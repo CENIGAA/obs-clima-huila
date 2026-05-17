@@ -22,6 +22,18 @@ const TENDENCIA_STYLE = {
 }
 const TENDENCIA_FALLBACK = { color: '#94A3B8', label: 'Sin tendencia' }
 
+const TENDENCIA_FILTROS = [
+  { value: 'all',        label: 'Todas' },
+  { value: 'increasing', label: 'Creciente'   },
+  { value: 'decreasing', label: 'Decreciente' },
+  { value: 'no trend',   label: 'Sin tendencia' },
+]
+
+const ESTADO_FILTROS = [
+  { value: 'all', label: 'Todas' },
+  { value: 'ACT', label: 'Activa' },
+]
+
 const MUNICIPIO_POLYGON_STYLE = {
   fillColor: '#EEF1FB',
   fillOpacity: 1,
@@ -40,27 +52,58 @@ function styleForTendencia(t) {
   return TENDENCIA_STYLE[t] ?? TENDENCIA_FALLBACK
 }
 
+function tendenciaKey(t) {
+  // Normaliza para que increasing/decreasing/no trend caigan en las 3 categorías
+  // de la leyenda; null o cualquier otro valor cuenta como "no trend".
+  if (t === 'increasing' || t === 'decreasing') return t
+  return 'no trend'
+}
+
 export default function MapaEstaciones() {
   const { data: estaciones, loading: loadingEst, error: errorEst } = useEstaciones()
   const { data: municipios } = useDataLoader('data/municipios_huila.geojson')
   const [seleccionada, setSeleccionada] = useState(null)
 
+  // Filtros
+  const [fMunicipio, setFMunicipio] = useState('all')
+  const [fTendencia, setFTendencia] = useState('all')
+  const [fEstado,    setFEstado]    = useState('all')
+
+  // Lista de municipios únicos ordenados alfabéticamente
+  const municipiosOpciones = useMemo(() => {
+    if (!Array.isArray(estaciones)) return []
+    const set = new Set()
+    for (const e of estaciones) if (e.municipio) set.add(e.municipio)
+    return [...set].sort((a, b) => a.localeCompare(b, 'es'))
+  }, [estaciones])
+
+  // Estaciones que pasan los 3 filtros
+  const estacionesFiltradas = useMemo(() => {
+    if (!Array.isArray(estaciones)) return []
+    return estaciones.filter((e) => {
+      if (fMunicipio !== 'all' && e.municipio !== fMunicipio) return false
+      if (fEstado    !== 'all' && e.estado    !== fEstado)    return false
+      if (fTendencia !== 'all') {
+        if (tendenciaKey(tendenciaPrincipal(e)) !== fTendencia) return false
+      }
+      return true
+    })
+  }, [estaciones, fMunicipio, fTendencia, fEstado])
+
+  // Conteo por tendencia sobre el subconjunto visible
   const conteoPorTendencia = useMemo(() => {
-    if (!Array.isArray(estaciones)) return null
-    const c = { increasing: 0, decreasing: 0, 'no trend': 0, otros: 0 }
-    for (const e of estaciones) {
-      const t = tendenciaPrincipal(e)
-      if (t in c) c[t] += 1
-      else c.otros += 1
+    const c = { increasing: 0, decreasing: 0, 'no trend': 0 }
+    for (const e of estacionesFiltradas) {
+      c[tendenciaKey(tendenciaPrincipal(e))] += 1
     }
     return c
-  }, [estaciones])
+  }, [estacionesFiltradas])
+
+  const totalEstaciones = Array.isArray(estaciones) ? estaciones.length : 0
+  const totalVisibles   = estacionesFiltradas.length
 
   const geojsonStyle = () => MUNICIPIO_POLYGON_STYLE
 
-  // El geojson actual contiene centroides municipales (Point); cuando se
-  // reemplace por polígonos, `style` arriba aplica automáticamente y este
-  // fallback queda inactivo.
   const geojsonPointToLayer = (_feature, latlng) =>
     L.circleMarker(latlng, {
       radius: 2,
@@ -93,6 +136,18 @@ export default function MapaEstaciones() {
             </p>
           </div>
         </div>
+
+        <Filtros
+          municipios={municipiosOpciones}
+          fMunicipio={fMunicipio}
+          fTendencia={fTendencia}
+          fEstado={fEstado}
+          onMunicipio={setFMunicipio}
+          onTendencia={setFTendencia}
+          onEstado={setFEstado}
+          totalVisibles={totalVisibles}
+          totalEstaciones={totalEstaciones}
+        />
 
         <Leyenda conteo={conteoPorTendencia} />
 
@@ -130,47 +185,52 @@ export default function MapaEstaciones() {
               />
             )}
 
-            {Array.isArray(estaciones) &&
-              estaciones.map((e) => {
-                const tend = tendenciaPrincipal(e)
-                const { color, label } = styleForTendencia(tend)
-                return (
-                  <CircleMarker
-                    key={e.codigo}
-                    center={[e.latitud, e.longitud]}
-                    radius={6}
-                    pathOptions={{
-                      color: '#ffffff',
-                      weight: 1.5,
-                      fillColor: color,
-                      fillOpacity: 0.9,
-                    }}
-                    eventHandlers={{
-                      click: () => setSeleccionada(e),
-                    }}
+            {estacionesFiltradas.map((e) => {
+              const tend = tendenciaPrincipal(e)
+              const { color, label } = styleForTendencia(tend)
+              return (
+                <CircleMarker
+                  key={e.codigo}
+                  center={[e.latitud, e.longitud]}
+                  radius={6}
+                  pathOptions={{
+                    color: '#ffffff',
+                    weight: 1.5,
+                    fillColor: color,
+                    fillOpacity: 0.9,
+                  }}
+                  eventHandlers={{
+                    click: () => setSeleccionada(e),
+                  }}
+                >
+                  <Tooltip
+                    direction="top"
+                    offset={[0, -6]}
+                    opacity={1}
+                    className="och-tooltip"
                   >
-                    <Tooltip
-                      direction="top"
-                      offset={[0, -6]}
-                      opacity={1}
-                      className="och-tooltip"
-                    >
-                      <div className="text-[11px] leading-tight">
-                        <div className="font-bold text-[#162341]">{e.nombre}</div>
-                        <div className="text-neutral-500">{e.municipio}</div>
-                        <div className="mt-0.5" style={{ color }}>
-                          {label}
-                        </div>
+                    <div className="text-[11px] leading-tight">
+                      <div className="font-bold text-[#162341]">{e.nombre}</div>
+                      <div className="text-neutral-500">{e.municipio}</div>
+                      <div className="mt-0.5" style={{ color }}>
+                        {label}
                       </div>
-                    </Tooltip>
-                  </CircleMarker>
-                )
-              })}
+                    </div>
+                  </Tooltip>
+                </CircleMarker>
+              )
+            })}
           </MapContainer>
 
           {loadingEst && !errorEst && (
             <div className="absolute bottom-3 left-3 z-[1000] px-3 py-1.5 rounded-full bg-white/95 shadow text-[11px] text-neutral-500 font-mono">
               Cargando estaciones…
+            </div>
+          )}
+
+          {!loadingEst && !errorEst && totalEstaciones > 0 && totalVisibles === 0 && (
+            <div className="absolute top-3 left-1/2 -translate-x-1/2 z-[1000] px-3 py-1.5 rounded-full bg-white/95 shadow text-[12px] text-neutral-600 font-medium">
+              Sin estaciones que coincidan con los filtros
             </div>
           )}
         </div>
@@ -183,6 +243,125 @@ export default function MapaEstaciones() {
     </section>
   )
 }
+
+// ─── Filtros ───────────────────────────────────────────────────────────────
+
+function Filtros({
+  municipios,
+  fMunicipio, fTendencia, fEstado,
+  onMunicipio, onTendencia, onEstado,
+  totalVisibles, totalEstaciones,
+}) {
+  return (
+    <div className="mt-6 rounded-2xl border border-neutral-200 bg-white p-4 sm:p-5">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:gap-6">
+        {/* Municipio */}
+        <FilterGroup label="Municipio" htmlFor="filtro-municipio">
+          <select
+            id="filtro-municipio"
+            value={fMunicipio}
+            onChange={(e) => onMunicipio(e.target.value)}
+            className="
+              w-full lg:w-[220px]
+              h-9 rounded-full bg-neutral-50 border border-neutral-200
+              px-4 pr-8 text-[13px] text-[#162341]
+              hover:border-[#4A60D8] focus:border-[#4A60D8] focus:bg-white
+              focus:outline-none focus:ring-2 focus:ring-[#4A60D8]/20
+              transition-colors
+              appearance-none cursor-pointer
+            "
+            style={{
+              backgroundImage:
+                "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23162341' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>\")",
+              backgroundRepeat: 'no-repeat',
+              backgroundPosition: 'right 12px center',
+            }}
+          >
+            <option value="all">Todos los municipios</option>
+            {municipios.map((m) => (
+              <option key={m} value={m}>{m}</option>
+            ))}
+          </select>
+        </FilterGroup>
+
+        {/* Tendencia */}
+        <FilterGroup label="Tendencia">
+          <PillGroup
+            options={TENDENCIA_FILTROS}
+            value={fTendencia}
+            onChange={onTendencia}
+            ariaLabel="Filtrar por tendencia Mann-Kendall"
+          />
+        </FilterGroup>
+
+        {/* Estado */}
+        <FilterGroup label="Estado">
+          <PillGroup
+            options={ESTADO_FILTROS}
+            value={fEstado}
+            onChange={onEstado}
+            ariaLabel="Filtrar por estado de la estación"
+          />
+        </FilterGroup>
+
+        {/* Contador */}
+        <div className="lg:ml-auto text-[12px] text-neutral-500 font-mono shrink-0">
+          <span className="text-[#162341] font-bold">{totalVisibles}</span>
+          <span className="text-neutral-400"> / {totalEstaciones} estaciones</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function FilterGroup({ label, htmlFor, children }) {
+  return (
+    <div className="min-w-0">
+      <label
+        htmlFor={htmlFor}
+        className="block text-[10.5px] font-semibold tracking-[0.12em] uppercase text-neutral-400 mb-1.5"
+      >
+        {label}
+      </label>
+      {children}
+    </div>
+  )
+}
+
+function PillGroup({ options, value, onChange, ariaLabel }) {
+  return (
+    <div
+      role="radiogroup"
+      aria-label={ariaLabel}
+      className="inline-flex flex-wrap items-center gap-1 p-1 bg-neutral-100 rounded-full"
+    >
+      {options.map((opt) => {
+        const active = opt.value === value
+        return (
+          <button
+            key={opt.value}
+            type="button"
+            role="radio"
+            aria-checked={active}
+            onClick={() => onChange(opt.value)}
+            className={`
+              px-3 h-7 rounded-full text-[12px] font-semibold
+              transition-colors
+              ${active
+                ? 'bg-[#162341] text-white shadow-sm'
+                : 'text-neutral-600 hover:text-[#162341] hover:bg-white'
+              }
+            `}
+          >
+            {opt.label}
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+// ─── Leyenda ───────────────────────────────────────────────────────────────
 
 function Leyenda({ conteo }) {
   const items = [
