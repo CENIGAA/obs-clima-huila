@@ -1,0 +1,62 @@
+{
+  "titulo": "Observatorio Climático del Huila — Efraín Domínguez Calle",
+  "subtitulo": "CENIGAA — Centro de Investigación en Ciencias y Recursos GeoAgroAmbientales",
+  "periodo_linea_base": "1923 – 2017",
+  "total_estaciones_aptas": 150,
+  "estaciones_con_precipitacion": 149,
+  "posicionamiento": [
+    "Instrumento vivo del libro CC_VCE Huila (2018)",
+    "Cumplimiento meta observatorio climático — Plan Huila 2050",
+    "Alineado con Plan de Cambio Climático del Municipio de Neiva",
+    "Nodo 1 de la Red ROGAA-Huila (5 observatorios territoriales)",
+    "Horizonte Europa: infraestructura compatible Copernicus/Destination Earth"
+  ],
+  "hallazgos_clave": {
+    "precipitacion": {
+      "tendencias_pt4": {
+        "increasing": 12,
+        "decreasing": 25,
+        "no trend": 112
+      },
+      "estaciones_con_tendencia_significativa": 37,
+      "patron_espacial": "Tendencia decreciente significativa al sur del departamento, creciente al norte (1985-2015)",
+      "enso": "Precipitación inversamente correlacionada con índices del Pacífico: Niño3.4, MEI, OMI. Anomalías de precipitación correlacionadas con 17+ índices globales NOAA.",
+      "distribucion_mensual": "Gumbel con asimetría derecha",
+      "distribucion_anual": "Log-Gamma"
+    }
+  },
+  "metodologia": {
+    "componentes": [
+      "1. Estacionalidad — patrón bimodal Huila (Abr-May / Oct-Nov)",
+      "2. Inercia — autocorrelación ACF lag 1-24 meses",
+      "3. Tendencia — Mann-Kendall + pendiente Theil-Sen",
+      "4. Ciclos seculares — media móvil 10 años",
+      "5. Fenómenos recurrentes — correlación ENSO (17+ índices NOAA)",
+      "6. Aleatoriedad — ajuste distribuciones (Kolmogorov-Smirnov)"
+    ],
+    "referencia_principal": "Domínguez Calle, E.A., Chavarro Díaz, J.A., Velasco Sánchez, A.N., Chavarro Díaz, J.I., De León Pérez, D.R., Garrido, A.E., Cañón Ramos, M.Á., & Parra Díaz, C.F. (2018). Cambio Climático y Variabilidad Climática Extrema en el Huila: Herramientas para la Caracterización de la Amenaza Hidroclimática. Editorial Académica Española. ISBN 978-620-2-16957-8.",
+    "convenio": "SGR-FCTeI · Convenio Especial de Cooperación 124 de 2015",
+    "instituciones": [
+      "CENIGAA",
+      "CORHUILA",
+      "NRMA",
+      "DSGAA",
+      "Gobernación del Huila"
+    ]
+  },
+  "fuentes_datos_fase1": [
+    "CCYVCE_DB.db — CC_VCE Huila · 149 estaciones · 1923-2017"
+  ],
+  "fuentes_datos_futuras": [
+    "ERA5-Land (Copernicus ECMWF) · Fase 2",
+    "IDEAM API / datos.gov.co · Fase 2",
+    "CHIRPS v2.0 (UCSB) · Fase 3",
+    "GPM IMERG (NASA) · Fase 3",
+    "CMIP6 / SSP (IPCC AR6) · Fase 4"
+  ],
+  "equipo": {
+    "direccion_cientifica": "Jorge I. Chavarro D. — Grupo Hidroinformática CENIGAA",
+    "infraestructura": "GAA+IA Lab — gaaialab.cenigaa.org",
+    "dedicado_a": "Efraín Antonio Domínguez Calle (1960–2021) — PhD en Hidrología, Universidad Estatal Hidrometeorológica de Rusia. Profesor Pontificia Universidad Javeriana. Premio Bienal Javeriano en Investigación 2019. Asesor Científico NRMA-CENIGAA. Autor principal del libro CC_VCE Huila. Figura insigne de la hidrología colombiana."
+  }
+}
