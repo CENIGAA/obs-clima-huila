@@ -6,6 +6,7 @@ import Hero   from './components/sections/Hero'
 import MapaEstaciones   from './components/sections/MapaEstaciones'
 import ComoFunciona     from './components/sections/ComoFunciona'
 import Biblioteca       from './components/sections/Biblioteca'
+import DatosAbiertos    from './components/sections/DatosAbiertos'
 import Aliados          from './components/sections/Aliados'
 import HomenajeEfrain   from './components/sections/HomenajeEfrain'
 import { useResumenDepartamento, useEstaciones } from './hooks/useDataLoader'
@@ -147,12 +148,7 @@ function Home() {
           description="Jorge I. Chavarro D. · Grupo Hidroinformática · GAA+IA Lab · CENIGAA"
           icon="👥"
         />
-        <PlaceholderSection
-          id="datos"
-          title="Datos abiertos"
-          description="Descarga CSV/JSON por estación con cita APA del libro y la base de datos"
-          icon="⬇"
-        />
+        <DatosAbiertos />
 
         {/* Dedicatoria */}
         <section
