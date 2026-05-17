@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { Cloud, Database, MapPin, ArrowDown, BookOpen, Droplets, Thermometer } from 'lucide-react'
 
 // ─── Tarjeta de estadística ───────────────────────────────────────────────────
@@ -130,12 +131,12 @@ export default function Hero({ resumenData }) {
           <div className="w-8 h-px bg-[#4A60D8]" aria-hidden="true" />
           <p className="text-[13px] text-neutral-500 italic">
             En memoria de{' '}
-            <a
-              href="#dedicatoria"
+            <Link
+              to="/efrain"
               className="text-neutral-400 hover:text-[#4A60D8] transition-colors not-italic font-medium underline underline-offset-2"
             >
-              Efraín Antonio Domínguez Calle (1960–2021)
-            </a>
+              Efraín Antonio Domínguez Calle (1969–2021)
+            </Link>
           </p>
         </div>
 

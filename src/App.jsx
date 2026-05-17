@@ -1,19 +1,21 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Hero   from './components/sections/Hero'
-import MapaEstaciones from './components/sections/MapaEstaciones'
+import MapaEstaciones   from './components/sections/MapaEstaciones'
+import Aliados          from './components/sections/Aliados'
+import HomenajeEfrain   from './components/sections/HomenajeEfrain'
 import { useResumenDepartamento, useEstaciones } from './hooks/useDataLoader'
 
 // ─── Banner de verificación de datos (desarrollo) ────────────────────────────
 function DataStatusBanner({ resumen, estaciones, error }) {
-  // Mostrar solo en desarrollo o si hay error
   const isDev = import.meta.env.DEV
   if (!isDev && !error) return null
 
   const hasResumen    = !!resumen
   const hasEstaciones = !!estaciones
-  const totalEst      = estaciones?.estaciones?.length ?? 0
+  const totalEst      = Array.isArray(estaciones) ? estaciones.length : 0
 
   return (
     <div
@@ -86,23 +88,22 @@ function PlaceholderSection({ id, title, description, icon = '🗂' }) {
   )
 }
 
-// ─── App principal ────────────────────────────────────────────────────────────
-export default function App() {
+// ─── Home ────────────────────────────────────────────────────────────────────
+function Home() {
   const { data: resumen,    error: errorResumen    } = useResumenDepartamento()
   const { data: estaciones, error: errorEstaciones } = useEstaciones()
 
-  // Log de verificación en consola (desarrollo)
   useEffect(() => {
     if (import.meta.env.DEV) {
       if (resumen) {
         console.log(
           '%c[OCH] resumen_departamento.json ✓',
           'color: #43B02A; font-weight: bold',
-          resumen
+          resumen,
         )
       }
       if (estaciones) {
-        const n = estaciones?.estaciones?.length ?? 0
+        const n = Array.isArray(estaciones) ? estaciones.length : 0
         console.log(
           `%c[OCH] estaciones.json ✓ — ${n} estaciones`,
           'color: #4A60D8; font-weight: bold',
@@ -110,10 +111,6 @@ export default function App() {
       }
       if (errorResumen || errorEstaciones) {
         console.error('[OCH] Error cargando datos:', errorResumen || errorEstaciones)
-        console.info(
-          '[OCH] Asegúrate de que public/data/ contiene: ' +
-          'estaciones.json, resumen_departamento.json, municipios_huila.geojson'
-        )
       }
     }
   }, [resumen, estaciones, errorResumen, errorEstaciones])
@@ -123,15 +120,10 @@ export default function App() {
   return (
     <>
       <Header />
-
       <main id="main-content">
-        {/* Sesión 1: Hero */}
         <Hero resumenData={resumen} />
-
-        {/* Sesión 2: Mapa de estaciones */}
         <MapaEstaciones />
 
-        {/* Secciones placeholder — se implementan en Sesiones 3-6 */}
         <PlaceholderSection
           id="resumen"
           title="Resumen Huila"
@@ -163,7 +155,7 @@ export default function App() {
           icon="⬇"
         />
 
-        {/* Sección dedicatoria — se desarrolla en Sesión 4 */}
+        {/* Dedicatoria */}
         <section
           id="dedicatoria"
           className="py-16 bg-[#162341] text-center"
@@ -175,28 +167,65 @@ export default function App() {
               id="dedicatoria-heading"
               className="text-xl font-bold text-white mb-3 tracking-tight"
             >
-              Dedicado a Efraín Antonio Domínguez Calle
+              Dedicado a{' '}
+              <Link
+                to="/efrain"
+                className="text-white hover:text-[#8B9FE8] transition-colors underline underline-offset-4 decoration-[#4A60D8]/60 decoration-2"
+              >
+                Efraín Antonio Domínguez Calle
+              </Link>
             </h2>
             <p className="text-neutral-400 text-[14px] leading-relaxed">
-              1960 – 2021 · Asesor Científico NRMACENIGAA<br />
+              1969 – 2021 · Asesor Científico NRMACENIGAA<br />
               Uno de los mayores conocedores de la hidrología colombiana.<br />
               Autor principal del libro{' '}
               <em className="text-neutral-300">CC_VCE Huila</em>
               {' '}(2018), base científica de este observatorio.
             </p>
+            <Link
+              to="/efrain"
+              className="inline-flex items-center gap-1.5 mt-5 text-[12.5px] font-medium text-[#8B9FE8] hover:text-white transition-colors"
+            >
+              Leer el homenaje completo →
+            </Link>
             <div className="w-12 h-px bg-[#43B02A] mx-auto mt-6" aria-hidden="true" />
           </div>
         </section>
+
+        {/* Aliados institucionales */}
+        <Aliados />
       </main>
 
       <Footer />
 
-      {/* Banner de estado de datos (solo en dev o si hay error) */}
       <DataStatusBanner
         resumen={resumen}
         estaciones={estaciones}
         error={dataError}
       />
     </>
+  )
+}
+
+// ─── App principal ───────────────────────────────────────────────────────────
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/efrain"
+          element={
+            <>
+              <Header />
+              <main id="main-content">
+                <HomenajeEfrain />
+              </main>
+              <Footer />
+            </>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   )
 }

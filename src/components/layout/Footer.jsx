@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Mail, MapPin, ExternalLink, Github, Cloud } from 'lucide-react'
 
 // ─── Logo CENIGAA en el footer ────────────────────────────────────────────────
@@ -169,6 +170,16 @@ export default function Footer() {
                 <Github size={12} aria-hidden="true" />
                 Repositorio GitHub
               </EcoLink>
+              <Link
+                to="/efrain"
+                className="
+                  flex items-center gap-1.5
+                  text-[13px] text-neutral-400
+                  hover:text-white transition-colors duration-200
+                "
+              >
+                Homenaje a Efraín Domínguez Calle
+              </Link>
             </nav>
 
             <div className="pt-2 space-y-2">
@@ -230,9 +241,12 @@ export default function Footer() {
         {/* Dedicatoria */}
         <p className="mt-4 text-center text-[11.5px] text-neutral-600 italic">
           Dedicado a{' '}
-          <span className="text-neutral-500 font-medium not-italic">
-            Efraín Antonio Domínguez Calle (1960–2021)
-          </span>
+          <Link
+            to="/efrain"
+            className="text-neutral-500 font-medium not-italic hover:text-white transition-colors underline underline-offset-2 decoration-[#4A60D8]/40"
+          >
+            Efraín Antonio Domínguez Calle (1969–2021)
+          </Link>
           {' '}— Asesor Científico NRMACENIGAA, maestro de la hidrología colombiana.
         </p>
       </div>
