@@ -3,27 +3,35 @@ const ALIADOS = [
     logo: '/assets/logos/Gobernacion_Huila.png',
     logoMaxWidth: 160,
     nombre: 'Gobernación del Huila',
-    descripcion: 'Responsable institucional · Plan Huila 2050',
+    rol: 'Responsable institucional',
+    descripcion:
+      'Lidera el Plan de Cambio Climático Huila 2050 y preside el Comité Departamental de Cambio Climático al que responde el Observatorio.',
     destacado: true,
   },
   {
     logo: '/assets/logos/CAM.svg',
     logoMaxWidth: 180,
     nombre: 'CAM',
-    descripcion: 'Responsable institucional · Autoridad Ambiental Regional del Alto Magdalena',
+    rol: 'Sede institucional del Observatorio',
+    descripcion:
+      'Corporación Autónoma Regional del Alto Magdalena. Sede del Observatorio Climático según el Plan Huila 2050. Coordinadora de Cambio Climático del departamento.',
     destacado: true,
   },
   {
     logo: '/assets/logos/CENIGAA.svg',
     logoMaxWidth: 200,
     nombre: 'CENIGAA',
-    descripcion: 'Gestor científico-tecnológico · Red ROGAA-Huila',
+    rol: 'Gestor científico-tecnológico',
+    descripcion:
+      'Construye y opera la plataforma digital del Observatorio. Aporta la base de datos histórica 1923–2017 de 150 estaciones y la metodología del libro CC_VCE Huila.',
     destacado: false,
   },
   {
     logo: null,
     nombre: 'IDEAM',
-    descripcion: 'Fuente de datos primaria · Registros climatológicos 1923–2017',
+    rol: 'Fuente de datos primaria',
+    descripcion:
+      'Instituto de Hidrología, Meteorología y Estudios Ambientales. Red de estaciones climatológicas del Huila — fuente primaria de los registros históricos del Observatorio.',
     destacado: false,
   },
 ]
@@ -84,13 +92,15 @@ export default function Aliados() {
           </h2>
           <div className="w-12 h-px bg-[#4A60D8] mx-auto mt-4 mb-5" aria-hidden="true" />
           <p className="text-[14.5px] text-neutral-600 leading-relaxed">
-            Este Observatorio Climático da cumplimiento a la meta de infraestructura
-            científica climática departamental del{' '}
+            El Observatorio Climático del Huila es el primero creado en Colombia
+            con el fin de coordinar las acciones del{' '}
             <strong className="text-[#162341] font-semibold">Plan Huila 2050</strong>,
-            bajo la responsabilidad de la{' '}
-            <strong className="text-[#162341] font-semibold">Gobernación del Huila</strong>{' '}
-            y la <strong className="text-[#162341] font-semibold">CAM</strong>. CENIGAA
-            actúa como su gestor científico-tecnológico.
+            generar la plataforma de información y monitoreo climático
+            departamental, y servir de base para la coordinación de las diversas
+            entidades relacionadas con el plan. Responde al{' '}
+            <strong className="text-[#162341] font-semibold">
+              Comité Departamental de Cambio Climático
+            </strong>.
           </p>
         </div>
 
@@ -124,10 +134,13 @@ export default function Aliados() {
                   {a.nombre}
                 </p>
                 <p
-                  className={`text-[12.5px] mt-1 leading-snug ${
-                    a.destacado ? 'text-[#4A60D8] font-medium' : 'text-neutral-500'
+                  className={`mt-1 text-[11px] font-semibold tracking-[0.06em] uppercase ${
+                    a.destacado ? 'text-[#4A60D8]' : 'text-neutral-400'
                   }`}
                 >
+                  {a.rol}
+                </p>
+                <p className="mt-2 text-[12.5px] text-neutral-600 leading-snug">
                   {a.descripcion}
                 </p>
               </div>
