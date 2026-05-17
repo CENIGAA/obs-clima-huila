@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Hero   from './components/sections/Hero'
+import MapaEstaciones from './components/sections/MapaEstaciones'
 import { useResumenDepartamento, useEstaciones } from './hooks/useDataLoader'
 
 // ─── Banner de verificación de datos (desarrollo) ────────────────────────────
@@ -127,13 +128,10 @@ export default function App() {
         {/* Sesión 1: Hero */}
         <Hero resumenData={resumen} />
 
-        {/* Secciones placeholder — se implementan en Sesiones 2-6 */}
-        <PlaceholderSection
-          id="mapa"
-          title="Mapa de estaciones"
-          description="150 estaciones coloreadas por tendencia Mann-Kendall · Click → panel de detalle"
-          icon="🗺"
-        />
+        {/* Sesión 2: Mapa de estaciones */}
+        <MapaEstaciones />
+
+        {/* Secciones placeholder — se implementan en Sesiones 3-6 */}
         <PlaceholderSection
           id="resumen"
           title="Resumen Huila"
