@@ -1,7 +1,7 @@
 {
   "titulo": "Observatorio Climático del Huila — Efraín Domínguez Calle",
   "subtitulo": "CENIGAA — Centro de Investigación en Ciencias y Recursos GeoAgroAmbientales",
-  "periodo_linea_base": "1923 – 2017",
+  "periodo_linea_base": "1930 – 2017",
   "total_estaciones_aptas": 150,
   "estaciones_con_precipitacion": 149,
   "posicionamiento": [
@@ -45,7 +45,7 @@
     ]
   },
   "fuentes_datos_fase1": [
-    "CCYVCE_DB.db — CC_VCE Huila · 149 estaciones · 1923-2017"
+    "CCYVCE_DB.db — CC_VCE Huila · 149 estaciones · 1930-2017"
   ],
   "fuentes_datos_futuras": [
     "ERA5-Land (Copernicus ECMWF) · Fase 2",

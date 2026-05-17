@@ -104,7 +104,7 @@ export default function Hero({ resumenData }) {
             Observatorio Climático del Huila
           </span>
           <span className="block text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.08] tracking-[-0.025em]">
-            94 años de datos
+            87 años de registros
           </span>
           <span className="block text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-[-0.025em]"
             style={{ color: '#43B02A' }}
@@ -165,8 +165,8 @@ export default function Hero({ resumenData }) {
           />
           <StatCard
             icon={Cloud}
-            value="94"
-            label="años de datos"
+            value="87"
+            label="años de registros"
             color="#43B02A"
             delay={460}
           />
@@ -229,7 +229,7 @@ export default function Hero({ resumenData }) {
             style={{ animationDelay: '600ms' }}
           >
             <span className="font-mono">
-              Período: 1923 – 2017
+              Período: 1930 – 2017
             </span>
             <span className="mx-2 text-neutral-700">·</span>
             <span>Fuente: CCYVCE_DB · SGR Conv. 124/2015</span>

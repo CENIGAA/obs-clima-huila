@@ -23,7 +23,7 @@ const ALIADOS = [
     nombre: 'CENIGAA',
     rol: 'Gestor científico-tecnológico',
     descripcion:
-      'Construye y opera la plataforma digital del Observatorio. Aporta la base de datos histórica 1923–2017 de 150 estaciones y la metodología del libro CC_VCE Huila.',
+      'Construye y opera la plataforma digital del Observatorio. Aporta la base de datos histórica 1930–2017 de 150 estaciones y la metodología del libro CC_VCE Huila.',
     destacado: false,
   },
   {

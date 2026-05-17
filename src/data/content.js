@@ -11,7 +11,7 @@ export const content = {
     meta: {
       title: 'Observatorio Climático del Huila "Efraín Domínguez Calle" | CENIGAA',
       description:
-        'Primera plataforma pública de datos climáticos del Departamento del Huila. 94 años de registros, 150 estaciones meteorológicas.',
+        'Primera plataforma pública de datos climáticos del Departamento del Huila. 87 años de registros, 150 estaciones meteorológicas.',
     },
     observatory: {
       name:        'Observatorio Climático del Huila',
@@ -22,7 +22,7 @@ export const content = {
     },
     hero: {
       supratitle: 'Observatorio Climático del Huila',
-      title1:     '94 años de datos',
+      title1:     '87 años de registros',
       title2:     'climáticos del Huila',
       subtitle:
         'Primera plataforma pública de referencia climática departamental. 150 estaciones meteorológicas, análisis de tendencias y variabilidad hidroclimática para el Departamento del Huila.',
@@ -33,7 +33,7 @@ export const content = {
     },
     stats: {
       stations:        { value: '150', label: 'estaciones aptas' },
-      years:           { value: '94',  label: 'años de datos' },
+      years:           { value: '87',  label: 'años de registros' },
       municipalities:  { value: '37',  label: 'municipios cubiertos' },
       components:      { value: '6',   label: 'componentes análisis' },
     },
@@ -53,7 +53,7 @@ export const content = {
     },
     dataSource: {
       database: 'CCYVCE_DB',
-      period:   '1923 – 2017',
+      period:   '1930 – 2017',
       project:  'SGR Conv. 124/2015',
       book:     'CC_VCE Huila · Domínguez Calle et al. (2018) · ISBN 978-620-2-16957-8',
     },
@@ -70,7 +70,7 @@ export const content = {
     meta: {
       title: 'Climate Observatory of Huila "Efraín Domínguez Calle" | CENIGAA',
       description:
-        'First public climate data platform for the Huila Department. 94 years of records, 150 meteorological stations.',
+        'First public climate data platform for the Huila Department. 87 years of records, 150 meteorological stations.',
     },
     observatory: {
       name:        'Climate Observatory of Huila',
@@ -81,7 +81,7 @@ export const content = {
     },
     hero: {
       supratitle: 'Climate Observatory of Huila',
-      title1:     '94 years of climate',
+      title1:     '87 years of climate',
       title2:     'data from Huila',
       subtitle:
         'First public reference climate platform for the Huila Department. 150 meteorological stations, trend analysis and hydroclimatic variability.',
@@ -92,7 +92,7 @@ export const content = {
     },
     stats: {
       stations:        { value: '150', label: 'suitable stations' },
-      years:           { value: '94',  label: 'years of data' },
+      years:           { value: '87',  label: 'years of records' },
       municipalities:  { value: '37',  label: 'municipalities covered' },
       components:      { value: '6',   label: 'analysis components' },
     },
@@ -112,7 +112,7 @@ export const content = {
     },
     dataSource: {
       database: 'CCYVCE_DB',
-      period:   '1923 – 2017',
+      period:   '1930 – 2017',
       project:  'SGR Conv. 124/2015',
       book:     'CC_VCE Huila · Domínguez Calle et al. (2018) · ISBN 978-620-2-16957-8',
     },

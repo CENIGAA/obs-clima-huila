@@ -123,7 +123,7 @@ export default function ComoFunciona() {
               Dr. Efraín Domínguez Calle
             </Link>
             . Así es como convertimos{' '}
-            <strong className="text-[#162341] font-semibold">94 años de datos</strong>{' '}
+            <strong className="text-[#162341] font-semibold">87 años de registros</strong>{' '}
             en conocimiento útil para el territorio.
           </p>
         </div>
