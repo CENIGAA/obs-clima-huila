@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useLocation } from 'react-router-dom'
 import { Menu, X, Cloud, ChevronRight, ExternalLink } from 'lucide-react'
 
 // ─── Logo CENIGAA (SVG inline hasta tener archivo SVG oficial) ───────────────
@@ -76,6 +77,13 @@ export default function Header() {
   const [menuOpen,    setMenuOpen]    = useState(false)
   const [scrolled,    setScrolled]    = useState(false)
   const [activeSection, setActiveSection] = useState('')
+
+  // Si no estamos en la home, las anclas (#mapa, #resumen, …) deben
+  // resolverse contra "/" para que la navegación funcione desde otras rutas.
+  const { pathname } = useLocation()
+  const onHome = pathname === '/'
+  const resolveHref = (href) =>
+    href.startsWith('#') && !onHome ? `/${href}` : href
 
   // Detectar scroll para cambiar estilo del header
   useEffect(() => {
@@ -168,7 +176,7 @@ export default function Header() {
             aria-label="Navegación principal"
           >
             {NAV_LINKS.map(link => (
-              <NavLink key={link.href} href={link.href}>
+              <NavLink key={link.href} href={resolveHref(link.href)}>
                 {link.label}
               </NavLink>
             ))}
@@ -253,7 +261,7 @@ export default function Header() {
       >
         <div className="container-main py-3">
           {NAV_LINKS.map(link => (
-            <MobileNavLink key={link.href} href={link.href} onClick={closeMenu}>
+            <MobileNavLink key={link.href} href={resolveHref(link.href)} onClick={closeMenu}>
               {link.label}
             </MobileNavLink>
           ))}
