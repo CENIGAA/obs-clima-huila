@@ -10,8 +10,8 @@
 
     <!-- SEO primario -->
     <title>Observatorio Climático del Huila - Efraín Domínguez Calle | CENIGAA</title>
-    <meta name="description" content="Primera plataforma pública de datos climáticos del Departamento del Huila. 94 años de registros, 150 estaciones meteorológicas, análisis de tendencias y variabilidad hidroclimática. CENIGAA — Red ROGAA-Huila." />
-    <meta name="keywords" content="observatorio climático Huila, cambio climático Huila, datos climatológicos Huila, CENIGAA, ROGAA Huila, Mann-Kendall, precipitación Huila, temperatura Huila, Efraín Domínguez Calle, hidrología Huila Colombia" />
+    <meta name="description" content="Primer observatorio climático departamental de Colombia. 150 estaciones, 94 años de registros IDEAM (1923–2017), 6 componentes científicos: estacionalidad, tendencia Mann-Kendall, ciclos seculares, ENSO, inercia y distribuciones extremas. Da cumplimiento al Plan Huila 2050 · CENIGAA · Red ROGAA-Huila." />
+    <meta name="keywords" content="observatorio climático Huila, cambio climático Huila, Plan Huila 2050, datos climatológicos Huila, CENIGAA, ROGAA Huila, Mann-Kendall, precipitación Huila, ENSO Huila, Niño Niña Huila, Efraín Domínguez Calle, CC_VCE Huila, hidrología Huila Colombia, IDEAM Huila, cuenca alta Magdalena" />
     <meta name="author" content="CENIGAA — Centro de Investigación en Ciencias y Recursos GeoAgroAmbientales" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://obs-clima-huila.cenigaa.org" />
@@ -20,15 +20,16 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://obs-clima-huila.cenigaa.org" />
     <meta property="og:title" content="Observatorio Climático del Huila - Efraín Domínguez Calle | CENIGAA" />
-    <meta property="og:description" content="Primera plataforma pública de datos climáticos del Departamento del Huila. 94 años de registros, 150 estaciones meteorológicas. CENIGAA — Red ROGAA-Huila." />
+    <meta property="og:description" content="Primer observatorio climático departamental de Colombia. 150 estaciones meteorológicas, 94 años de registros (1923–2017), análisis Mann-Kendall, ENSO y distribuciones extremas. Plan Huila 2050 · CENIGAA." />
     <meta property="og:image" content="https://obs-clima-huila.cenigaa.org/og-image.jpg" />
+    <meta property="og:image:alt" content="Observatorio Climático del Huila — CENIGAA" />
     <meta property="og:locale" content="es_CO" />
     <meta property="og:site_name" content="CENIGAA" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Observatorio Climático del Huila | CENIGAA" />
-    <meta name="twitter:description" content="94 años de datos climáticos del Huila. Primera plataforma pública de referencia departamental." />
+    <meta name="twitter:description" content="150 estaciones · 94 años (1923–2017) · 6 componentes científicos. Primer observatorio climático departamental de Colombia. Plan Huila 2050." />
     <meta name="twitter:image" content="https://obs-clima-huila.cenigaa.org/og-image.jpg" />
 
     <!-- Google Fonts: Inter -->
@@ -70,6 +71,54 @@
           "name": "Observatorio Climático del Huila «Efraín Domínguez Calle»",
           "description": "Primera plataforma pública de datos climáticos del Departamento del Huila. Red ROGAA-Huila · CENIGAA.",
           "publisher": { "@id": "https://www.cenigaa.org/#organization" },
+          "inLanguage": "es-CO"
+        },
+        {
+          "@type": "Dataset",
+          "@id": "https://obs-clima-huila.cenigaa.org/#dataset",
+          "name": "Registros climatológicos del Departamento del Huila 1923–2017",
+          "alternateName": "OCH — Base de datos hidroclimática Huila",
+          "description": "Serie temporal de 94 años de registros climatológicos del Departamento del Huila, Colombia, integrada por 150 estaciones meteorológicas con datos de precipitación mensual y anual. Cada estación incluye análisis Mann-Kendall de tendencia, estacionalidad bimodal, ciclos seculares, correlación con índices ENSO (Niño3.4, MEI, OMI), inercia climática y ajuste a distribuciones de valores extremos (Gumbel, Log-Gamma, Normal).",
+          "url": "https://obs-clima-huila.cenigaa.org",
+          "keywords": [
+            "precipitación",
+            "Huila",
+            "Colombia",
+            "Plan Huila 2050",
+            "Mann-Kendall",
+            "ENSO",
+            "cuenca alta del Magdalena",
+            "IDEAM",
+            "1923-2017"
+          ],
+          "license": "https://creativecommons.org/licenses/by/4.0/",
+          "isAccessibleForFree": true,
+          "creator": { "@id": "https://www.cenigaa.org/#organization" },
+          "publisher": { "@id": "https://www.cenigaa.org/#organization" },
+          "sourceOrganization": {
+            "@type": "GovernmentOrganization",
+            "name": "IDEAM",
+            "alternateName": "Instituto de Hidrología, Meteorología y Estudios Ambientales",
+            "url": "https://www.ideam.gov.co"
+          },
+          "spatialCoverage": {
+            "@type": "Place",
+            "name": "Departamento del Huila, Colombia",
+            "geo": {
+              "@type": "GeoShape",
+              "box": "1.55 -76.65 3.85 -74.50"
+            }
+          },
+          "temporalCoverage": "1923-01-01/2017-12-31",
+          "variableMeasured": [
+            "Precipitación total mensual (mm)",
+            "Precipitación total anual (mm)",
+            "Tendencia Mann-Kendall (pendiente Theil-Sen)",
+            "Correlación con índices ENSO",
+            "Parámetros de distribuciones extremas"
+          ],
+          "measurementTechnique": "Análisis estadístico de series temporales según metodología de Domínguez Calle (2018), CC_VCE Huila",
+          "citation": "Domínguez Calle, E.A. (2018). Cambio climático y variabilidad climática extrema en el Huila. Editorial Académica Española. ISBN 978-620-2-16957-8",
           "inLanguage": "es-CO"
         }
       ]

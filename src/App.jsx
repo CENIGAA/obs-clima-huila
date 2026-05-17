@@ -4,6 +4,8 @@ import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Hero   from './components/sections/Hero'
 import MapaEstaciones   from './components/sections/MapaEstaciones'
+import ComoFunciona     from './components/sections/ComoFunciona'
+import Biblioteca       from './components/sections/Biblioteca'
 import Aliados          from './components/sections/Aliados'
 import HomenajeEfrain   from './components/sections/HomenajeEfrain'
 import { useResumenDepartamento, useEstaciones } from './hooks/useDataLoader'
@@ -136,12 +138,9 @@ function Home() {
           description="Plan Huila 2050 · Plan CC Neiva · PNACC · ODS 13 · Horizonte Europa"
           icon="🏛"
         />
-        <PlaceholderSection
-          id="biblioteca"
-          title="Biblioteca climática"
-          description="Repositorio de investigaciones sobre cambio climático en el Huila"
-          icon="📚"
-        />
+        <ComoFunciona />
+        <Biblioteca />
+
         <PlaceholderSection
           id="equipo"
           title="Equipo"
