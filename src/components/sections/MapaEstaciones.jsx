@@ -9,7 +9,8 @@ import {
 } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { useEstaciones, useEstacion, useDataLoader } from '../../hooks/useDataLoader'
+import { useEstaciones, useDataLoader } from '../../hooks/useDataLoader'
+import PanelEstacion from './PanelEstacion'
 
 const HUILA_CENTER = [2.5, -75.5]
 const HUILA_ZOOM = 8
@@ -37,97 +38,6 @@ function tendenciaPrincipal(est) {
 
 function styleForTendencia(t) {
   return TENDENCIA_STYLE[t] ?? TENDENCIA_FALLBACK
-}
-
-function formatPeriodo(fechaInicio, fechaFin) {
-  if (!fechaInicio || !fechaFin) return null
-  const yi = fechaInicio.slice(0, 4)
-  const yf = fechaFin.slice(0, 4)
-  return `${yi} – ${yf}`
-}
-
-function computeCompletitud(fechaInicio, fechaFin, nMeses) {
-  if (!fechaInicio || !fechaFin || !nMeses) return null
-  const [yi, mi] = fechaInicio.split('-').map(Number)
-  const [yf, mf] = fechaFin.split('-').map(Number)
-  const expected = (yf - yi) * 12 + (mf - mi) + 1
-  if (expected <= 0) return null
-  return Math.round((nMeses / expected) * 1000) / 10
-}
-
-function SidePanel({ estacion, onClose }) {
-  const { data: detalle, loading } = useEstacion(estacion?.codigo ?? null)
-
-  if (!estacion) return null
-
-  const tend = tendenciaPrincipal(estacion)
-  const { color, label } = styleForTendencia(tend)
-  const sensor = estacion?.sensores?.[0]
-  const pt = detalle?.datos?.[sensor]
-  const periodo = pt ? formatPeriodo(pt.fecha_inicio, pt.fecha_fin) : null
-  const completitud = pt
-    ? computeCompletitud(pt.fecha_inicio, pt.fecha_fin, pt.n_meses)
-    : null
-
-  return (
-    <aside
-      className="
-        absolute top-3 right-3 z-[1000] w-[300px] max-w-[calc(100%-1.5rem)]
-        rounded-2xl bg-white/95 backdrop-blur-md shadow-xl
-        border border-neutral-200 p-5
-        animate-fade-in
-      "
-      aria-label={`Detalle de estación ${estacion.nombre}`}
-    >
-      <div className="flex items-start justify-between gap-3 mb-3">
-        <div>
-          <p className="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">
-            Estación · {estacion.codigo}
-          </p>
-          <h3 className="text-[15px] font-bold text-[#162341] mt-0.5 leading-tight">
-            {estacion.nombre}
-          </h3>
-          <p className="text-[12px] text-neutral-500 mt-0.5">
-            {estacion.municipio}
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={onClose}
-          className="
-            shrink-0 -mt-1 -mr-1 w-7 h-7 rounded-full
-            text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100
-            text-lg leading-none
-          "
-          aria-label="Cerrar panel"
-        >
-          ×
-        </button>
-      </div>
-
-      <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-[12.5px]">
-        <dt className="text-neutral-500">Período</dt>
-        <dd className="text-[#162341] font-medium font-mono">
-          {loading ? '…' : periodo ?? '—'}
-        </dd>
-
-        <dt className="text-neutral-500">Completitud</dt>
-        <dd className="text-[#162341] font-medium font-mono">
-          {loading ? '…' : completitud != null ? `${completitud}%` : '—'}
-        </dd>
-
-        <dt className="text-neutral-500">Tendencia MK</dt>
-        <dd className="font-medium flex items-center gap-1.5">
-          <span
-            className="inline-block w-2.5 h-2.5 rounded-full"
-            style={{ background: color }}
-            aria-hidden="true"
-          />
-          <span style={{ color }}>{label}</span>
-        </dd>
-      </dl>
-    </aside>
-  )
 }
 
 export default function MapaEstaciones() {
@@ -263,12 +173,12 @@ export default function MapaEstaciones() {
               Cargando estaciones…
             </div>
           )}
-
-          <SidePanel
-            estacion={seleccionada}
-            onClose={() => setSeleccionada(null)}
-          />
         </div>
+
+        <PanelEstacion
+          estacion={seleccionada}
+          onClose={() => setSeleccionada(null)}
+        />
       </div>
     </section>
   )
