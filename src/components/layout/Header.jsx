@@ -65,12 +65,13 @@ function MobileNavLink({ href, children, onClick }) {
 
 // ─── Header principal ─────────────────────────────────────────────────────────
 const NAV_LINKS = [
-  { href: '#mapa',      label: 'Mapa de estaciones' },
-  { href: '#resumen',   label: 'Resumen Huila' },
-  { href: '#politica',  label: 'Política pública' },
+  { href: '#mapa',      label: 'Mapa' },
+  { href: '#sobre',     label: 'Sobre' },
+  { href: '#resumen',   label: 'Resumen' },
+  { href: '#politica',  label: 'Política' },
   { href: '#biblioteca',label: 'Biblioteca' },
   { href: '#equipo',    label: 'Equipo' },
-  { href: '#datos',     label: 'Datos abiertos' },
+  { href: '#datos',     label: 'Datos' },
 ]
 
 export default function Header() {

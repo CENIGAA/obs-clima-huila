@@ -4,8 +4,10 @@ import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 import Hero   from './components/sections/Hero'
 import MapaEstaciones   from './components/sections/MapaEstaciones'
+import SobreObservatorio from './components/sections/SobreObservatorio'
 import ComoFunciona     from './components/sections/ComoFunciona'
 import Biblioteca       from './components/sections/Biblioteca'
+import Equipo           from './components/sections/Equipo'
 import DatosAbiertos    from './components/sections/DatosAbiertos'
 import Aliados          from './components/sections/Aliados'
 import HomenajeEfrain   from './components/sections/HomenajeEfrain'
@@ -126,6 +128,7 @@ function Home() {
       <main id="main-content">
         <Hero resumenData={resumen} />
         <MapaEstaciones />
+        <SobreObservatorio />
 
         <PlaceholderSection
           id="resumen"
@@ -142,12 +145,7 @@ function Home() {
         <ComoFunciona />
         <Biblioteca />
 
-        <PlaceholderSection
-          id="equipo"
-          title="Equipo"
-          description="Jorge I. Chavarro D. · Grupo Hidroinformática · GAA+IA Lab · CENIGAA"
-          icon="👥"
-        />
+        <Equipo />
         <DatosAbiertos />
 
         {/* Dedicatoria */}
