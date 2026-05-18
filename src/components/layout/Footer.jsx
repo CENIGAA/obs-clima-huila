@@ -120,9 +120,7 @@ export default function Footer() {
               <EcoLink href="https://obs-clima-huila.cenigaa.org">
                 Obs. Climático ← estás aquí
               </EcoLink>
-              <EcoLink href="https://obs-suelos-huila.cenigaa.org" external>
-                Obs. Suelos del Huila
-              </EcoLink>
+              {/* Obs. Suelos del Huila — oculto hasta que el subdominio exista */}
             </nav>
 
             <div className="pt-2">
