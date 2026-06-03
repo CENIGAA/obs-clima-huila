@@ -113,7 +113,7 @@ export default function PoliticaSection() {
           </h2>
           <p className="text-[15px] text-neutral-600 leading-relaxed">
             Recorrido por los <strong>{totalInstrumentos} instrumentos</strong>{' '}
-            que enmarcan la gestión climática aplicable al Huila — desde la
+            que enmarcan la gestión climática aplicable al Huila, desde la
             arquitectura global del régimen climático hasta los actos
             administrativos municipales. Cada tarjeta enlaza a la fuente oficial.
           </p>

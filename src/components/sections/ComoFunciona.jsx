@@ -16,7 +16,7 @@ const COMPONENTES = [
     icon: TrendingDown,
     titulo: 'Tendencia',
     explicacion:
-      '¿Está cambiando el clima? El test Mann-Kendall detecta si la lluvia o la temperatura llevan décadas aumentando o disminuyendo — con rigor estadístico.',
+      '¿Está cambiando el clima? El test Mann-Kendall detecta si la lluvia o la temperatura llevan décadas aumentando o disminuyendo, con rigor estadístico.',
     dato: '25 estaciones muestran tendencia decreciente en precipitación. 12 creciente.',
   },
   {
@@ -28,7 +28,7 @@ const COMPONENTES = [
   },
   {
     icon: CloudRain,
-    titulo: 'Fenómenos recurrentes — ENSO',
+    titulo: 'Fenómenos recurrentes - ENSO',
     explicacion:
       'El Niño seca el Huila. La Niña lo humedece. El análisis de correlación con 17 índices climáticos del Pacífico mide exactamente cuánto y con qué retraso.',
     dato: 'Correlación inversa con Niño3.4, MEI y OMI confirmada en la mayoría de estaciones.',
@@ -37,14 +37,14 @@ const COMPONENTES = [
     icon: History,
     titulo: 'Inercia climática',
     explicacion:
-      'El clima de hoy depende del clima de ayer. La autocorrelación mide esa dependencia temporal — clave para predecir períodos secos o lluviosos con semanas de anticipación.',
+      'El clima de hoy depende del clima de ayer. La autocorrelación mide esa dependencia temporal, clave para predecir períodos secos o lluviosos con semanas de anticipación.',
     dato: 'Dependencia temporal significativa en series de precipitación mensual en toda la cuenca alta del Magdalena.',
   },
   {
     icon: BarChart2,
     titulo: 'Distribuciones estadísticas',
     explicacion:
-      '¿Cuál es la lluvia máxima esperada en 100 años? El ajuste a 14 distribuciones estadísticas — Gumbel, Log-Gamma, Normal — permite estimar eventos extremos con base científica.',
+      '¿Cuál es la lluvia máxima esperada en 100 años? El ajuste a 14 distribuciones estadísticas (Gumbel, Log-Gamma, Normal) permite estimar eventos extremos con base científica.',
     dato: 'Precipitación mensual ajusta a Gumbel en la mayoría de estaciones. Anual a Log-Gamma.',
   },
 ]

@@ -12,6 +12,7 @@ import DatosAbiertos    from './components/sections/DatosAbiertos'
 import Aliados          from './components/sections/Aliados'
 import HomenajeEfrain   from './components/sections/HomenajeEfrain'
 import PoliticaSection  from './components/sections/PoliticaSection'
+import ResumenSection   from './components/sections/ResumenSection'
 import { useResumenDepartamento, useEstaciones } from './hooks/useDataLoader'
 
 // ─── Banner de verificación de datos (desarrollo) ────────────────────────────
@@ -59,41 +60,6 @@ function DataStatusBanner({ resumen, estaciones, error }) {
   )
 }
 
-// ─── Sección placeholder (sesiones 2-6) ─────────────────────────────────────
-function PlaceholderSection({ id, title, description, icon = '🗂' }) {
-  return (
-    <section
-      id={id}
-      className="py-20 border-t border-neutral-100"
-      aria-labelledby={`${id}-heading`}
-    >
-      <div className="container-main">
-        <div className="flex items-start gap-3 mb-4">
-          <span className="text-2xl" aria-hidden="true">{icon}</span>
-          <div>
-            <h2
-              id={`${id}-heading`}
-              className="text-2xl font-bold text-[#162341] tracking-tight"
-            >
-              {title}
-            </h2>
-            <p className="text-neutral-500 mt-1 text-[14px]">{description}</p>
-          </div>
-        </div>
-
-        <div className="mt-8 rounded-2xl border-2 border-dashed border-neutral-200 bg-neutral-50 p-12 text-center">
-          <p className="text-neutral-400 text-[13px] font-medium">
-            En construcción — próximas sesiones Claude Code
-          </p>
-          <p className="text-neutral-300 text-[12px] mt-1 font-mono">
-            {id} · obs-clima-huila.cenigaa.org
-          </p>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 // ─── Home ────────────────────────────────────────────────────────────────────
 function Home() {
   const { data: resumen,    error: errorResumen    } = useResumenDepartamento()
@@ -111,7 +77,7 @@ function Home() {
       if (estaciones) {
         const n = Array.isArray(estaciones) ? estaciones.length : 0
         console.log(
-          `%c[OCH] estaciones.json ✓ — ${n} estaciones`,
+          `%c[OCH] estaciones.json ✓ - ${n} estaciones`,
           'color: #4A60D8; font-weight: bold',
         )
       }
@@ -131,12 +97,7 @@ function Home() {
         <MapaEstaciones />
         <SobreObservatorio />
 
-        <PlaceholderSection
-          id="resumen"
-          title="Resumen Huila"
-          description="Hallazgos departamentales: patrones espaciales norte/sur, correlación ENSO"
-          icon="📊"
-        />
+        <ResumenSection />
         <PoliticaSection />
         <ComoFunciona />
         <Biblioteca />

@@ -183,7 +183,7 @@ export default function HomenajeEfrain() {
             <strong className="text-[#162341] font-semibold">PhD en Ciencias Técnicas</strong>{' '}
             (Hidrología, Recursos Hídricos e Hidroquímica) y{' '}
             <strong className="text-[#162341] font-semibold">Maestría en Ecología
-            Hidrometeorológica</strong> — Universidad Estatal Hidrometeorológica de Rusia.
+            Hidrometeorológica</strong> - Universidad Estatal Hidrometeorológica de Rusia.
           </Bullet>
           <Bullet>
             Ingeniero Hidrólogo e Investigador.
@@ -193,7 +193,7 @@ export default function HomenajeEfrain() {
               Director del Departamento de Ecología y Territorio
             </strong>
             , Facultad de Estudios Ambientales y Rurales, Pontificia Universidad
-            Javeriana — formó generaciones de profesionales y lideró redes
+            Javeriana - formó generaciones de profesionales y lideró redes
             científicas internacionales de cambio climático y biodiversidad.
           </Bullet>
         </ul>

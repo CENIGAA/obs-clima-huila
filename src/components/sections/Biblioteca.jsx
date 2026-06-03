@@ -25,7 +25,7 @@ const REFERENCIAS = [
   {
     año: 2021,
     autores: 'IPCC',
-    titulo: 'Sixth Assessment Report — Climate Change 2021: The Physical Science Basis',
+    titulo: 'Sixth Assessment Report - Climate Change 2021: The Physical Science Basis',
     fuente: 'Cambridge University Press',
   },
   {
@@ -38,7 +38,7 @@ const REFERENCIAS = [
   {
     año: 2014,
     autores: 'CAM',
-    titulo: 'Plan de Ordenación y Manejo de la Cuenca del Río Magdalena — Tramo Alto',
+    titulo: 'Plan de Ordenación y Manejo de la Cuenca del Río Magdalena - Tramo Alto',
     fuente: 'Neiva: CAM',
   },
 ]

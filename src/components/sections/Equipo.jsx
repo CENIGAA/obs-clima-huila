@@ -85,7 +85,7 @@ export default function Equipo() {
         </div>
 
         <div className="mt-8 grid gap-5 md:grid-cols-3 items-stretch">
-          {/* Director científico — destacado */}
+          {/* Director científico - destacado */}
           <CardBase destacado>
             <CardIcon icon={Users} destacado />
             <p className="text-[10.5px] font-mono uppercase tracking-[0.15em] text-[#4A60D8]">

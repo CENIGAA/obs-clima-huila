@@ -1,7 +1,7 @@
 /**
- * content.js — Textos y datos del Observatorio Climático del Huila
+ * content.js - Textos y datos del Observatorio Climático del Huila
  * Estructura bilingüe ES/EN preparada desde el inicio
- * (ver 03_CAPA_ESTATICA.md — sección 6: Multiidioma)
+ * (ver 03_CAPA_ESTATICA.md - sección 6: Multiidioma)
  *
  * Idioma activo: es-CO
  */
@@ -65,7 +65,7 @@ export const content = {
     ],
   },
 
-  // ── Inglés (preparado — contenido pendiente de traducción) ──────────────────
+  // ── Inglés (preparado - contenido pendiente de traducción) ──────────────────
   en: {
     meta: {
       title: 'Climate Observatory of Huila "Efraín Domínguez Calle" | CENIGAA',
@@ -125,7 +125,7 @@ export const content = {
   },
 }
 
-/** Idioma activo — cambiar a 'en' para habilitar inglés */
+/** Idioma activo - cambiar a 'en' para habilitar inglés */
 export const LANG = 'es'
 
 /** Shortcut para el contenido activo */

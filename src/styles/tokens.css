@@ -1,17 +1,17 @@
 /* ============================================================
-   CENIGAA DESIGN TOKENS — Observatorio Climático del Huila
+   CENIGAA DESIGN TOKENS - Observatorio Climático del Huila
    Colores oficiales SIC (Pantone certificados)
-   Versión: 1.1 — Mayo 2026
+   Versión: 1.1 - Mayo 2026
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-  /* ── Colores de marca — oficiales SIC ─────────────────────── */
-  --color-brand-blue:         #4A60D8;  /* Pantone 2726c — Azul institucional */
-  --color-brand-green:        #43B02A;  /* Pantone 361c  — Verde institucional */
-  --color-brand-orange:       #F4511E;  /* Pantone 171c  — Naranja acento */
-  --color-brand-navy:         #162341;  /* Pantone 282c  — Navy profundo */
+  /* ── Colores de marca - oficiales SIC ─────────────────────── */
+  --color-brand-blue:         #4A60D8;  /* Pantone 2726c - Azul institucional */
+  --color-brand-green:        #43B02A;  /* Pantone 361c  - Verde institucional */
+  --color-brand-orange:       #F4511E;  /* Pantone 171c  - Naranja acento */
+  --color-brand-navy:         #162341;  /* Pantone 282c  - Navy profundo */
 
   /* ── Variantes claras (10% saturación base) ──────────────── */
   --color-brand-blue-light:   #EEF1FB;
@@ -50,10 +50,10 @@
   --color-border:          var(--color-neutral-200);
   --color-border-strong:   var(--color-neutral-300);
 
-  /* ── Observatorio — colores funcionales de dato ──────────── */
-  --color-trend-up:      #3B82F6;   /* Tendencia creciente — azul */
-  --color-trend-down:    #EF4444;   /* Tendencia decreciente — rojo */
-  --color-trend-neutral: #94A3B8;   /* Sin tendencia — gris */
+  /* ── Observatorio - colores funcionales de dato ──────────── */
+  --color-trend-up:      #3B82F6;   /* Tendencia creciente - azul */
+  --color-trend-down:    #EF4444;   /* Tendencia decreciente - rojo */
+  --color-trend-neutral: #94A3B8;   /* Sin tendencia - gris */
   --color-quality-ex:    #43B02A;   /* Calidad EXCELENTE */
   --color-quality-good:  #4A60D8;   /* Calidad BUENA */
   --color-quality-reg:   #F4511E;   /* Calidad REGULAR */

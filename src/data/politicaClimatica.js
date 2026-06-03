@@ -5,7 +5,7 @@ export const politicaClimatica = [
     instrumentos: [
       {
         id: 'cmnucc',
-        nombre: 'CMNUCC — Convención Marco de las Naciones Unidas sobre el Cambio Climático',
+        nombre: 'CMNUCC - Convención Marco de las Naciones Unidas sobre el Cambio Climático',
         sigla: 'CMNUCC',
         ano: 1992,
         entidad: 'UNFCCC / Naciones Unidas',
@@ -27,7 +27,7 @@ export const politicaClimatica = [
       },
       {
         id: 'ods13',
-        nombre: 'ODS 13 — Acción por el Clima',
+        nombre: 'ODS 13 - Acción por el Clima',
         sigla: 'ODS 13',
         ano: 2015,
         entidad: 'Naciones Unidas',
@@ -44,7 +44,7 @@ export const politicaClimatica = [
     instrumentos: [
       {
         id: 'ley164',
-        nombre: 'Ley 164 de 1994 — Ratificación CMNUCC',
+        nombre: 'Ley 164 de 1994 - Ratificación CMNUCC',
         sigla: 'Ley 164/1994',
         ano: 1994,
         entidad: 'Congreso de Colombia',
@@ -77,7 +77,7 @@ export const politicaClimatica = [
       },
       {
         id: 'ley1931',
-        nombre: 'Ley 1931 de 2018 — Directrices para la Gestión del Cambio Climático',
+        nombre: 'Ley 1931 de 2018 - Directrices para la Gestión del Cambio Climático',
         sigla: 'Ley 1931/2018',
         ano: 2018,
         entidad: 'Congreso de Colombia',
@@ -88,7 +88,7 @@ export const politicaClimatica = [
       },
       {
         id: 'ndc2',
-        nombre: 'NDC 2.0 — Contribución Determinada a Nivel Nacional',
+        nombre: 'NDC 2.0 - Contribución Determinada a Nivel Nacional',
         sigla: 'NDC 2.0',
         ano: 2020,
         entidad: 'Ministerio de Ambiente y Desarrollo Sostenible',
@@ -99,7 +99,7 @@ export const politicaClimatica = [
       },
       {
         id: 'e2050',
-        nombre: 'Estrategia Climática de Largo Plazo — Colombia 2050',
+        nombre: 'Estrategia Climática de Largo Plazo - Colombia 2050',
         sigla: 'E2050',
         ano: 2021,
         entidad: 'Ministerio de Ambiente y Desarrollo Sostenible',
@@ -110,7 +110,7 @@ export const politicaClimatica = [
       },
       {
         id: 'ndc3',
-        nombre: 'NDC 3.0 — Transformaciones para la Vida',
+        nombre: 'NDC 3.0 - Transformaciones para la Vida',
         sigla: 'NDC 3.0',
         ano: 2025,
         entidad: 'Ministerio de Ambiente y Desarrollo Sostenible',
@@ -127,7 +127,7 @@ export const politicaClimatica = [
     instrumentos: [
       {
         id: 'huila2050',
-        nombre: 'Plan Integral de Gestión del Cambio Climático Territorial — Plan Huila 2050',
+        nombre: 'Plan Integral de Gestión del Cambio Climático Territorial - Plan Huila 2050',
         sigla: 'PIGCCT Huila 2050',
         ano: 2014,
         entidad: 'Gobernación del Huila / CAM',

@@ -1,5 +1,5 @@
 /* ============================================================
-   ESTILOS GLOBALES — Observatorio Climático del Huila
+   ESTILOS GLOBALES - Observatorio Climático del Huila
    ============================================================ */
 
 @import './tokens.css';
@@ -75,7 +75,7 @@
     text-decoration: none;
   }
 
-  /* Skip to content — accesibilidad */
+  /* Skip to content - accesibilidad */
   .skip-to-content {
     position: absolute;
     top: -100%;
@@ -208,5 +208,5 @@
    NOTA: Contenido actualmente en español (es-CO).
    Para habilitar EN: agregar clase [data-lang="en"] al <html>
    y sobrescribir variables de contenido en content.js.
-   Estructura preparada — ver src/data/content.js
+   Estructura preparada - ver src/data/content.js
 */

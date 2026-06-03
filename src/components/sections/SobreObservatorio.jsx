@@ -67,11 +67,11 @@ export default function SobreObservatorio() {
             </strong>
             , que financió la investigación CC_VCE Huila. CENIGAA sistematizó{' '}
             <strong className="text-[#162341] font-semibold">87 años</strong> de
-            registros climatológicos — desde la estación{' '}
+            registros climatológicos - desde la estación{' '}
             <strong className="text-[#162341] font-semibold">
               APTO BENITO SALAS en Neiva (1930)
             </strong>{' '}
-            hasta 2017 — en la base de datos CCYVCE_DB, aplicando la metodología
+            hasta 2017 - en la base de datos CCYVCE_DB, aplicando la metodología
             del{' '}
             <Link
               to="/efrain"

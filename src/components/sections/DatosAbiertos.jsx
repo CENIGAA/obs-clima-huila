@@ -46,7 +46,7 @@ export default function DatosAbiertos() {
         </div>
 
         <div className="mt-8 grid gap-5 lg:grid-cols-[1.4fr_1fr] items-stretch">
-          {/* Tarjeta principal — catálogo CSV */}
+          {/* Tarjeta principal - catálogo CSV */}
           <div className="rounded-2xl border-2 border-[#C5CEEF] bg-white p-6 sm:p-7 flex flex-col">
             <div className="flex items-start gap-3 mb-4">
               <span
@@ -99,7 +99,7 @@ export default function DatosAbiertos() {
             </p>
           </div>
 
-          {/* Tarjeta secundaria — datos por estación */}
+          {/* Tarjeta secundaria - datos por estación */}
           <div className="rounded-2xl border border-neutral-200 bg-white p-6 sm:p-7 flex flex-col">
             <span
               className="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-[#EEF1FB] text-[#4A60D8] shrink-0 mb-4"
@@ -134,7 +134,7 @@ export default function DatosAbiertos() {
           Domínguez Calle, E.A. et al. (2018).{' '}
           <em>Cambio climático y variabilidad climática extrema en el Huila</em>.
           Editorial Académica Española. ISBN 978-620-2-16957-8 · Base de datos
-          procesada por CENIGAA — Observatorio Climático del Huila (1930–2017).
+          procesada por CENIGAA, Observatorio Climático del Huila (1930–2017).
         </p>
       </div>
     </section>

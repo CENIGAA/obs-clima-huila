@@ -63,7 +63,7 @@ export default function Footer() {
       <div className="container-main py-12 lg:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
 
-          {/* Columna 1 — Identidad institucional */}
+          {/* Columna 1 - Identidad institucional */}
           <div className="lg:col-span-2 space-y-4">
             <a
               href="https://www.cenigaa.org"
@@ -84,7 +84,7 @@ export default function Footer() {
               <p className="text-[12.5px] text-neutral-500 leading-snug">
                 Este observatorio es el{' '}
                 <strong className="text-neutral-400 font-semibold">Nodo 1</strong>{' '}
-                de la Red de Observatorios GeoAgroAmbientales del Huila —{' '}
+                de la Red de Observatorios GeoAgroAmbientales del Huila -{' '}
                 <span className="font-semibold text-[#4A60D8]">ROGAA-Huila</span>
               </p>
             </div>
@@ -105,14 +105,14 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Columna 2 — Ecosistema CENIGAA */}
+          {/* Columna 2 - Ecosistema CENIGAA */}
           <div className="space-y-4">
             <h3 className="text-[11px] font-bold tracking-[0.1em] uppercase text-neutral-500">
               Ecosistema CENIGAA
             </h3>
             <nav aria-label="Ecosistema CENIGAA" className="flex flex-col gap-2.5">
               <EcoLink href="https://www.cenigaa.org" external>
-                www.cenigaa.org — Inicio
+                www.cenigaa.org - Inicio
               </EcoLink>
               <EcoLink href="https://gaaialab.cenigaa.org" external>
                 GAA+IA Lab
@@ -120,7 +120,7 @@ export default function Footer() {
               <EcoLink href="https://obs-clima-huila.cenigaa.org">
                 Obs. Climático ← estás aquí
               </EcoLink>
-              {/* Obs. Suelos del Huila — oculto hasta que el subdominio exista */}
+              {/* Obs. Suelos del Huila - oculto hasta que el subdominio exista */}
             </nav>
 
             <div className="pt-2">
@@ -146,7 +146,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Columna 3 — Recursos */}
+          {/* Columna 3 - Recursos */}
           <div className="space-y-4">
             <h3 className="text-[11px] font-bold tracking-[0.1em] uppercase text-neutral-500">
               Recursos
@@ -212,7 +212,7 @@ export default function Footer() {
         {/* ── Pie de footer ──────────────────────────────────── */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <p className="text-[12px] text-neutral-600">
-            © CENIGAA {year} — Todos los derechos reservados.{' '}
+            © CENIGAA {year} - Todos los derechos reservados.{' '}
             <a
               href="https://www.cenigaa.org"
               target="_blank"
@@ -245,7 +245,7 @@ export default function Footer() {
           >
             Efraín Antonio Domínguez Calle (1969–2021)
           </Link>
-          {' '}— Asesor Científico NRMACENIGAA, maestro de la hidrología colombiana.
+          , Asesor Científico NRMACENIGAA, maestro de la hidrología colombiana.
         </p>
       </div>
     </footer>

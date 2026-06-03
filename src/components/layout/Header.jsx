@@ -11,7 +11,7 @@ function CenigaaLogo({ className = '' }) {
       className={`inline-flex items-center gap-1.5 ${className}`}
       aria-label="CENIGAA"
     >
-      {/* Isotipo placeholder — 3 círculos alusivos a Geo·Agro·Ambiental */}
+      {/* Isotipo placeholder - 3 círculos alusivos a Geo·Agro·Ambiental */}
       <span className="flex items-center gap-0.5" aria-hidden="true">
         <span className="w-2.5 h-2.5 rounded-full bg-[#43B02A]" />
         <span className="w-2.5 h-2.5 rounded-full bg-[#4A60D8]" />
@@ -112,7 +112,7 @@ export default function Header() {
 
   return (
     <>
-      {/* Skip to content — accesibilidad */}
+      {/* Skip to content - accesibilidad */}
       <a href="#main-content" className="skip-to-content">
         Ir al contenido principal
       </a>
@@ -225,7 +225,7 @@ export default function Header() {
           </button>
         </div>
 
-        {/* ── Indicador ROGAA — barra de progreso decorativa ──── */}
+        {/* ── Indicador ROGAA - barra de progreso decorativa ──── */}
         <div
           className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#4A60D8] via-[#43B02A] to-[#F4511E]"
           aria-hidden="true"

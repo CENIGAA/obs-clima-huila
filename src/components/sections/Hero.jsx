@@ -56,14 +56,14 @@ export default function Hero({ resumenData }) {
 
       {/* ── Gradientes de profundidad ───────────────────────── */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        {/* Gradiente radial — azul brand */}
+        {/* Gradiente radial - azul brand */}
         <div
           className="absolute top-0 right-0 w-[600px] h-[600px] -translate-y-1/4 translate-x-1/4 rounded-full"
           style={{
             background: 'radial-gradient(circle, rgba(74,96,216,0.18) 0%, transparent 70%)',
           }}
         />
-        {/* Gradiente radial — verde */}
+        {/* Gradiente radial - verde */}
         <div
           className="absolute bottom-0 left-0 w-[500px] h-[500px] translate-y-1/4 -translate-x-1/4 rounded-full"
           style={{

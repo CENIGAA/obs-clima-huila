@@ -31,7 +31,7 @@ const ALIADOS = [
     nombre: 'IDEAM',
     rol: 'Fuente de datos primaria',
     descripcion:
-      'Instituto de Hidrología, Meteorología y Estudios Ambientales. Red de estaciones climatológicas del Huila — fuente primaria de los registros históricos del Observatorio.',
+      'Instituto de Hidrología, Meteorología y Estudios Ambientales. Red de estaciones climatológicas del Huila, fuente primaria de los registros históricos del Observatorio.',
     destacado: false,
   },
 ]
