@@ -5,9 +5,9 @@
 
 | Versión | Fecha | Branch | Último commit | Estado |
 |---|---|---|---|---|
-| v1.0.0 | 2026-05-18 | `main` | `7eb02e0` — *MVP complete - about, team sections, quality pass* | ✅ **Producción · MVP completo** |
+| v1.0.1 | 2026-06-03 | `main` | `4b95d1c` — *feat: seccion politica publica cambio climatico #politica* | ✅ **Producción · MVP + sección política** |
 
-> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-05-18 tras cerrar el ciclo de 5 sesiones de implementación. No contiene aspiraciones: sólo lo que está mergeado a `main`.
+> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-06-03 tras incorporar los assets P0 faltantes (favicon, og-image, apple-touch-icon) y la sección **#politica** con 12 instrumentos oficiales. No contiene aspiraciones: sólo lo que está mergeado a `main`.
 
 ---
 
@@ -61,6 +61,9 @@ cenigaa-obs-clima-huila/
 │   └── azure-static-web-apps-jolly-forest-0b932a410.yml
 ├── public/
 │   ├── staticwebapp.config.json
+│   ├── favicon.svg                        ← añadido en v1.0.1 (commit 5c40948)
+│   ├── apple-touch-icon.png               ← añadido en v1.0.1 (commit 5c40948)
+│   ├── og-image.jpg                       ← añadido en v1.0.1 (commit 5c40948)
 │   ├── assets/
 │   │   ├── Nevado tatacoa.jpg
 │   │   ├── efrain/                        (6 retratos: 1.jpg, 2.webp, 3.jpg, 4.jpg, .JPG, isologo.jpg)
@@ -77,7 +80,8 @@ cenigaa-obs-clima-huila/
     ├── hooks/
     │   └── useDataLoader.js               (useEstaciones, useEstacion, useResumenDepartamento)
     ├── data/
-    │   └── content.js                     (estructura ES/EN preparada — no activa)
+    │   ├── content.js                     (estructura ES/EN preparada — no activa)
+    │   └── politicaClimatica.js           ← v1.0.1 · 4 niveles, 12 instrumentos
     ├── styles/
     │   ├── tokens.css                     (tokens SIC)
     │   └── global.css                     (reset + @tailwind + utilidades)
@@ -94,6 +98,7 @@ cenigaa-obs-clima-huila/
         ├── Equipo.jsx
         ├── DatosAbiertos.jsx
         ├── Aliados.jsx
+        ├── PoliticaSection.jsx            ← v1.0.1 · #politica (Global/Nacional/Dpto/Mpio)
         └── HomenajeEfrain.jsx             (ruta /efrain)
 ```
 
@@ -149,7 +154,7 @@ cenigaa-obs-clima-huila/
 | 2 | **Mapa de estaciones** (con filtros Municipio / Tendencia / Estado + leyenda en vivo + panel 4 tabs) | `#mapa` | ✅ Implementada | Sesiones 2–3, filtros añadidos post-Sesión 5 |
 | 3 | **Sobre el Observatorio** (origen, ROGAA-Huila, ciencia abierta) | `#sobre` | ✅ Implementada | Sesión 5 cierre |
 | 4 | Resumen Huila | `#resumen` | ❌ **Placeholder** "En construcción" | — |
-| 5 | Marco de política pública | `#politica` | ❌ **Placeholder** "En construcción" | — |
+| 5 | **Política pública sobre cambio climático** (12 instrumentos en 4 niveles: Global / Nacional / Departamental / Municipal, tarjetas con enlaces a fuentes oficiales) | `#politica` | ✅ Implementada | v1.0.1 · commit `4b95d1c` |
 | 6 | **Cómo funciona el Observatorio** (6 cards componentes) | `#metodologia` | ✅ Implementada | Sesión 5 |
 | 7 | **Biblioteca climática del Huila** (6 referencias) | `#biblioteca` | ✅ Implementada | Sesión 5 |
 | 8 | **Equipo** (3 cards + memorial Efraín) | `#equipo` | ✅ Implementada | Sesión 5 cierre |
@@ -165,7 +170,7 @@ cenigaa-obs-clima-huila/
 
 ### Hub de navegación
 
-- **Header**: 7 anchors (`#mapa`, `#sobre`, `#resumen`, `#politica`, `#biblioteca`, `#equipo`, `#datos`) + CTA externo "Red ROGAA → www.cenigaa.org". Resuelve correctamente desde `/efrain` (los anchors se prefijan con `/` vía `useLocation`).
+- **Header**: 7 anchors (`#mapa`, `#sobre`, `#resumen`, `#politica` → label "Política pública", `#biblioteca`, `#equipo`, `#datos`) + CTA externo "Red ROGAA → www.cenigaa.org". Resuelve correctamente desde `/efrain` (los anchors se prefijan con `/` vía `useLocation`).
 - **Footer**: cuatro columnas — identidad + ecosistema CENIGAA + Recursos (incluye link `/efrain`) + redes ROGAA — más dedicatoria al pie con link cruzado a `/efrain`.
 
 ---
@@ -191,17 +196,17 @@ cenigaa-obs-clima-huila/
 - ✅ `WebSite` — name, description, publisher (`@id` cruzado a la organización), `inLanguage: es-CO`
 - ✅ `Dataset` — **añadido en Sesión 5**: 150 estaciones, `temporalCoverage: 1930-01-01/2017-12-31`, `spatialCoverage` con bounding box del Huila, `sourceOrganization: IDEAM`, `variableMeasured` (precipitación, MK, ENSO, distribuciones), `license: CC-BY 4.0`, `citation` APA al libro CC_VCE Huila
 
-### Pendientes SEO / activos faltantes
+### Activos SEO
 
-| Archivo / recurso | Estado | Impacto |
+| Archivo / recurso | Estado | Notas |
 |---|---|---|
-| `public/favicon.svg` | ❌ **Referenciado en `index.html` pero el archivo no existe** | 404 en pestaña |
-| `public/apple-touch-icon.png` | ❌ **Referenciado pero no existe** | 404 al guardar en iOS |
-| `public/og-image.jpg` | ❌ **Referenciado en og:image y twitter:image pero no existe** | Preview roto en redes sociales |
+| `public/favicon.svg` | ✅ Presente (v1.0.1 · commit `5c40948`) | 7 líneas SVG inline; favicon en pestaña |
+| `public/apple-touch-icon.png` | ✅ Presente (v1.0.1 · commit `5c40948`) | 5.1 KB · ícono para iOS home-screen |
+| `public/og-image.jpg` | ✅ Presente (v1.0.1 · commit `5c40948`) | 82.9 KB · preview en redes sociales |
 | `public/robots.txt` | ❌ No existe | Crawlers usan defaults |
 | `public/sitemap.xml` | ❌ No existe | Indexación menos guiada (Google igual lo encuentra) |
 
-> ⚠ **Acción recomendada antes de difusión externa**: generar y publicar `favicon.svg`, `apple-touch-icon.png` (192×192), `og-image.jpg` (1200×630) y `sitemap.xml` con rutas `/` y `/efrain`.
+> ✅ **P0 resuelto en v1.0.1**: los tres activos referenciados desde `index.html` ya existen, eliminando los 404s de favicon/og-image. Pendiente menor: `robots.txt` y `sitemap.xml` con rutas `/` y `/efrain`.
 
 ---
 
@@ -275,7 +280,7 @@ Todos con `target=_blank rel=noopener noreferrer`.
 
 ### Hub central observatorios
 
-🟡 No hay enlace a `observatorios.cenigaa.org` — el hub aún no existe (`CENIGAA_CONTEXT.md §3` lo marca "📋 Por crear"). El Footer enlaza a `obs-suelos-huila.cenigaa.org` aunque tampoco existe; tratarlo como pendiente sincronizado.
+🟡 No hay enlace a `observatorios.cenigaa.org` — el hub aún no existe (`CENIGAA_CONTEXT.md §3` lo marca "📋 Por crear"). El enlace a `obs-suelos-huila.cenigaa.org` fue **ocultado** del Footer en v1.0.1 (commit `5c40948`) para evitar 404s hasta que el subdominio se publique.
 
 ### Audit de enlaces externos
 
@@ -337,7 +342,7 @@ Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total 
 
 ### Estado general
 
-🟢 **MVP en producción.** 9 de las 11 secciones planeadas están implementadas con contenido final. Las dos restantes (`#resumen` y `#politica`) son placeholders explícitos "En construcción".
+🟢 **MVP + marco normativo en producción.** 10 de las 11 secciones planeadas están implementadas con contenido final. La única restante es `#resumen` (Hallazgos departamentales) — placeholder explícito "En construcción".
 
 ### Hallazgos de la auditoría (positivos)
 
@@ -348,14 +353,13 @@ Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total 
 - ✅ Code splitting agresivo — el chunk de Recharts (374 KB) no carga en la home
 - ✅ Pasada de calidad: alts descriptivos en todos los `<img>`, `rel=noopener` en todos los externos, attribution de Leaflet corregido
 - ✅ Filtros del mapa con conteo de leyenda derivado de la misma lista filtrada (imposible que se desincronicen)
+- ✅ **Sección política pública (v1.0.1)** — 12 instrumentos oficiales en 4 niveles con enlaces directos a UNFCCC, Función Pública, Minambiente, Gobernación del Huila y Alcaldía de Neiva; todos los anchors con `rel="noopener noreferrer"`
 
 ### Pendientes (priorizados)
 
 | Prio | Item | Notas |
 |---|---|---|
-| 🔴 P0 | Crear `public/favicon.svg`, `public/apple-touch-icon.png`, `public/og-image.jpg` | Referenciados en `index.html` pero archivos ausentes → 404s visibles |
-| 🟠 P1 | Implementar sección `#resumen` (Hallazgos departamentales: patrones norte/sur, ENSO) | Datos en `resumen_departamento.json` listos para visualizar |
-| 🟠 P1 | Implementar sección `#politica` (Plan Huila 2050 · Plan CC Neiva · PNACC · ODS 13) | Sólo placeholder; placeholder en nav |
+| 🟠 P1 | Implementar sección `#resumen` (Hallazgos departamentales: patrones norte/sur, ENSO) | Datos en `resumen_departamento.json` listos para visualizar; única sección aún en placeholder |
 | 🟡 P2 | Reemplazar `municipios_huila.geojson` por polígonos reales | El style polygon ya está cableado |
 | 🟡 P2 | Convertir imágenes JPG/PNG críticas a WebP | Brecha frente a §6 del CONTEXT |
 | 🟡 P2 | Sustituir `CenigaaLogo` placeholder por SVG oficial registrado SIC | TODO explícito en Header y Footer |
@@ -363,9 +367,15 @@ Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total 
 | 🟢 P3 | Correr Lighthouse y registrar baseline (objetivo ≥ 90 las 4 categorías) | Sin medición previa |
 | 🟢 P3 | Habilitar contenido EN cuando se traduzca (`src/data/content.js` ya tiene la estructura) | Sólo cambiar `LANG = 'en'` |
 
+### Cerrado en v1.0.1 (desde v1.0.0)
+
+- ✅ ~~P0 favicon · apple-touch-icon · og-image~~ — resueltos en commit `5c40948` (public/ y build/)
+- ✅ ~~P1 sección `#politica`~~ — implementada en commit `4b95d1c` con 12 instrumentos y enlaces oficiales
+- ✅ ~~Riesgo obs-suelos-huila enlazado~~ — ocultado en Footer en commit `5c40948`
+
 ### Riesgos operacionales
 
-- 🟡 **`obs-suelos-huila.cenigaa.org` ya está enlazado en el Footer pero el subdominio no existe aún** (CENIGAA_CONTEXT.md §3 / §5 lo marca futuro). Si Google lo crawlea desde aquí, registra 404. Sugerencia: ocultar el `EcoLink` o apuntarlo a `www.cenigaa.org/observatorios` hasta que se cree.
+- ✅ ~~`obs-suelos-huila.cenigaa.org` enlazado en el Footer~~ — **resuelto en v1.0.1**: el `EcoLink` quedó comentado en `Footer.jsx` hasta que el subdominio se publique.
 - 🟡 La estructura ES/EN en `src/data/content.js` **no está conectada** a los componentes — Hero, Header y Footer tienen los strings hardcoded. El comentario de `global.css` documenta cómo activar EN pero requiere refactor.
 - 🟢 `staticwebapp.config.json` usa `navigationFallback: /index.html` — correcto para SPA según la advertencia explícita de `CENIGAA_CONTEXT.md §2` ("Solo usar en SPAs").
 
@@ -373,7 +383,7 @@ Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total 
 
 Cualquier uso académico o institucional debe citar:
 > Domínguez Calle, E.A., Chavarro Díaz, J.A., Velasco Sánchez, A.N., Chavarro Díaz, J.I., De León Pérez, D.R., Garrido, A.E., Cañón Ramos, M.Á., & Parra Díaz, C.F. (2018). *Cambio Climático y Variabilidad Climática Extrema en el Huila: Herramientas para la Caracterización de la Amenaza Hidroclimática*. Editorial Académica Española. ISBN 978-620-2-16957-8.
-> + **CENIGAA (2026)** — Observatorio Climático del Huila «Efraín Domínguez Calle», procesamiento y publicación de los datos 1930–2017.
+> + **CENIGAA (2026)** — Observatorio Climático del Huila «Efraín Domínguez Calle», procesamiento y publicación de los datos 1930–2017. Última actualización del nodo: junio 2026.
 
 ---
 
@@ -381,12 +391,16 @@ Cualquier uso académico o institucional debe citar:
 
 | Versión | Fecha | Commit | Hito |
 |---|---|---|---|
+| **v1.0.1** | **2026-06-03** | `4b95d1c` | Cierre de P0 SEO (favicon + apple-touch-icon + og-image), ocultamiento del enlace prematuro a `obs-suelos-huila` e implementación de la sección **#politica** con 12 instrumentos oficiales en 4 niveles (Global / Nacional / Departamental / Municipal) y enlaces a fuentes del Estado colombiano y organismos internacionales. |
 | **v1.0.0** | **2026-05-18** | `7eb02e0` | Creación del documento. Estado del nodo tras cierre del MVP (Sesiones 1–5 + correcciones de período de datos, filtros del mapa, catálogo descargable, sección Sobre, sección Equipo y pasada de calidad). |
 
 ### Antecedentes (commits de referencia del repo)
 
 ```
-7eb02e0  feat: MVP complete - about, team sections, quality pass
+4b95d1c  feat: seccion politica publica cambio climatico #politica     ← v1.0.1
+5c40948  fix: assets P0 favicon+og-image, ocultar enlace obs-suelos    ← v1.0.1
+e64139d  docs: crear CENIGAA_STATUS_obs-clima-huila.md v1.0.0
+7eb02e0  feat: MVP complete - about, team sections, quality pass       ← v1.0.0
 ad63fd3  feat: open data section with downloadable station catalog
 8b571e0  feat: add real-time filters to station map
 b3a013d  fix: correct data period from 1923 to 1930, 87 years of records
@@ -400,6 +414,6 @@ ea54cef  fix: add postcss config so Tailwind directives compile
 
 ---
 
-*CENIGAA_STATUS_obs-clima-huila.md v1.0.0 — 2026-05-18*
+*CENIGAA_STATUS_obs-clima-huila.md v1.0.1 — 2026-06-03*
 *Auditor: agente Claude Code · Branch `main` · Repositorio `cenigaa-obs-clima-huila`*
-*Próxima revisión sugerida: al cerrar las secciones `#resumen` y `#politica`, o al publicar los activos SEO faltantes (favicon, og-image, sitemap).*
+*Próxima revisión sugerida: al cerrar la sección `#resumen`, al publicar `robots.txt` + `sitemap.xml`, o al sustituir el logo placeholder por el SVG oficial.*
