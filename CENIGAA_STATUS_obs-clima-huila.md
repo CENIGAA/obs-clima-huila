@@ -5,9 +5,9 @@
 
 | Versión | Fecha | Branch | Último commit | Estado |
 |---|---|---|---|---|
-| v1.0.1 | 2026-06-03 | `main` | `4b95d1c` — *feat: seccion politica publica cambio climatico #politica* | ✅ **Producción · MVP + sección política** |
+| v1.1.0 | 2026-06-03 | `main` | `77c135f` — *feat: seccion resumen hallazgos + fix em-dash en textos* | ✅ **Producción · MVP completo (11/11 secciones)** |
 
-> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-06-03 tras incorporar los assets P0 faltantes (favicon, og-image, apple-touch-icon) y la sección **#politica** con 12 instrumentos oficiales. No contiene aspiraciones: sólo lo que está mergeado a `main`.
+> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-06-03 tras cerrar la última sección pendiente (**#resumen**, hallazgos departamentales con gráfico Mann-Kendall) y aplicar una pasada de calidad tipográfica eliminando 56 em-dashes (U+2014) de los textos visibles del sitio. No contiene aspiraciones: sólo lo que está mergeado a `main`.
 
 ---
 
@@ -76,7 +76,7 @@ cenigaa-obs-clima-huila/
 │       └── estacion_*.json                          (150 archivos por estación)
 └── src/
     ├── main.jsx
-    ├── App.jsx                            ← BrowserRouter + Routes (/, /efrain)
+    ├── App.jsx                            ← BrowserRouter + Routes (/, /efrain) · PlaceholderSection removida en v1.1.0
     ├── hooks/
     │   └── useDataLoader.js               (useEstaciones, useEstacion, useResumenDepartamento)
     ├── data/
@@ -99,6 +99,7 @@ cenigaa-obs-clima-huila/
         ├── DatosAbiertos.jsx
         ├── Aliados.jsx
         ├── PoliticaSection.jsx            ← v1.0.1 · #politica (Global/Nacional/Dpto/Mpio)
+        ├── ResumenSection.jsx             ← v1.1.0 · #resumen (Hallazgos + BarChart)
         └── HomenajeEfrain.jsx             (ruta /efrain)
 ```
 
@@ -106,12 +107,14 @@ cenigaa-obs-clima-huila/
 
 | Chunk | Tamaño | Gzip | Contenido |
 |---|---:|---:|---|
-| `index-*.js` | 117 KB | 33.6 KB | App shell + router + secciones |
-| `map-*.js` | 289 KB | 88.5 KB | leaflet + react-leaflet |
-| `charts-*.js` | 374 KB | 110.3 KB | recharts (carga sólo al abrir el panel de estación) |
-| `icons-*.js` | 20 KB | 5.8 KB | lucide-react |
+| `index-*.js` | 130 KB | 37.4 KB | App shell + router + secciones |
+| `map-*.js` | 289 KB | 88.7 KB | leaflet + react-leaflet |
+| `charts-*.js` | 374 KB | 110.6 KB | recharts (a partir de v1.1.0 también carga en home por el `BarChart` de `#resumen`) |
+| `icons-*.js` | 21 KB | 6.0 KB | lucide-react |
 | `vendor-*.js` | 0.06 KB | 0.07 KB | react / react-dom (hoisted por Rollup a otros chunks) |
-| `index-*.css` | 52 KB | 14.1 KB | Tailwind compilado + Leaflet CSS + tokens |
+| `index-*.css` | 55 KB | 14.5 KB | Tailwind compilado + Leaflet CSS + tokens |
+
+> ⚠ **Regresión de rendimiento controlada en v1.1.0**: el chunk `charts-*.js` (374 KB) ya no es lazy en home. Antes sólo se descargaba al hacer click en una estación; ahora se descarga al cargar `/` porque `ResumenSection` renderiza un `BarChart` arriba del fold. Mitigaciones posibles a evaluar: (a) `React.lazy` del componente `BarChart` con suspense placeholder, (b) sustituir Recharts por un SVG estático en `#resumen` (3 barras, no necesita responsive complejo).
 
 ---
 
@@ -153,7 +156,7 @@ cenigaa-obs-clima-huila/
 | 1 | **Hero** | `#hero` | ✅ Implementada | Sesión 1 |
 | 2 | **Mapa de estaciones** (con filtros Municipio / Tendencia / Estado + leyenda en vivo + panel 4 tabs) | `#mapa` | ✅ Implementada | Sesiones 2–3, filtros añadidos post-Sesión 5 |
 | 3 | **Sobre el Observatorio** (origen, ROGAA-Huila, ciencia abierta) | `#sobre` | ✅ Implementada | Sesión 5 cierre |
-| 4 | Resumen Huila | `#resumen` | ❌ **Placeholder** "En construcción" | — |
+| 4 | **Qué nos dicen 87 años de registros** (3 métricas grandes 149/37/87, `BarChart` Mann-Kendall con distribución de tendencias, 4 tarjetas de hallazgos: sur decreciente, norte creciente, ENSO, bimodal estable, + nota metodológica) | `#resumen` | ✅ Implementada | v1.1.0 · commit `77c135f` |
 | 5 | **Política pública sobre cambio climático** (12 instrumentos en 4 niveles: Global / Nacional / Departamental / Municipal, tarjetas con enlaces a fuentes oficiales) | `#politica` | ✅ Implementada | v1.0.1 · commit `4b95d1c` |
 | 6 | **Cómo funciona el Observatorio** (6 cards componentes) | `#metodologia` | ✅ Implementada | Sesión 5 |
 | 7 | **Biblioteca climática del Huila** (6 referencias) | `#biblioteca` | ✅ Implementada | Sesión 5 |
@@ -214,7 +217,7 @@ cenigaa-obs-clima-huila/
 
 ### Estrategia de bundling (real)
 
-`vite.config.js` define `manualChunks` separando `leaflet`, `react-leaflet`, `recharts` y `lucide-react` en chunks dedicados. **Resultado**: la home **no carga `charts-*.js` (374 KB)** hasta que el usuario hace click en una estación → primer paint mucho más ligero.
+`vite.config.js` define `manualChunks` separando `leaflet`, `react-leaflet`, `recharts` y `lucide-react` en chunks dedicados. **A partir de v1.1.0** el chunk `charts-*.js` (374 KB) se carga también en home porque `ResumenSection` renderiza un `BarChart` arriba del fold. Antes este chunk era diferido al click en una estación. Mitigación pendiente (P1): hacer `React.lazy` del componente Recharts del resumen o sustituirlo por un SVG estático.
 
 ### Imágenes
 
@@ -342,7 +345,7 @@ Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total 
 
 ### Estado general
 
-🟢 **MVP + marco normativo en producción.** 10 de las 11 secciones planeadas están implementadas con contenido final. La única restante es `#resumen` (Hallazgos departamentales) — placeholder explícito "En construcción".
+🟢 **MVP completo en producción.** Las **11 secciones planeadas están implementadas** con contenido final (no quedan placeholders). La pasada de calidad tipográfica de v1.1.0 eliminó además todos los em-dashes visibles (U+2014) de los textos del sitio.
 
 ### Hallazgos de la auditoría (positivos)
 
@@ -354,18 +357,27 @@ Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total 
 - ✅ Pasada de calidad: alts descriptivos en todos los `<img>`, `rel=noopener` en todos los externos, attribution de Leaflet corregido
 - ✅ Filtros del mapa con conteo de leyenda derivado de la misma lista filtrada (imposible que se desincronicen)
 - ✅ **Sección política pública (v1.0.1)** — 12 instrumentos oficiales en 4 niveles con enlaces directos a UNFCCC, Función Pública, Minambiente, Gobernación del Huila y Alcaldía de Neiva; todos los anchors con `rel="noopener noreferrer"`
+- ✅ **Sección resumen hallazgos (v1.1.0)** — visualización Mann-Kendall (25 / 112 / 12) con `BarChart` Recharts + 4 hallazgos narrativos + bloque metodológico Theil-Sen / Gumbel / Log-Gamma + cita ISBN
+- ✅ **Pasada tipográfica v1.1.0** — 56 em-dashes (U+2014) eliminados de 16 archivos según contexto (` - ` separador, `,` aposición, `(...)` inciso con lista); se mantuvieron 10 `'—'` en `PanelEstacion.jsx` por ser placeholder técnico de dato nulo
+- ✅ **Limpieza de código muerto** — función `PlaceholderSection` eliminada de `App.jsx` (33 líneas) al integrar las dos últimas secciones reales
 
 ### Pendientes (priorizados)
 
 | Prio | Item | Notas |
 |---|---|---|
-| 🟠 P1 | Implementar sección `#resumen` (Hallazgos departamentales: patrones norte/sur, ENSO) | Datos en `resumen_departamento.json` listos para visualizar; única sección aún en placeholder |
+| 🟠 P1 | **Mitigar regresión de carga de `charts-*.js` (374 KB) en home** | `ResumenSection` rompe el code-splitting que tenía Recharts; opciones: `React.lazy` del `BarChart` con suspense, o sustituir por SVG estático (3 barras no necesitan responsive complejo) |
 | 🟡 P2 | Reemplazar `municipios_huila.geojson` por polígonos reales | El style polygon ya está cableado |
 | 🟡 P2 | Convertir imágenes JPG/PNG críticas a WebP | Brecha frente a §6 del CONTEXT |
 | 🟡 P2 | Sustituir `CenigaaLogo` placeholder por SVG oficial registrado SIC | TODO explícito en Header y Footer |
 | 🟢 P3 | Publicar `robots.txt` y `sitemap.xml` (`/`, `/efrain`) | Mejora indexación, no crítico |
-| 🟢 P3 | Correr Lighthouse y registrar baseline (objetivo ≥ 90 las 4 categorías) | Sin medición previa |
+| 🟢 P3 | Correr Lighthouse y registrar baseline (objetivo ≥ 90 las 4 categorías) | Sin medición previa; especialmente relevante tras la regresión de Recharts |
 | 🟢 P3 | Habilitar contenido EN cuando se traduzca (`src/data/content.js` ya tiene la estructura) | Sólo cambiar `LANG = 'en'` |
+
+### Cerrado en v1.1.0 (desde v1.0.1)
+
+- ✅ ~~P1 sección `#resumen`~~ — implementada en commit `77c135f` con métricas, `BarChart` Mann-Kendall y 4 hallazgos
+- ✅ ~~Em-dashes visibles en textos del sitio~~ — pasada tipográfica de 56 reemplazos en 16 archivos (sólo se mantuvieron los 10 placeholders técnicos de `PanelEstacion.jsx`)
+- ✅ ~~Código muerto `PlaceholderSection` en App.jsx~~ — eliminado al cerrar las dos últimas secciones reales
 
 ### Cerrado en v1.0.1 (desde v1.0.0)
 
@@ -391,12 +403,15 @@ Cualquier uso académico o institucional debe citar:
 
 | Versión | Fecha | Commit | Hito |
 |---|---|---|---|
+| **v1.1.0** | **2026-06-03** | `77c135f` | **MVP completo (11/11 secciones).** Cierre de la última sección pendiente `#resumen` (Hallazgos: 3 métricas grandes, `BarChart` Mann-Kendall, 4 tarjetas de hallazgos y nota metodológica con cita ISBN) + pasada tipográfica eliminando 56 em-dashes visibles + eliminación del componente muerto `PlaceholderSection`. Regresión controlada: `charts-*.js` deja de ser lazy en home. |
 | **v1.0.1** | **2026-06-03** | `4b95d1c` | Cierre de P0 SEO (favicon + apple-touch-icon + og-image), ocultamiento del enlace prematuro a `obs-suelos-huila` e implementación de la sección **#politica** con 12 instrumentos oficiales en 4 niveles (Global / Nacional / Departamental / Municipal) y enlaces a fuentes del Estado colombiano y organismos internacionales. |
 | **v1.0.0** | **2026-05-18** | `7eb02e0` | Creación del documento. Estado del nodo tras cierre del MVP (Sesiones 1–5 + correcciones de período de datos, filtros del mapa, catálogo descargable, sección Sobre, sección Equipo y pasada de calidad). |
 
 ### Antecedentes (commits de referencia del repo)
 
 ```
+77c135f  feat: seccion resumen hallazgos + fix em-dash en textos       ← v1.1.0
+cac0be6  docs: actualizar CENIGAA_STATUS a v1.0.1                      ← v1.1.0 (meta)
 4b95d1c  feat: seccion politica publica cambio climatico #politica     ← v1.0.1
 5c40948  fix: assets P0 favicon+og-image, ocultar enlace obs-suelos    ← v1.0.1
 e64139d  docs: crear CENIGAA_STATUS_obs-clima-huila.md v1.0.0
@@ -414,6 +429,6 @@ ea54cef  fix: add postcss config so Tailwind directives compile
 
 ---
 
-*CENIGAA_STATUS_obs-clima-huila.md v1.0.1 — 2026-06-03*
+*CENIGAA_STATUS_obs-clima-huila.md v1.1.0 — 2026-06-03*
 *Auditor: agente Claude Code · Branch `main` · Repositorio `cenigaa-obs-clima-huila`*
-*Próxima revisión sugerida: al cerrar la sección `#resumen`, al publicar `robots.txt` + `sitemap.xml`, o al sustituir el logo placeholder por el SVG oficial.*
+*Próxima revisión sugerida: al mitigar la regresión de carga de `charts-*.js` en home (P1), al publicar `robots.txt` + `sitemap.xml`, o al sustituir el logo placeholder por el SVG oficial registrado SIC.*
