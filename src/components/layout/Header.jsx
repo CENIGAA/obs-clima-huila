@@ -68,7 +68,7 @@ const NAV_LINKS = [
   { href: '#mapa',      label: 'Mapa' },
   { href: '#sobre',     label: 'Sobre' },
   { href: '#resumen',   label: 'Resumen' },
-  { href: '#politica',  label: 'Política' },
+  { href: '#politica',  label: 'Política pública' },
   { href: '#biblioteca',label: 'Biblioteca' },
   { href: '#equipo',    label: 'Equipo' },
   { href: '#datos',     label: 'Datos' },

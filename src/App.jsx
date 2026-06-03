@@ -11,6 +11,7 @@ import Equipo           from './components/sections/Equipo'
 import DatosAbiertos    from './components/sections/DatosAbiertos'
 import Aliados          from './components/sections/Aliados'
 import HomenajeEfrain   from './components/sections/HomenajeEfrain'
+import PoliticaSection  from './components/sections/PoliticaSection'
 import { useResumenDepartamento, useEstaciones } from './hooks/useDataLoader'
 
 // ─── Banner de verificación de datos (desarrollo) ────────────────────────────
@@ -136,12 +137,7 @@ function Home() {
           description="Hallazgos departamentales: patrones espaciales norte/sur, correlación ENSO"
           icon="📊"
         />
-        <PlaceholderSection
-          id="politica"
-          title="Marco de política pública"
-          description="Plan Huila 2050 · Plan CC Neiva · PNACC · ODS 13 · Horizonte Europa"
-          icon="🏛"
-        />
+        <PoliticaSection />
         <ComoFunciona />
         <Biblioteca />
 
