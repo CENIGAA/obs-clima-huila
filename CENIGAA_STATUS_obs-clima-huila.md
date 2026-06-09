@@ -5,9 +5,15 @@
 
 | Versión | Fecha | Branch | Último commit | Estado |
 |---|---|---|---|---|
+<<<<<<< HEAD
 | v1.1.0 | 2026-06-03 | `main` | `77c135f` — *feat: seccion resumen hallazgos + fix em-dash en textos* | ✅ **Producción · MVP completo (11/11 secciones)** |
 
 > Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-06-03 tras cerrar la última sección pendiente (**#resumen**, hallazgos departamentales con gráfico Mann-Kendall) y aplicar una pasada de calidad tipográfica eliminando 56 em-dashes (U+2014) de los textos visibles del sitio. No contiene aspiraciones: sólo lo que está mergeado a `main`.
+=======
+| v1.0.1 | 2026-05-18 | `main` | `5c40948` — *fix: assets P0 favicon+og-image, ocultar enlace obs-suelos* | ✅ **Producción · MVP completo · Assets P0 resueltos** |
+
+> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-05-18. v1.0.1 cierra los tres P0 detectados por v1.0.0 (favicon, apple-touch-icon, og-image) y oculta el enlace al subdominio `obs-suelos-huila` mientras no exista. Sin cambios funcionales en el código de la app.
+>>>>>>> e09de38 (logos cenigaa)
 
 ---
 
@@ -201,6 +207,7 @@ cenigaa-obs-clima-huila/
 
 ### Activos SEO
 
+<<<<<<< HEAD
 | Archivo / recurso | Estado | Notas |
 |---|---|---|
 | `public/favicon.svg` | ✅ Presente (v1.0.1 · commit `5c40948`) | 7 líneas SVG inline; favicon en pestaña |
@@ -210,6 +217,17 @@ cenigaa-obs-clima-huila/
 | `public/sitemap.xml` | ❌ No existe | Indexación menos guiada (Google igual lo encuentra) |
 
 > ✅ **P0 resuelto en v1.0.1**: los tres activos referenciados desde `index.html` ya existen, eliminando los 404s de favicon/og-image. Pendiente menor: `robots.txt` y `sitemap.xml` con rutas `/` y `/efrain`.
+=======
+| Archivo / recurso | Estado | Detalle |
+|---|---|---|
+| `public/favicon.svg` | ✅ **Generado en v1.0.1** | 364 B · viewBox 32×32 · isotipo CENIGAA (3 círculos brand sobre navy) |
+| `public/apple-touch-icon.png` | ✅ **Generado en v1.0.1** | 180×180 · 5 KB · rasterizado vía `sips` desde SVG fuente |
+| `public/og-image.jpg` | ✅ **Generado en v1.0.1** | 1200×630 · 83 KB · navy con isotipo, wordmark, "Observatorio Climático del Huila", subtítulo "150 estaciones · 87 años · 1930–2017", pill "RED ROGAA · NODO 1", dedicatoria Efraín, URL en mono |
+| `public/robots.txt` | ❌ No existe | Crawlers usan defaults — sin bloqueos |
+| `public/sitemap.xml` | ❌ No existe | Indexación menos guiada (Google igual descubre `/` y `/efrain`) |
+
+> ⚠ **Cache de previews sociales**: Twitter, LinkedIn, Facebook y WhatsApp cachean los previews con TTL largo. Si la URL ya fue compartida antes del fix, puede requerir purge manual vía [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) o [Twitter Card Validator](https://cards-dev.twitter.com/validator) para que tomen la imagen nueva.
+>>>>>>> e09de38 (logos cenigaa)
 
 ---
 
@@ -283,7 +301,13 @@ Todos con `target=_blank rel=noopener noreferrer`.
 
 ### Hub central observatorios
 
+<<<<<<< HEAD
 🟡 No hay enlace a `observatorios.cenigaa.org` — el hub aún no existe (`CENIGAA_CONTEXT.md §3` lo marca "📋 Por crear"). El enlace a `obs-suelos-huila.cenigaa.org` fue **ocultado** del Footer en v1.0.1 (commit `5c40948`) para evitar 404s hasta que el subdominio se publique.
+=======
+🟡 No hay enlace a `observatorios.cenigaa.org` — el hub aún no existe (`CENIGAA_CONTEXT.md §3` lo marca "📋 Por crear").
+
+✅ **Resuelto en v1.0.1**: el `<EcoLink>` a `obs-suelos-huila.cenigaa.org` quedó comentado en [Footer.jsx](src/components/layout/Footer.jsx) con nota inline (`{/* Obs. Suelos del Huila — oculto hasta que el subdominio exista */}`). Cuando el subdominio entre en producción se descomenta.
+>>>>>>> e09de38 (logos cenigaa)
 
 ### Audit de enlaces externos
 
@@ -365,13 +389,20 @@ Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total 
 
 | Prio | Item | Notas |
 |---|---|---|
+<<<<<<< HEAD
 | 🟠 P1 | **Mitigar regresión de carga de `charts-*.js` (374 KB) en home** | `ResumenSection` rompe el code-splitting que tenía Recharts; opciones: `React.lazy` del `BarChart` con suspense, o sustituir por SVG estático (3 barras no necesitan responsive complejo) |
+=======
+| ~~🔴 P0~~ | ~~Crear `public/favicon.svg`, `public/apple-touch-icon.png`, `public/og-image.jpg`~~ | ✅ **Resuelto en v1.0.1** (commit `5c40948`) |
+| 🟠 P1 | Implementar sección `#resumen` (Hallazgos departamentales: patrones norte/sur, ENSO) | Datos en `resumen_departamento.json` listos para visualizar |
+| 🟠 P1 | Implementar sección `#politica` (Plan Huila 2050 · Plan CC Neiva · PNACC · ODS 13) | Sólo placeholder; placeholder en nav |
+>>>>>>> e09de38 (logos cenigaa)
 | 🟡 P2 | Reemplazar `municipios_huila.geojson` por polígonos reales | El style polygon ya está cableado |
 | 🟡 P2 | Convertir imágenes JPG/PNG críticas a WebP | Brecha frente a §6 del CONTEXT |
 | 🟡 P2 | Sustituir `CenigaaLogo` placeholder por SVG oficial registrado SIC | TODO explícito en Header y Footer |
 | 🟢 P3 | Publicar `robots.txt` y `sitemap.xml` (`/`, `/efrain`) | Mejora indexación, no crítico |
 | 🟢 P3 | Correr Lighthouse y registrar baseline (objetivo ≥ 90 las 4 categorías) | Sin medición previa; especialmente relevante tras la regresión de Recharts |
 | 🟢 P3 | Habilitar contenido EN cuando se traduzca (`src/data/content.js` ya tiene la estructura) | Sólo cambiar `LANG = 'en'` |
+| 🟢 P3 | Trackear `CENIGAA_CONTEXT.md` en git | Archivo obligatorio según CONTEXT §2; actualmente untracked en la raíz |
 
 ### Cerrado en v1.1.0 (desde v1.0.1)
 
@@ -387,7 +418,11 @@ Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total 
 
 ### Riesgos operacionales
 
+<<<<<<< HEAD
 - ✅ ~~`obs-suelos-huila.cenigaa.org` enlazado en el Footer~~ — **resuelto en v1.0.1**: el `EcoLink` quedó comentado en `Footer.jsx` hasta que el subdominio se publique.
+=======
+- ~~🟡 `obs-suelos-huila.cenigaa.org` enlazado en Footer sin existir el subdominio~~ → ✅ **Resuelto en v1.0.1** (EcoLink comentado en [Footer.jsx](src/components/layout/Footer.jsx))
+>>>>>>> e09de38 (logos cenigaa)
 - 🟡 La estructura ES/EN en `src/data/content.js` **no está conectada** a los componentes — Hero, Header y Footer tienen los strings hardcoded. El comentario de `global.css` documenta cómo activar EN pero requiere refactor.
 - 🟢 `staticwebapp.config.json` usa `navigationFallback: /index.html` — correcto para SPA según la advertencia explícita de `CENIGAA_CONTEXT.md §2` ("Solo usar en SPAs").
 
@@ -403,19 +438,30 @@ Cualquier uso académico o institucional debe citar:
 
 | Versión | Fecha | Commit | Hito |
 |---|---|---|---|
+<<<<<<< HEAD
 | **v1.1.0** | **2026-06-03** | `77c135f` | **MVP completo (11/11 secciones).** Cierre de la última sección pendiente `#resumen` (Hallazgos: 3 métricas grandes, `BarChart` Mann-Kendall, 4 tarjetas de hallazgos y nota metodológica con cita ISBN) + pasada tipográfica eliminando 56 em-dashes visibles + eliminación del componente muerto `PlaceholderSection`. Regresión controlada: `charts-*.js` deja de ser lazy en home. |
 | **v1.0.1** | **2026-06-03** | `4b95d1c` | Cierre de P0 SEO (favicon + apple-touch-icon + og-image), ocultamiento del enlace prematuro a `obs-suelos-huila` e implementación de la sección **#politica** con 12 instrumentos oficiales en 4 niveles (Global / Nacional / Departamental / Municipal) y enlaces a fuentes del Estado colombiano y organismos internacionales. |
 | **v1.0.0** | **2026-05-18** | `7eb02e0` | Creación del documento. Estado del nodo tras cierre del MVP (Sesiones 1–5 + correcciones de período de datos, filtros del mapa, catálogo descargable, sección Sobre, sección Equipo y pasada de calidad). |
+=======
+| **v1.0.1** | **2026-05-18** | `5c40948` | Generación de los 3 activos SEO ausentes (favicon.svg 32×32, apple-touch-icon.png 180×180, og-image.jpg 1200×630) vía SVG + sips. Footer: `EcoLink` a `obs-suelos-huila.cenigaa.org` comentado hasta que el subdominio exista. Sin cambios funcionales en el código de la app. |
+| v1.0.0 | 2026-05-18 | `7eb02e0` | Creación del documento. Estado del nodo tras cierre del MVP (Sesiones 1–5 + correcciones de período de datos, filtros del mapa, catálogo descargable, sección Sobre, sección Equipo y pasada de calidad). |
+>>>>>>> e09de38 (logos cenigaa)
 
 ### Antecedentes (commits de referencia del repo)
 
 ```
+<<<<<<< HEAD
 77c135f  feat: seccion resumen hallazgos + fix em-dash en textos       ← v1.1.0
 cac0be6  docs: actualizar CENIGAA_STATUS a v1.0.1                      ← v1.1.0 (meta)
 4b95d1c  feat: seccion politica publica cambio climatico #politica     ← v1.0.1
 5c40948  fix: assets P0 favicon+og-image, ocultar enlace obs-suelos    ← v1.0.1
 e64139d  docs: crear CENIGAA_STATUS_obs-clima-huila.md v1.0.0
 7eb02e0  feat: MVP complete - about, team sections, quality pass       ← v1.0.0
+=======
+5c40948  fix: assets P0 favicon+og-image, ocultar enlace obs-suelos
+e64139d  docs: crear CENIGAA_STATUS_obs-clima-huila.md v1.0.0
+7eb02e0  feat: MVP complete - about, team sections, quality pass
+>>>>>>> e09de38 (logos cenigaa)
 ad63fd3  feat: open data section with downloadable station catalog
 8b571e0  feat: add real-time filters to station map
 b3a013d  fix: correct data period from 1923 to 1930, 87 years of records
@@ -429,6 +475,12 @@ ea54cef  fix: add postcss config so Tailwind directives compile
 
 ---
 
+<<<<<<< HEAD
 *CENIGAA_STATUS_obs-clima-huila.md v1.1.0 — 2026-06-03*
 *Auditor: agente Claude Code · Branch `main` · Repositorio `cenigaa-obs-clima-huila`*
 *Próxima revisión sugerida: al mitigar la regresión de carga de `charts-*.js` en home (P1), al publicar `robots.txt` + `sitemap.xml`, o al sustituir el logo placeholder por el SVG oficial registrado SIC.*
+=======
+*CENIGAA_STATUS_obs-clima-huila.md v1.0.1 — 2026-05-18*
+*Auditor: agente Claude Code · Branch `main` · Repositorio `cenigaa-obs-clima-huila`*
+*Próxima revisión sugerida: al cerrar las secciones `#resumen` y `#politica`, o al publicar `robots.txt` / `sitemap.xml` y correr la primera medición Lighthouse.*
+>>>>>>> e09de38 (logos cenigaa)
