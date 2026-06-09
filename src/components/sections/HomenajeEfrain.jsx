@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import { ArrowLeft, BookOpen, GraduationCap, Mountain, Scale } from 'lucide-react'
 
-const HERO_BG = "/assets/Nevado%20tatacoa.jpg"
-const FOTO_EFRAIN = "/assets/efrain/Efrain-dominguez1.jpg"
+const HERO_BG = "/assets/Nevado%20tatacoa.webp"
+const FOTO_EFRAIN = "/assets/efrain/Efrain-dominguez1.webp"
 
 function VolverButton() {
   return (

@@ -2,28 +2,14 @@ import { useState, useEffect, useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Menu, X, Cloud, ChevronRight, ExternalLink } from 'lucide-react'
 
-// ─── Logo CENIGAA (SVG inline hasta tener archivo SVG oficial) ───────────────
-// TODO: Reemplazar con <img src="/assets/images/logo/cenigaa-logo-color.svg" />
-//       cuando el logo SVG esté disponible en el repositorio.
+// ─── Logo CENIGAA (oficial SIC) ──────────────────────────────────────────────
 function CenigaaLogo({ className = '' }) {
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 ${className}`}
-      aria-label="CENIGAA"
-    >
-      {/* Isotipo placeholder - 3 círculos alusivos a Geo·Agro·Ambiental */}
-      <span className="flex items-center gap-0.5" aria-hidden="true">
-        <span className="w-2.5 h-2.5 rounded-full bg-[#43B02A]" />
-        <span className="w-2.5 h-2.5 rounded-full bg-[#4A60D8]" />
-        <span className="w-2.5 h-2.5 rounded-full bg-[#F4511E] opacity-80" />
-      </span>
-      <span
-        className="font-extrabold text-[17px] tracking-[-0.02em] text-[#162341]"
-        style={{ fontFamily: 'Inter, sans-serif' }}
-      >
-        CENIGAA
-      </span>
-    </span>
+    <img
+      src="/assets/logos/CENIGAA.svg"
+      alt="CENIGAA"
+      className={`h-8 w-auto ${className}`}
+    />
   )
 }
 

@@ -1,13 +1,7 @@
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-} from 'recharts'
+import { lazy, Suspense } from 'react'
 import { TrendingDown, TrendingUp, Minus, Activity } from 'lucide-react'
+
+const LazyBarChart = lazy(() => import('./LazyBarChart'))
 
 const tendencias = [
   { nombre: 'Decreciente',   valor: 25,  color: '#F4511E' },
@@ -51,18 +45,6 @@ const metricas = [
   { valor: '37',   label: 'con tendencia significativa' },
   { valor: '87',   label: 'años de registro' },
 ]
-
-function TooltipTendencia({ active, payload }) {
-  if (!active || !payload || !payload.length) return null
-  const { nombre, valor } = payload[0].payload
-  return (
-    <div className="rounded-md bg-[#162341] text-white px-3 py-1.5 text-[12px] shadow-lg">
-      <span className="font-semibold">{nombre}:</span>{' '}
-      <span className="font-mono">{valor}</span>{' '}
-      <span className="text-neutral-300">estaciones</span>
-    </div>
-  )
-}
 
 export default function ResumenSection() {
   return (
@@ -117,33 +99,13 @@ export default function ResumenSection() {
             </span>
           </div>
 
-          <ResponsiveContainer width="100%" height={220}>
-            <BarChart
-              data={tendencias}
-              margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
-            >
-              <XAxis
-                dataKey="nombre"
-                tick={{ fontSize: 12, fill: '#475569' }}
-                axisLine={{ stroke: '#cbd5e1' }}
-                tickLine={false}
-              />
-              <YAxis
-                tick={{ fontSize: 12, fill: '#94a3b8' }}
-                axisLine={false}
-                tickLine={false}
-              />
-              <Tooltip
-                cursor={{ fill: 'rgba(22,35,65,0.04)' }}
-                content={<TooltipTendencia />}
-              />
-              <Bar dataKey="valor" radius={[6, 6, 0, 0]}>
-                {tendencias.map((entry) => (
-                  <Cell key={entry.nombre} fill={entry.color} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+          <Suspense
+            fallback={
+              <div className="h-56 bg-gray-100 rounded-lg animate-pulse" />
+            }
+          >
+            <LazyBarChart data={tendencias} />
+          </Suspense>
         </div>
 
         {/* Hallazgos */}

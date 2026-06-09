@@ -1,20 +1,14 @@
 import { Link } from 'react-router-dom'
 import { Mail, MapPin, ExternalLink, Github, Cloud } from 'lucide-react'
 
-// ─── Logo CENIGAA en el footer ────────────────────────────────────────────────
+// ─── Logo CENIGAA en el footer (oficial SIC, versión blanca para fondo navy) ──
 function CenigaaLogoFooter() {
   return (
-    <div className="flex items-center gap-2">
-      {/* Isotipo placeholder */}
-      <div className="flex items-center gap-0.5" aria-hidden="true">
-        <span className="w-3 h-3 rounded-full bg-[#43B02A]" />
-        <span className="w-3 h-3 rounded-full bg-[#4A60D8]" />
-        <span className="w-3 h-3 rounded-full bg-[#F4511E] opacity-80" />
-      </div>
-      <span className="font-extrabold text-xl tracking-[-0.02em] text-white">
-        CENIGAA
-      </span>
-    </div>
+    <img
+      src="/assets/logos/logo_cenigaa_T_Blanco.png"
+      alt="CENIGAA"
+      className="h-8 w-auto"
+    />
   )
 }
 
