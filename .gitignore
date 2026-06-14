@@ -146,3 +146,12 @@ vite.config.ts.timestamp-*
 # Claude Code local settings
 .claude/
 .DS_Store
+
+# Fase 2 — datos locales, no van al sitio web
+data/
+*.pdf
+*.db
+*.sqlite
+outputs/
+__pycache__/
+.ipynb_checkpoints/
