@@ -191,8 +191,8 @@ export default function Hero({ resumenData }) {
           className="fade-up flex flex-col sm:flex-row gap-3 mt-10"
           style={{ animationDelay: '480ms' }}
         >
-          <a
-            href="#mapa"
+          <Link
+            to="/mapa"
             className="
               inline-flex items-center justify-center gap-2
               bg-[#4A60D8] hover:bg-[#3A50C8]
@@ -205,9 +205,9 @@ export default function Hero({ resumenData }) {
           >
             <MapPin size={15} aria-hidden="true" />
             Explorar mapa de estaciones
-          </a>
-          <a
-            href="#datos"
+          </Link>
+          <Link
+            to="/datos"
             className="
               inline-flex items-center justify-center gap-2
               bg-white/8 hover:bg-white/12
@@ -219,7 +219,7 @@ export default function Hero({ resumenData }) {
           >
             <Database size={15} aria-hidden="true" />
             Descargar datos
-          </a>
+          </Link>
         </div>
 
         {/* Indicador de periodo de datos */}

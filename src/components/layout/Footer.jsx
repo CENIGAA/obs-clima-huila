@@ -13,18 +13,28 @@ function CenigaaLogoFooter() {
 }
 
 // ─── Link de ecosistema ───────────────────────────────────────────────────────
-function EcoLink({ href, children, external = false }) {
+// `to`     → ruta interna (react-router Link, sin reload)
+// `href`   → URL externa (anchor con target/rel cuando external=true)
+function EcoLink({ to, href, children, external = false }) {
+  const className = `
+    flex items-center gap-1.5
+    text-[13px] text-neutral-400
+    hover:text-white transition-colors duration-200
+    group
+  `
+  if (to) {
+    return (
+      <Link to={to} className={className}>
+        {children}
+      </Link>
+    )
+  }
   return (
     <a
       href={href}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
-      className="
-        flex items-center gap-1.5
-        text-[13px] text-neutral-400
-        hover:text-white transition-colors duration-200
-        group
-      "
+      className={className}
     >
       {children}
       {external && (
@@ -111,7 +121,7 @@ export default function Footer() {
               <EcoLink href="https://gaaialab.cenigaa.org" external>
                 GAA+IA Lab
               </EcoLink>
-              <EcoLink href="https://obs-clima-huila.cenigaa.org">
+              <EcoLink to="/">
                 Obs. Climático ← estás aquí
               </EcoLink>
               {/* Obs. Suelos del Huila - oculto hasta que el subdominio exista */}
@@ -146,13 +156,13 @@ export default function Footer() {
               Recursos
             </h3>
             <nav aria-label="Recursos del observatorio" className="flex flex-col gap-2.5">
-              <EcoLink href="#datos">
+              <EcoLink to="/datos">
                 Datos abiertos (CSV / JSON)
               </EcoLink>
-              <EcoLink href="#biblioteca">
+              <EcoLink to="/biblioteca">
                 Biblioteca climática
               </EcoLink>
-              <EcoLink href="#mapa">
+              <EcoLink to="/mapa">
                 Explorador de estaciones
               </EcoLink>
               <EcoLink

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { useLocation } from 'react-router-dom'
+import { NavLink as RouterNavLink, Link } from 'react-router-dom'
 import { Menu, X, Cloud, ChevronRight, ExternalLink } from 'lucide-react'
 
 // ─── Logo CENIGAA (oficial SIC) ──────────────────────────────────────────────
@@ -13,73 +13,72 @@ function CenigaaLogo({ className = '' }) {
   )
 }
 
-// ─── Ítem de navegación ───────────────────────────────────────────────────────
-function NavLink({ href, children, onClick }) {
+// ─── Item nav desktop — usa NavLink de react-router para estado activo ──────
+function NavItem({ to, children, onClick }) {
   return (
-    <a
-      href={href}
+    <RouterNavLink
+      to={to}
+      end={to === '/'}
       onClick={onClick}
-      className="
-        relative text-[13.5px] font-medium text-neutral-600
-        hover:text-[#4A60D8] transition-colors duration-200
-        after:absolute after:bottom-[-2px] after:left-0 after:w-0 after:h-[2px]
+      className={({ isActive }) => `
+        relative text-[13.5px] font-medium
+        ${isActive ? 'text-[#4A60D8]' : 'text-neutral-600 hover:text-[#4A60D8]'}
+        transition-colors duration-200
+        after:absolute after:bottom-[-2px] after:left-0 after:h-[2px]
         after:bg-[#4A60D8] after:rounded-full after:transition-all after:duration-200
-        hover:after:w-full
-      "
+        ${isActive ? 'after:w-full' : 'after:w-0 hover:after:w-full'}
+      `}
     >
       {children}
-    </a>
+    </RouterNavLink>
   )
 }
 
-// ─── Ítem de nav móvil ────────────────────────────────────────────────────────
-function MobileNavLink({ href, children, onClick }) {
+// ─── Item nav móvil ─────────────────────────────────────────────────────────
+function MobileNavItem({ to, children, onClick }) {
   return (
-    <a
-      href={href}
+    <RouterNavLink
+      to={to}
+      end={to === '/'}
       onClick={onClick}
-      className="
-        flex items-center py-3 px-4 text-[15px] font-medium text-neutral-700
-        hover:text-[#4A60D8] hover:bg-[#EEF1FB] rounded-lg
+      className={({ isActive }) => `
+        flex items-center py-3 px-4 text-[15px] font-medium rounded-lg
         transition-colors duration-150
-      "
+        ${isActive
+          ? 'text-[#4A60D8] bg-[#EEF1FB]'
+          : 'text-neutral-700 hover:text-[#4A60D8] hover:bg-[#EEF1FB]'
+        }
+      `}
     >
       {children}
-    </a>
+    </RouterNavLink>
   )
 }
 
-// ─── Header principal ─────────────────────────────────────────────────────────
+// ─── Items del menú: una ruta por entrada ───────────────────────────────────
 const NAV_LINKS = [
-  { href: '#mapa',      label: 'Mapa' },
-  { href: '#sobre',     label: 'Sobre' },
-  { href: '#resumen',   label: 'Resumen' },
-  { href: '#politica',  label: 'Política pública' },
-  { href: '#biblioteca',label: 'Biblioteca' },
-  { href: '#equipo',    label: 'Equipo' },
-  { href: '#datos',     label: 'Datos' },
+  { to: '/',           label: 'Inicio' },
+  { to: '/mapa',       label: 'Mapa' },
+  { to: '/sobre',      label: 'Sobre' },
+  { to: '/resumen',    label: 'Resumen' },
+  { to: '/politica',   label: 'Política pública' },
+  { to: '/biblioteca', label: 'Biblioteca' },
+  { to: '/equipo',     label: 'Equipo' },
+  { to: '/datos',      label: 'Datos' },
 ]
 
 export default function Header() {
-  const [menuOpen,    setMenuOpen]    = useState(false)
-  const [scrolled,    setScrolled]    = useState(false)
-  const [activeSection, setActiveSection] = useState('')
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
-  // Si no estamos en la home, las anclas (#mapa, #resumen, …) deben
-  // resolverse contra "/" para que la navegación funcione desde otras rutas.
-  const { pathname } = useLocation()
-  const onHome = pathname === '/'
-  const resolveHref = (href) =>
-    href.startsWith('#') && !onHome ? `/${href}` : href
-
-  // Detectar scroll para cambiar estilo del header
+  // Estilo del header en scroll
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 16)
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Cerrar menú al resize
+  // Cerrar menú al pasar a desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) setMenuOpen(false)
@@ -88,7 +87,7 @@ export default function Header() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Bloquear scroll del body cuando el menú móvil está abierto
+  // Bloquear scroll cuando el menú móvil está abierto
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -119,7 +118,7 @@ export default function Header() {
 
           {/* ── Identidad: Logo + breadcrumb + nombre nodo ──────── */}
           <div className="flex flex-col min-w-0">
-            {/* Breadcrumb */}
+            {/* Breadcrumb CENIGAA externo */}
             <div className="flex items-center gap-1 mb-0.5">
               <a
                 href="https://www.cenigaa.org"
@@ -130,7 +129,7 @@ export default function Header() {
                   text-[11px] font-semibold tracking-[0.08em] uppercase
                   text-neutral-400 hover:text-[#4A60D8] transition-colors duration-200
                 "
-                aria-label="Volver al sitio principal de CENIGAA"
+                aria-label="Ir al sitio principal de CENIGAA"
               >
                 <CenigaaLogo className="scale-75 origin-left" />
               </a>
@@ -140,35 +139,44 @@ export default function Header() {
               </span>
             </div>
 
-            {/* Nombre del nodo */}
-            <div className="flex items-center gap-2 min-w-0">
-              <Cloud size={16} className="text-[#4A60D8] flex-shrink-0" aria-hidden="true" />
+            {/* Nombre del nodo → Link a / */}
+            <Link
+              to="/"
+              className="flex items-center gap-2 min-w-0 group"
+              aria-label="Ir al inicio del Observatorio Climático del Huila"
+            >
+              <Cloud
+                size={16}
+                className="text-[#4A60D8] flex-shrink-0 group-hover:scale-110 transition-transform"
+                aria-hidden="true"
+              />
               <div className="min-w-0">
                 <span className="
-                  text-[14px] sm:text-[15px] font-bold tracking-[-0.01em] text-[#162341]
+                  text-[14px] sm:text-[15px] font-bold tracking-[-0.01em]
+                  text-[#162341] group-hover:text-[#4A60D8] transition-colors
                   truncate block leading-tight
-                " aria-current="page">
+                ">
                   Observatorio Climático del Huila
                 </span>
                 <span className="text-[11px] text-neutral-400 font-normal hidden sm:block leading-none mt-0.5">
                   Efraín Domínguez Calle · CENIGAA
                 </span>
               </div>
-            </div>
+            </Link>
           </div>
 
           {/* ── Navegación desktop ─────────────────────────────── */}
           <nav
-            className="hidden lg:flex items-center gap-6"
+            className="hidden lg:flex items-center gap-5 xl:gap-6"
             aria-label="Navegación principal"
           >
             {NAV_LINKS.map(link => (
-              <NavLink key={link.href} href={resolveHref(link.href)}>
+              <NavItem key={link.to} to={link.to}>
                 {link.label}
-              </NavLink>
+              </NavItem>
             ))}
 
-            {/* CTA: Red ROGAA */}
+            {/* CTA: Red ROGAA externo */}
             <a
               href="https://www.cenigaa.org"
               target="_blank"
@@ -248,9 +256,9 @@ export default function Header() {
       >
         <div className="container-main py-3">
           {NAV_LINKS.map(link => (
-            <MobileNavLink key={link.href} href={resolveHref(link.href)} onClick={closeMenu}>
+            <MobileNavItem key={link.to} to={link.to} onClick={closeMenu}>
               {link.label}
-            </MobileNavLink>
+            </MobileNavItem>
           ))}
 
           {/* Separador */}

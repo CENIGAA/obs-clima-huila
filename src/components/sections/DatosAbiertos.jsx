@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Download, MapPin, Database, FileSpreadsheet } from 'lucide-react'
 
 const CATALOGO_URL = '/data/catalogo_estaciones_CENIGAA.csv'
@@ -115,12 +116,12 @@ export default function DatosAbiertos() {
             </h3>
             <p className="text-[13px] text-neutral-600 leading-relaxed flex-1">
               Para descargar datos por estación, haz click en cualquier punto del{' '}
-              <a
-                href="#mapa"
+              <Link
+                to="/mapa"
                 className="font-medium text-[#4A60D8] hover:text-[#162341] underline underline-offset-2"
               >
                 mapa
-              </a>
+              </Link>
               {' '}→ pestaña <strong className="text-[#162341] font-semibold">Datos</strong>.
             </p>
             <p className="mt-4 text-[11.5px] text-neutral-400">
