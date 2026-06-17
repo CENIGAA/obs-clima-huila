@@ -2,17 +2,6 @@ import { useState, useEffect, useCallback } from 'react'
 import { NavLink as RouterNavLink, Link } from 'react-router-dom'
 import { Menu, X, Cloud, ChevronRight, ExternalLink } from 'lucide-react'
 
-// ─── Logo CENIGAA (oficial SIC) ──────────────────────────────────────────────
-function CenigaaLogo({ className = '' }) {
-  return (
-    <img
-      src="/assets/logos/CENIGAA.svg"
-      alt="CENIGAA"
-      className={`h-8 w-auto ${className}`}
-    />
-  )
-}
-
 // ─── Item nav desktop — usa NavLink de react-router para estado activo ──────
 function NavItem({ to, children, onClick }) {
   return (
@@ -125,13 +114,12 @@ export default function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-                  flex items-center gap-1
-                  text-[11px] font-semibold tracking-[0.08em] uppercase
-                  text-neutral-400 hover:text-[#4A60D8] transition-colors duration-200
+                  text-[11px] font-extrabold tracking-[0.08em] uppercase
+                  text-neutral-500 hover:text-[#4A60D8] transition-colors duration-200
                 "
                 aria-label="Ir al sitio principal de CENIGAA"
               >
-                <CenigaaLogo className="scale-75 origin-left" />
+                CENIGAA
               </a>
               <ChevronRight size={10} className="text-neutral-300 flex-shrink-0" />
               <span className="text-[11px] font-semibold tracking-[0.06em] uppercase text-neutral-400 truncate hidden sm:block">
