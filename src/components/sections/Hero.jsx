@@ -256,13 +256,21 @@ export default function Hero({ resumenData }) {
                   bg-[#0f1830]
                 "
               >
-                <img
-                  src="/assets/Portada_Plan_Huila2050.png"
-                  alt="Portada del Plan de Cambio Climático Huila 2050 — Gobernación del Huila y CAM"
-                  className="w-full h-full object-cover"
-                  loading="eager"
-                  fetchpriority="high"
-                />
+                <picture>
+                  <source
+                    srcSet="/assets/Portada_Plan_Huila2050.webp"
+                    type="image/webp"
+                  />
+                  <img
+                    src="/assets/Portada_Plan_Huila2050.png"
+                    alt="Portada del Plan de Cambio Climático Huila 2050 — Gobernación del Huila y CAM"
+                    width={1394}
+                    height={1760}
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                    fetchpriority="high"
+                  />
+                </picture>
                 {/* Glow brand-blue de profundidad */}
                 <div
                   className="absolute -inset-px rounded-2xl pointer-events-none"
