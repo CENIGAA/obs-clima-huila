@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   AlertTriangle, Clock, Construction, ExternalLink, MapPin,
-  Waves, Activity, Target, RefreshCw,
+  Waves, Activity, Target, RefreshCw, Globe2,
 } from 'lucide-react'
 
 const ENSO_URL = '/data/enso-estado.json'
@@ -402,6 +402,325 @@ function BloqueGeovisores({ geovisores }) {
   )
 }
 
+// ─── Bloque Nacional · Escala Colombia (entre Geovisores e Histórico) ──────
+const NIVEL_IMPACTO_BADGE = {
+  alto:     'bg-[#FEF0EC] text-[#F4511E] border-[#FAC4B4]',
+  moderado: 'bg-orange-50  text-orange-700 border-orange-200',
+  bajo:     'bg-[#EBF7E7]  text-[#43B02A] border-[#B8E4AB]',
+}
+
+const NIVEL_IMPACTO_FILL = {
+  alto:     { color: '#F4511E', op: 0.85 },
+  moderado: { color: '#F4A261', op: 0.85 },
+  bajo:     { color: '#43B02A', op: 0.75 },
+}
+
+// Paths SVG conceptuales de las 5 regiones hidrológicas (viewBox 400×600).
+// Aproximación didáctica, no cartográfica. Coordenadas según briefing.
+const REGIONES_SVG = [
+  {
+    key: 'caribe',
+    label: 'Caribe',
+    d: 'M 60 20 L 340 20 L 340 80 L 280 100 L 200 90 L 140 110 L 60 80 Z',
+    nivel: 'alto',
+    text: { x: 200, y: 60, fill: 'white' },
+  },
+  {
+    key: 'pacifica',
+    label: 'Pacífica',
+    d: 'M 30 90 L 100 90 L 80 200 L 60 300 L 30 350 L 20 250 L 20 150 Z',
+    nivel: 'moderado',
+    text: { x: 55, y: 220, fill: '#162341' },
+  },
+  {
+    key: 'andina',
+    label: 'Andina',
+    d: 'M 100 90 L 280 100 L 300 200 L 260 320 L 200 380 L 160 340 L 120 260 L 80 200 Z',
+    nivel: 'alto',
+    text: { x: 190, y: 200, fill: 'white' },
+  },
+  {
+    key: 'orinoquia',
+    label: 'Orinoquía',
+    d: 'M 280 100 L 380 80 L 390 300 L 300 320 L 260 320 L 300 200 Z',
+    nivel: 'bajo',
+    text: { x: 330, y: 210, fill: 'white' },
+  },
+  {
+    key: 'amazonia',
+    label: 'Amazonía',
+    d: 'M 160 340 L 200 380 L 260 320 L 300 320 L 390 300 L 380 500 L 280 560 L 180 520 L 100 440 L 120 360 Z',
+    nivel: 'bajo',
+    text: { x: 260, y: 430, fill: 'white' },
+  },
+]
+
+function MapaColombiaConceptual() {
+  return (
+    <svg
+      viewBox="0 0 400 600"
+      xmlns="http://www.w3.org/2000/svg"
+      className="w-full max-w-xs mx-auto block"
+      role="img"
+      aria-label="Mapa conceptual de impactos El Niño 2026 por región hidrológica de Colombia. El Huila marcado en azul CENIGAA dentro de la región Andina."
+    >
+      {REGIONES_SVG.map((r) => {
+        const fill = NIVEL_IMPACTO_FILL[r.nivel]
+        const nivelTexto =
+          r.nivel === 'alto' ? 'Impacto alto'
+          : r.nivel === 'moderado' ? 'Impacto moderado'
+          : 'Impacto bajo'
+        return (
+          <g key={r.key}>
+            <path
+              d={r.d}
+              fill={fill.color}
+              fillOpacity={fill.op}
+              stroke="white"
+              strokeWidth="1.5"
+            >
+              <title>
+                Región {r.label}: {nivelTexto}
+                {r.key === 'andina' ? '. Incluye el Huila.' : ''}
+              </title>
+            </path>
+            <text
+              x={r.text.x}
+              y={r.text.y}
+              textAnchor="middle"
+              fill={r.text.fill}
+              fontSize={r.label.length > 7 ? 10 : 11}
+              fontWeight="600"
+              style={{ pointerEvents: 'none' }}
+            >
+              {r.label}
+            </text>
+          </g>
+        )
+      })}
+
+      {/* Pin del Huila en la región Andina (cabecera del Magdalena) */}
+      <g>
+        <circle cx="180" cy="285" r="12" fill="#4A60D8" fillOpacity="0.25" />
+        <circle cx="180" cy="285" r="7" fill="#4A60D8" />
+        <text
+          x="180"
+          y="308"
+          textAnchor="middle"
+          fill="#162341"
+          fontSize="10"
+          fontWeight="700"
+        >
+          Huila
+        </text>
+        <title>Departamento del Huila, cabecera del río Magdalena</title>
+      </g>
+
+      {/* Leyenda */}
+      <g>
+        <rect x="30" y="560" width="14" height="14" fill="#F4511E" rx="2" />
+        <text x="50" y="572" fill="#162341" fontSize="9">Alto</text>
+        <rect x="100" y="560" width="14" height="14" fill="#F4A261" rx="2" />
+        <text x="120" y="572" fill="#162341" fontSize="9">Moderado</text>
+        <rect x="195" y="560" width="14" height="14" fill="#43B02A" rx="2" />
+        <text x="215" y="572" fill="#162341" fontSize="9">Bajo</text>
+      </g>
+    </svg>
+  )
+}
+
+function BloqueEscalaNacional({ nacional }) {
+  if (!nacional) return null
+
+  const alerta = nacional.alerta_ideam
+  const regiones = nacional.impacto_por_region ?? []
+  const huila = nacional.huila_en_contexto
+
+  return (
+    <section
+      id="escala-nacional"
+      className="py-16 lg:py-20 bg-[#F8F9FA]"
+      aria-labelledby="escala-nacional-heading"
+    >
+      <div className="container-main">
+        {/* Encabezado de sección */}
+        <div className="flex items-start gap-3 mb-10 max-w-3xl">
+          <span
+            className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#EBF7E7] text-[#43B02A] shrink-0"
+            aria-hidden="true"
+          >
+            <Globe2 size={18} />
+          </span>
+          <div>
+            <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#43B02A] mb-1">
+              Escala nacional
+            </p>
+            <h2
+              id="escala-nacional-heading"
+              className="text-2xl sm:text-[28px] font-bold text-[#162341] tracking-tight"
+            >
+              El Niño 2026 en Colombia
+            </h2>
+            <p className="text-[14px] text-neutral-600 mt-2 leading-relaxed">
+              El forzamiento global del Pacífico ecuatorial llega con intensidad
+              diferenciada según la región hidrológica. El Huila, en la cabecera
+              del Magdalena, ocupa una de las posiciones de mayor exposición del país.
+            </p>
+          </div>
+        </div>
+
+        {/* N1 · Tarjeta de alerta IDEAM */}
+        <div className="rounded-2xl bg-[#162341] text-white p-6 mb-12 flex flex-col lg:flex-row lg:items-center gap-5 shadow-xl">
+          <div className="shrink-0">
+            <span className="inline-flex items-center gap-2 bg-[#F4511E] text-white text-[11px] font-bold px-3 py-1.5 rounded-full uppercase tracking-[0.12em]">
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse inline-block" aria-hidden="true" />
+              Alerta activa IDEAM
+            </span>
+          </div>
+          <div className="flex-1">
+            <p className="text-[13.5px] sm:text-[14.5px] leading-relaxed">
+              {alerta.texto}
+            </p>
+          </div>
+          <div className="shrink-0 grid grid-cols-2 gap-5 lg:text-right">
+            <div>
+              <p className="text-[10.5px] text-neutral-400 uppercase tracking-[0.12em]">
+                Persistencia
+              </p>
+              <p className="text-2xl font-extrabold text-[#43B02A] tabular-nums">
+                {alerta.probabilidad_persistencia}%
+              </p>
+            </div>
+            <div>
+              <p className="text-[10.5px] text-neutral-400 uppercase tracking-[0.12em]">
+                Muy fuerte
+              </p>
+              <p className="text-2xl font-extrabold text-[#F4511E] tabular-nums">
+                {alerta.probabilidad_intensidad_muy_fuerte}%
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* N2 · Mapa + tabla de regiones */}
+        <div className="mb-12">
+          <h3 className="text-[17px] font-bold text-[#162341] leading-tight mb-6">
+            Impactos esperados por región hidrológica
+          </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
+            <div className="w-full">
+              <MapaColombiaConceptual />
+              <p className="text-[11.5px] text-neutral-500 text-center mt-3 leading-snug">
+                Mapa conceptual. Regiones hidrológicas IDEAM Colombia.
+                Huila marcado en azul CENIGAA (#4A60D8).
+              </p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-[13px] text-left">
+                <thead>
+                  <tr className="border-b-2 border-[#162341]">
+                    <th className="pb-2 pr-3 text-[10.5px] font-bold text-[#162341] uppercase tracking-[0.1em]">
+                      Región
+                    </th>
+                    <th className="pb-2 pr-3 text-[10.5px] font-bold text-[#162341] uppercase tracking-[0.1em]">
+                      Impacto
+                    </th>
+                    <th className="pb-2 text-[10.5px] font-bold text-[#162341] uppercase tracking-[0.1em]">
+                      Descripción
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {regiones.map((r) => (
+                    <tr
+                      key={r.region}
+                      className={`border-b border-neutral-100 ${r.huila_incluido ? 'bg-[#EEF1FB]' : ''}`}
+                    >
+                      <td className="py-3 pr-3 font-semibold text-[#162341] whitespace-nowrap align-top">
+                        {r.region}
+                        {r.huila_incluido && (
+                          <span className="ml-2 inline-block text-[10px] bg-[#4A60D8] text-white px-1.5 py-0.5 rounded font-semibold align-middle">
+                            Huila
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-3 pr-3 align-top">
+                        <span
+                          className={`inline-block text-[10.5px] font-semibold px-2 py-0.5 rounded-full border ${NIVEL_IMPACTO_BADGE[r.nivel_impacto] ?? NIVEL_IMPACTO_BADGE.bajo}`}
+                        >
+                          {r.nivel_impacto.charAt(0).toUpperCase() + r.nivel_impacto.slice(1)}
+                        </span>
+                      </td>
+                      <td className="py-3 text-neutral-600 leading-snug align-top">
+                        {r.descripcion}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        {/* N3 · Cuenca alta del Magdalena */}
+        <div className="rounded-2xl bg-white border border-neutral-200 p-6 mb-12">
+          <h3 className="text-[17px] font-bold text-[#162341] leading-tight mb-4">
+            La cuenca alta del Magdalena bajo El Niño
+          </h3>
+          <p className="text-[14px] text-neutral-700 leading-relaxed mb-4">
+            {huila.posicion}. {huila.descripcion}
+          </p>
+          <p className="text-[14px] text-neutral-700 leading-relaxed mb-5">
+            {huila.vulnerabilidad_diferenciada}
+          </p>
+          <div className="rounded-r-lg border-l-4 border-[#4A60D8] bg-[#EEF1FB] py-3 px-4">
+            <p className="text-[12.5px] font-semibold text-[#162341] mb-1">
+              Señal en campo. Semana del 16 de junio de 2026
+            </p>
+            <p className="text-[13px] text-neutral-700 leading-snug">
+              {huila.señal_actual}
+            </p>
+          </div>
+          <p className="text-[11.5px] text-neutral-500 mt-4 leading-snug">
+            La correlación entre El Niño y la precipitación histórica del Huila
+            se documenta en la sección siguiente con datos de la serie CC_VCE
+            (1930-2017, 87 años de registros propios de CENIGAA).
+          </p>
+        </div>
+
+        {/* N4 · Sectores en alerta */}
+        <div>
+          <h3 className="text-[17px] font-bold text-[#162341] leading-tight mb-5">
+            Sectores en seguimiento. Huila
+          </h3>
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {huila.sectores_alerta.map((sector, idx) => (
+              <li
+                key={idx}
+                className="flex items-start gap-2.5 text-[13.5px] text-neutral-700 leading-snug bg-white rounded-lg border border-neutral-200 px-4 py-3"
+              >
+                <span
+                  className="mt-1 shrink-0 inline-flex items-center justify-center w-4 h-4 rounded-full bg-[#F4511E]"
+                  aria-hidden="true"
+                >
+                  <span className="block w-1.5 h-1.5 rounded-full bg-white" />
+                </span>
+                <span>{sector}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="text-[11.5px] text-neutral-500 mt-6 leading-relaxed">
+            Fuente: IDEAM Colombia, comunicado oficial 11 de junio de 2026.
+            Corporación Autónoma Regional del Alto Magdalena.
+            Diario del Huila, informe sectorial junio 2026.
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 // ─── Bloque 5 · Correlación histórica Huila ─────────────────────────────────
 function BloqueHistoricoHuila() {
   return (
@@ -646,6 +965,7 @@ export default function Enso() {
       <BloqueLineaTiempo items={data.linea_tiempo} />
       <BloqueIndicadores indicadores={data.indicadores} meta={data._meta} />
       <BloqueGeovisores geovisores={data.geovisores} />
+      <BloqueEscalaNacional nacional={data.escala_nacional} />
       <BloqueHistoricoHuila />
       <BloqueSeguimientoLocal />
       <BloqueCreditos meta={data._meta} />

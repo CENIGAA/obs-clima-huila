@@ -135,5 +135,67 @@
       "tipo": "Pronóstico probabilístico científico",
       "logo_texto": "IRI"
     }
-  ]
+  ],
+  "escala_nacional": {
+    "_meta": {
+      "fuente": "IDEAM Colombia — Comunicado oficial 11 junio 2026",
+      "url_fuente": "https://www.ideam.gov.co/sala-de-prensa/noticia/ideam-indica-que-las-condiciones-tipo-el-nino-ya-se-encuentran-presentes",
+      "fecha_confirmacion_ideam": "2026-06-11",
+      "ultima_actualizacion": "2026-06-17"
+    },
+    "alerta_ideam": {
+      "estado": "ACTIVA",
+      "texto": "El Niño confirmado en Colombia. Condiciones presentes en el océano Pacífico ecuatorial desde el 11 de junio de 2026, tres meses antes de lo previsto.",
+      "intensidad_proyectada": "muy fuerte",
+      "probabilidad_persistencia": 96,
+      "probabilidad_intensidad_muy_fuerte": 63,
+      "periodo_critico": "noviembre 2026 — enero 2027",
+      "referencia_historica": "Posible evento entre los más intensos desde 1950"
+    },
+    "impacto_por_region": [
+      {
+        "region": "Andina",
+        "nivel_impacto": "alto",
+        "descripcion": "Reducción de precipitación del 40% al 50% en los valles interandinos del Magdalena y Cauca. Aumento de temperaturas por encima de valores históricos.",
+        "huila_incluido": true
+      },
+      {
+        "region": "Caribe",
+        "nivel_impacto": "alto",
+        "descripcion": "Reducción de lluvias y aumento de temperaturas. Mayor estrés hídrico en cuencas del norte del país.",
+        "huila_incluido": false
+      },
+      {
+        "region": "Pacífica",
+        "nivel_impacto": "moderado",
+        "descripcion": "Reducción moderada de precipitaciones. Las zonas más lluviosas no quedarán secas, pero recibirán menos lluvia de lo normal.",
+        "huila_incluido": false
+      },
+      {
+        "region": "Orinoquía",
+        "nivel_impacto": "bajo",
+        "descripcion": "Impacto menor. Los patrones de lluvia en esta zona están más influenciados por la dinámica del Atlántico y la cuenca amazónica.",
+        "huila_incluido": false
+      },
+      {
+        "region": "Amazonía",
+        "nivel_impacto": "bajo",
+        "descripcion": "Comportamiento mixto. Menor sensibilidad directa al forzamiento ENSO desde el Pacífico.",
+        "huila_incluido": false
+      }
+    ],
+    "huila_en_contexto": {
+      "posicion": "Cabecera de la cuenca alta del río Magdalena",
+      "descripcion": "El Huila ocupa la cabecera del sistema hídrico más importante de Colombia. En eventos El Niño, la cuenca alta recibe reducciones de precipitación proporcionalmente mayores que la cuenca media y baja, por el debilitamiento de la ZCIT sobre las estribaciones andinas.",
+      "vulnerabilidad_diferenciada": "El norte del departamento (Neiva, Palermo, Villa Vieja) presenta las menores precipitaciones del Huila, por debajo de 1.000 mm anuales en algunas zonas. Esta condición base se agrava durante El Niño.",
+      "señal_actual": "Desde el 16 de junio de 2026, el IDEAM reporta tiempo seco con predominio en los valles interandinos del Huila y el Tolima. Es la primera manifestación observable en campo.",
+      "sectores_alerta": [
+        "Caficultura y cacao (Acevedo, Pitalito, La Plata)",
+        "Abastecimiento de agua potable en Neiva y municipios del norte",
+        "Riesgo de incendios forestales (norte del departamento: 18.000-19.000 ha históricas afectadas)",
+        "Caudales del río Magdalena y afluentes principales",
+        "Generación hidroeléctrica (cuenca alta)"
+      ]
+    }
+  }
 }

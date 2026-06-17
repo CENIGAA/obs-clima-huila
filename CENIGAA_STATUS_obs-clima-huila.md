@@ -5,9 +5,9 @@
 
 | Versión | Fecha | Branch | Último commit | Estado |
 |---|---|---|---|---|
-| v1.3.0 | 2026-06-17 | `main` | (pendiente del commit `feat: subpágina /enso`) | ✅ **Producción · Subpágina /enso operativa con datos JSON manuales** |
+| v1.4.0 | 2026-06-17 | `main` | (pendiente del commit `feat(enso): bloque escala nacional Colombia`) | ✅ **Producción · /enso con narrativa de tres escalas (global → nacional → regional)** |
 
-> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-06-17. v1.3.0 añade la subpágina **`/enso`** (Seguimiento El Niño 2026 en el Huila) como ruta dedicada con 7 bloques de contenido alimentados desde un único JSON de actualización manual (`public/data/enso-estado.json`). Incluye además la portada del Plan Huila 2050 en el Hero (con WebP), el item "El Niño 2026" en el nav y la limpieza completa de "Red ROGAA" → "ROGAA" en todo el sitio.
+> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-06-17. v1.4.0 añade el **Bloque Escala Nacional** a la subpágina `/enso`: inserción entre los geovisores internacionales y la correlación histórica del Huila, con cuatro sub-bloques (alerta IDEAM, mapa SVG conceptual de Colombia por regiones hidrológicas + tabla, cuenca alta del Magdalena, sectores en seguimiento). Implementa la capa intermedia de la narrativa global → nacional → regional anticipada en la versión anterior.
 
 ---
 
@@ -177,7 +177,7 @@ Hasta v1.1.0 todas las secciones se renderizaban apiladas en la home (`/`). **A 
 | `/biblioteca` | **Biblioteca** | `Biblioteca` (6 referencias curadas con APA y badges) | ✅ |
 | `/equipo` | **Equipo** | `Equipo` (Jorge Chavarro destacado + Grupo Hidroinformática + GAA+IA Lab) + banda `Dedicatoria` memorial a Efraín | ✅ |
 | `/datos` | **Datos** | `DatosAbiertos` (CSV catálogo descargable + cita APA + apuntador al panel de estación) | ✅ |
-| `/enso` | **El Niño 2026** | `Enso` — 7 bloques (Hero con alerta dinámica, editorial, línea de tiempo con pulse animado en estado actual, 3 indicadores en tiempo cuasi-real, 3 geovisores NOAA/C3S/IRI, correlación histórica Huila, placeholder seguimiento local 17 estaciones automáticas, créditos en 3 columnas). Todo el contenido dinámico viene de `public/data/enso-estado.json` con fetch + estados de carga/error | ✅ **v1.3.0** |
+| `/enso` | **El Niño 2026** | `Enso` — 8 bloques (Hero con alerta dinámica, editorial, línea de tiempo con pulse animado en estado actual, 3 indicadores cuasi-real, 3 geovisores NOAA/C3S/IRI, **Escala nacional v1.4.0**: alerta IDEAM + mapa SVG conceptual Colombia + tabla 5 regiones + cuenca alta Magdalena + sectores Huila, correlación histórica Huila, placeholder seguimiento local 17 estaciones, créditos 3 columnas). Todo el contenido dinámico viene de `public/data/enso-estado.json` con fetch + estados de carga/error | ✅ **v1.4.0** |
 | `/efrain` | (no en nav) | `HomenajeEfrain` (banner Nevado-Tatacoa, retrato, biografía, blockquote, ficha del libro con ISBN) | ✅ |
 
 ### Header de navegación
@@ -467,7 +467,8 @@ Cualquier uso académico o institucional debe citar:
 
 | Versión | Fecha | Commit | Hito |
 |---|---|---|---|
-| **v1.3.0** | **2026-06-17** | pendiente | **Subpágina `/enso` — Seguimiento El Niño 2026.** Nueva ruta dedicada con 7 bloques alimentados desde `public/data/enso-estado.json` (datos JSON de actualización manual semanal). Componente único `Enso.jsx` con fetch + estados loading/error. Hero con badge de alerta dinámico (color por fase ENSO), línea de tiempo vertical con marcador `animate-ping` en el ítem "presente" y borde verde en hitos, indicadores en tiempo cuasi-real con valor grande en naranja, geovisores NOAA/C3S/IRI con botones que abren cada sitio en pestaña nueva (target=_blank rel=noopener), correlación histórica Huila 25/12/112, placeholder de seguimiento local con 17 estaciones automáticas. Cambios complementarios: portada Plan Huila 2050 en el Hero (WebP 244 KB con fallback PNG 2.93 MB · `<picture>`), logo CENIGAA del menú reemplazado por wordmark de texto, logo CENIGAA del footer agrandado (h-14 → h-20), purga global "Red ROGAA" → "ROGAA" en 11 ocurrencias, item "El Niño 2026" añadido al nav, `sitemap.xml` ampliado de 2 a 10 URLs. |
+| **v1.4.0** | **2026-06-17** | pendiente | **Bloque Escala Nacional Colombia en `/enso`.** Nueva clave `escala_nacional` en el JSON con cuatro sub-secciones: `alerta_ideam` (texto + probabilidades 96% persistencia / 63% intensidad muy fuerte), `impacto_por_region` (5 regiones hidrológicas), `huila_en_contexto` (posición en cuenca alta + vulnerabilidad diferenciada + señal en campo + 5 sectores en seguimiento). Componente `BloqueEscalaNacional` con: (N1) tarjeta navy de alerta IDEAM con pulse animado; (N2) grid 2 columnas con mapa SVG conceptual de Colombia (viewBox 400×600, 5 paths poligonales por región, pin azul del Huila, leyenda inline, `<title>` por path para a11y) + tabla de regiones con badges por nivel y row resaltado para la Andina; (N3) tarjeta blanca con bloque blockquote de "Señal en campo" del 16 jun 2026; (N4) grid de 5 sectores en seguimiento. Inserción entre Geovisores (Bloque 4) e Histórico Huila (Bloque 5). Sin dependencias npm nuevas. |
+| v1.3.0 | 2026-06-17 | `7625afc` | **Subpágina `/enso` — Seguimiento El Niño 2026.** Nueva ruta dedicada con 7 bloques alimentados desde `public/data/enso-estado.json` (datos JSON de actualización manual semanal). Componente único `Enso.jsx` con fetch + estados loading/error. Hero con badge de alerta dinámico (color por fase ENSO), línea de tiempo vertical con marcador `animate-ping` en el ítem "presente" y borde verde en hitos, indicadores en tiempo cuasi-real con valor grande en naranja, geovisores NOAA/C3S/IRI con botones que abren cada sitio en pestaña nueva (target=_blank rel=noopener), correlación histórica Huila 25/12/112, placeholder de seguimiento local con 17 estaciones automáticas. Cambios complementarios: portada Plan Huila 2050 en el Hero (WebP 244 KB con fallback PNG 2.93 MB · `<picture>`), logo CENIGAA del menú reemplazado por wordmark de texto, logo CENIGAA del footer agrandado (h-14 → h-20), purga global "Red ROGAA" → "ROGAA" en 11 ocurrencias, item "El Niño 2026" añadido al nav, `sitemap.xml` ampliado de 2 a 10 URLs. |
 | v1.2.0 | 2026-06-14 | `c6496a9` | **Refactor arquitectónico + scaffolding Fase 2.** (a) Home queda solo con el Hero; cada item del nav (`Mapa`, `Sobre`, `Resumen`, `Política pública`, `Biblioteca`, `Equipo`, `Datos`) pasa a su propia ruta. Nuevo item "Inicio" + nombre del nodo clickable. Header con `NavLink` de react-router y estado activo visual. Footer `EcoLink` interno vs externo. Hero CTAs con `<Link>`. (b) Groundwork de Fase 2: `.gitignore` extendido a `data/ *.pdf *.db *.sqlite outputs/`, PDF del libro reubicado a `data/referencias/`, notebook Jupyter de 23 celdas con pipeline IDEAM 2017–2026, lista de 150 estaciones poblada desde producción, dependencias Python instaladas, smoke test celda 1 ejecutado. (c) Incorpora cambios externos: lazy `BarChart` en `/resumen`, `robots.txt`, `sitemap.xml`, logos oficiales SIC en Header, 5 imágenes WebP. Resuelve 5 marcadores de conflicto de merge en este propio documento. |
 | v1.1.0 | 2026-06-03 | `77c135f` | MVP completo (11/11 secciones). Cierre de la última sección pendiente `#resumen` (Hallazgos: 3 métricas grandes, `BarChart` Mann-Kendall, 4 tarjetas de hallazgos y nota metodológica con cita ISBN) + pasada tipográfica eliminando 56 em-dashes visibles + eliminación del componente muerto `PlaceholderSection`. |
 | v1.0.1 | 2026-05-18 | `4b95d1c` / `5c40948` | Cierre de P0 SEO (favicon + apple-touch-icon + og-image), ocultamiento del enlace prematuro a `obs-suelos-huila` e implementación de la sección `#politica` con 12 instrumentos oficiales en 4 niveles (Global / Nacional / Departamental / Municipal). |
@@ -502,9 +503,9 @@ ea54cef  fix: add postcss config so Tailwind directives compile
 
 ---
 
-*CENIGAA_STATUS_obs-clima-huila.md v1.3.0 — 2026-06-17*
+*CENIGAA_STATUS_obs-clima-huila.md v1.4.0 — 2026-06-17*
 *Auditor: agente Claude Code · Branch `main` · Repositorio `cenigaa-obs-clima-huila`*
-*Próxima revisión sugerida: al automatizar la actualización del `enso-estado.json` con la API NOAA (prevista jul 2026), al correr la primera Lighthouse baseline tras `/enso` (P1), o al ejecutar la primera corrida real del Módulo 1 del notebook de Fase 2 (P1).*
+*Próxima revisión sugerida: al añadir el bloque regional con las 17 estaciones automáticas (cierra la narrativa global → nacional → regional), al automatizar la actualización del `enso-estado.json` con la API NOAA (prevista jul 2026), o al ejecutar la primera corrida real del Módulo 1 del notebook de Fase 2.*
 
 ---
 
@@ -538,3 +539,28 @@ ea54cef  fix: add postcss config so Tailwind directives compile
 - 🟡 **Em-dashes en `enso-estado.json`.** Pendiente pasada tipográfica si se quiere alinear con la regla de estilo del resto del sitio.
 - 🟡 **SEO por ruta.** `/enso` hereda el `<title>` global. Considerar agregar react-helmet o `<title>` dinámico vía `useEffect` si se quiere SEO/share preview específico por subpágina.
 - 🟢 **Bloque 6 placeholder.** El "Seguimiento con estaciones automáticas del Huila" queda explícitamente marcado "en construcción" hasta Q3 2026 (alineado con la descripción del propio prompt).
+
+---
+
+## Anexo v1.4.0 — Bloque Escala Nacional Colombia
+
+### Archivos modificados
+
+| Ruta | Cambio |
+|---|---|
+| `public/data/enso-estado.json` | Nueva clave de primer nivel `escala_nacional` con 4 sub-objetos (`_meta`, `alerta_ideam`, `impacto_por_region`, `huila_en_contexto`). 5 regiones hidrológicas con `nivel_impacto` y `huila_incluido` boolean. 5 sectores en `sectores_alerta`. JSON validado. |
+| `src/components/sections/Enso.jsx` | (a) Nuevo componente `BloqueEscalaNacional` con guard defensivo `if (!nacional) return null`. (b) Sub-componente `MapaColombiaConceptual` con 5 paths SVG poligonales (viewBox 400×600), pin del Huila en (180, 285), leyenda inline. (c) Tablas con badges por `nivel_impacto` y row resaltado en `bg-[#EEF1FB]` cuando `huila_incluido`. (d) Import añadido: `Globe2` de lucide-react. (e) Render entre `<BloqueGeovisores />` y `<BloqueHistoricoHuila />`. |
+
+### Decisiones técnicas
+
+1. **Mapa SVG poligonal conceptual, no cartográfico.** 5 paths simples derivados de las coordenadas del briefing (viewBox 400×600). Cada región tiene `<title>` accesible. El pin del Huila (`#4A60D8` con halo a opacity 0.25) marca la cabecera del Magdalena dentro de la Andina. La leyenda se renderiza dentro del mismo SVG (3 rectángulos coloreados) para que la imagen sea autosuficiente al hacer screenshot.
+2. **Patrón `BloqueXxx({ data })` con guard interno.** El componente recibe `nacional={data.escala_nacional}` y hace `if (!nacional) return null` — mismo patrón defensivo que usan los demás bloques. La página entera ya tiene early-return en loading/error, este guard adicional protege contra JSON parciales en cache.
+3. **Fondo `bg-[#F8F9FA]` (gris claro)** para mantener la alternancia visual del componente (navy / white / gray / white / navy / **gray** / white / gray / navy). No introduce un tono nuevo.
+4. **Tabla de regiones**: row con fondo `bg-[#EEF1FB]` cuando `huila_incluido === true`, y un badge inline "Huila" al lado del nombre de la región. La Andina queda visualmente diferenciada sin necesidad de filtros aparte.
+5. **Em-dashes en el JSON preservados** (mismo criterio que v1.3.0 — instrucción "contenido exacto"). En el JSX que escribí, los em-dashes del template del usuario fueron reemplazados por punto, coma o paréntesis ("Señal en campo. Semana del 16 de junio", "Mapa conceptual. Regiones hidrológicas IDEAM", "Sectores en seguimiento. Huila", "Fuente: IDEAM Colombia, comunicado oficial...").
+6. **No se modificó el sitemap**: la nueva sección vive dentro de `/enso`, no es una ruta nueva — el `<lastmod>` quedará desactualizado, ajustable manualmente cuando se haga la próxima pasada SEO.
+
+### Pendientes detectados
+
+- 🟡 **`<lastmod>` de `/enso` en sitemap.xml** sigue marcado `2026-06-17` (correcto si se hace el push hoy, pero se vuelve obsoleto cuando se siga editando el bloque sin tocar el sitemap).
+- 🟢 **Bloque regional** (cierre de la narrativa 3 escalas) — pendiente conectar con el placeholder del Bloque 6 cuando las 17 estaciones automáticas tengan visualización operativa (Q3 2026).
