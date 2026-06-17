@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import {
   AlertTriangle, Clock, Construction, ExternalLink, MapPin,
   Waves, Activity, Target, RefreshCw, Globe2,
@@ -409,123 +411,119 @@ const NIVEL_IMPACTO_BADGE = {
   bajo:     'bg-[#EBF7E7]  text-[#43B02A] border-[#B8E4AB]',
 }
 
-const NIVEL_IMPACTO_FILL = {
-  alto:     { color: '#F4511E', op: 0.85 },
-  moderado: { color: '#F4A261', op: 0.85 },
-  bajo:     { color: '#43B02A', op: 0.75 },
+const REGION_NOMBRES = {
+  Caribe:    'Región Caribe',
+  Pacifica:  'Región Pacífica',
+  Andina:    'Región Andina',
+  Orinoquia: 'Región Orinoquía',
+  Amazonia:  'Región Amazonía',
 }
 
-// Paths SVG conceptuales de las 5 regiones hidrológicas (viewBox 400×600).
-// Aproximación didáctica, no cartográfica. Coordenadas según briefing.
-const REGIONES_SVG = [
-  {
-    key: 'caribe',
-    label: 'Caribe',
-    d: 'M 60 20 L 340 20 L 340 80 L 280 100 L 200 90 L 140 110 L 60 80 Z',
-    nivel: 'alto',
-    text: { x: 200, y: 60, fill: 'white' },
-  },
-  {
-    key: 'pacifica',
-    label: 'Pacífica',
-    d: 'M 30 90 L 100 90 L 80 200 L 60 300 L 30 350 L 20 250 L 20 150 Z',
-    nivel: 'moderado',
-    text: { x: 55, y: 220, fill: '#162341' },
-  },
-  {
-    key: 'andina',
-    label: 'Andina',
-    d: 'M 100 90 L 280 100 L 300 200 L 260 320 L 200 380 L 160 340 L 120 260 L 80 200 Z',
-    nivel: 'alto',
-    text: { x: 190, y: 200, fill: 'white' },
-  },
-  {
-    key: 'orinoquia',
-    label: 'Orinoquía',
-    d: 'M 280 100 L 380 80 L 390 300 L 300 320 L 260 320 L 300 200 Z',
-    nivel: 'bajo',
-    text: { x: 330, y: 210, fill: 'white' },
-  },
-  {
-    key: 'amazonia',
-    label: 'Amazonía',
-    d: 'M 160 340 L 200 380 L 260 320 L 300 320 L 390 300 L 380 500 L 280 560 L 180 520 L 100 440 L 120 360 Z',
-    nivel: 'bajo',
-    text: { x: 260, y: 430, fill: 'white' },
-  },
-]
+const NIVEL_LABEL = {
+  alto:     'Alto',
+  moderado: 'Moderado',
+  bajo:     'Bajo',
+}
 
-function MapaColombiaConceptual() {
+function MapaColombiaLeaflet() {
+  const mapaRegionesRef = useRef(null)
+  const mapaRegionesInstanceRef = useRef(null)
+
+  useEffect(() => {
+    if (!mapaRegionesRef.current) return
+    if (mapaRegionesInstanceRef.current) return
+
+    const map = L.map(mapaRegionesRef.current, {
+      center: [4.5, -74.0],
+      zoom: 5,
+      zoomControl: true,
+      scrollWheelZoom: false,
+      attributionControl: true,
+      dragging: true,
+    })
+
+    mapaRegionesInstanceRef.current = map
+
+    L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
+          '&copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19,
+        opacity: 0.7,
+      },
+    ).addTo(map)
+
+    fetch('/data/colombia-regiones-hidrologicas.geojson')
+      .then((r) => r.json())
+      .then((geojson) => {
+        L.geoJSON(geojson, {
+          style: (feature) => ({
+            fillColor: feature.properties.color,
+            fillOpacity: 0.55,
+            color: 'white',
+            weight: 1.8,
+            lineJoin: 'round',
+          }),
+          onEachFeature: (feature, layer) => {
+            const nombre =
+              REGION_NOMBRES[feature.properties.nombre] ||
+              feature.properties.nombre
+            const nivel = NIVEL_LABEL[feature.properties.nivel_impacto] || ''
+            layer.bindTooltip(
+              '<b>' + nombre + '</b><br>' +
+              'Impacto El Niño 2026: <b>' + nivel + '</b>',
+              { sticky: true },
+            )
+            layer.on('mouseover', function () {
+              this.setStyle({ fillOpacity: 0.75, weight: 2.5 })
+            })
+            layer.on('mouseout', function () {
+              this.setStyle({ fillOpacity: 0.55, weight: 1.8 })
+            })
+          },
+        }).addTo(map)
+
+        // Pin Huila - centroide real del departamento (2.5414, -75.6168)
+        L.circleMarker([2.5414, -75.6168], {
+          radius: 16,
+          fillColor: '#4A60D8',
+          color: 'transparent',
+          fillOpacity: 0.18,
+        }).addTo(map)
+
+        L.circleMarker([2.5414, -75.6168], {
+          radius: 9,
+          fillColor: '#4A60D8',
+          color: 'white',
+          weight: 2.5,
+          fillOpacity: 1,
+        })
+          .bindTooltip(
+            '<b>Huila</b><br>Cabecera cuenca alta del Magdalena<br>' +
+            '<small>Observatorio CENIGAA</small>',
+            { direction: 'right', offset: [10, 0] },
+          )
+          .addTo(map)
+      })
+
+    return () => {
+      if (mapaRegionesInstanceRef.current) {
+        mapaRegionesInstanceRef.current.remove()
+        mapaRegionesInstanceRef.current = null
+      }
+    }
+  }, [])
+
   return (
-    <svg
-      viewBox="0 0 400 600"
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-full max-w-xs mx-auto block"
-      role="img"
-      aria-label="Mapa conceptual de impactos El Niño 2026 por región hidrológica de Colombia. El Huila marcado en azul CENIGAA dentro de la región Andina."
-    >
-      {REGIONES_SVG.map((r) => {
-        const fill = NIVEL_IMPACTO_FILL[r.nivel]
-        const nivelTexto =
-          r.nivel === 'alto' ? 'Impacto alto'
-          : r.nivel === 'moderado' ? 'Impacto moderado'
-          : 'Impacto bajo'
-        return (
-          <g key={r.key}>
-            <path
-              d={r.d}
-              fill={fill.color}
-              fillOpacity={fill.op}
-              stroke="white"
-              strokeWidth="1.5"
-            >
-              <title>
-                Región {r.label}: {nivelTexto}
-                {r.key === 'andina' ? '. Incluye el Huila.' : ''}
-              </title>
-            </path>
-            <text
-              x={r.text.x}
-              y={r.text.y}
-              textAnchor="middle"
-              fill={r.text.fill}
-              fontSize={r.label.length > 7 ? 10 : 11}
-              fontWeight="600"
-              style={{ pointerEvents: 'none' }}
-            >
-              {r.label}
-            </text>
-          </g>
-        )
-      })}
-
-      {/* Pin del Huila en la región Andina (cabecera del Magdalena) */}
-      <g>
-        <circle cx="180" cy="285" r="12" fill="#4A60D8" fillOpacity="0.25" />
-        <circle cx="180" cy="285" r="7" fill="#4A60D8" />
-        <text
-          x="180"
-          y="308"
-          textAnchor="middle"
-          fill="#162341"
-          fontSize="10"
-          fontWeight="700"
-        >
-          Huila
-        </text>
-        <title>Departamento del Huila, cabecera del río Magdalena</title>
-      </g>
-
-      {/* Leyenda */}
-      <g>
-        <rect x="30" y="560" width="14" height="14" fill="#F4511E" rx="2" />
-        <text x="50" y="572" fill="#162341" fontSize="9">Alto</text>
-        <rect x="100" y="560" width="14" height="14" fill="#F4A261" rx="2" />
-        <text x="120" y="572" fill="#162341" fontSize="9">Moderado</text>
-        <rect x="195" y="560" width="14" height="14" fill="#43B02A" rx="2" />
-        <text x="215" y="572" fill="#162341" fontSize="9">Bajo</text>
-      </g>
-    </svg>
+    <div
+      ref={mapaRegionesRef}
+      style={{ height: '380px', width: '100%' }}
+      className="rounded-xl overflow-hidden border border-gray-100 shadow-sm"
+      aria-label="Mapa de impactos El Niño 2026 por región hidrológica de Colombia"
+    />
   )
 }
 
@@ -609,10 +607,10 @@ function BloqueEscalaNacional({ nacional }) {
           </h3>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
             <div className="w-full">
-              <MapaColombiaConceptual />
-              <p className="text-[11.5px] text-neutral-500 text-center mt-3 leading-snug">
-                Mapa conceptual. Regiones hidrológicas IDEAM Colombia.
-                Huila marcado en azul CENIGAA (#4A60D8).
+              <MapaColombiaLeaflet />
+              <p className="text-xs text-gray-400 text-center mt-2">
+                Fuente: Natural Earth / IDEAM. Pasa el cursor sobre cada región
+                para ver el nivel de impacto.
               </p>
             </div>
 
