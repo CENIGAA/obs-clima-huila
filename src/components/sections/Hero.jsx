@@ -79,14 +79,18 @@ export default function Hero({ resumenData }) {
 
       {/* ── Contenido ──────────────────────────────────────── */}
       <div className="container-main relative z-10 py-16 lg:py-24">
+        <div className="grid gap-12 lg:grid-cols-[1fr_minmax(0,440px)] lg:gap-14 lg:items-center">
 
-        {/* Supra-título: red ROGAA */}
+          {/* Columna izquierda: texto del hero */}
+          <div className="min-w-0">
+
+        {/* Supra-título: ROGAA */}
         <div
           className="fade-in flex items-center gap-2 mb-6"
           style={{ animationDelay: '0ms' }}
         >
           <span className="data-badge bg-[#4A60D8]/20 text-[#8B9FE8] border border-[#4A60D8]/30">
-            Red ROGAA-Huila
+            ROGAA-Huila
           </span>
           <span className="text-neutral-600" aria-hidden="true">·</span>
           <span className="data-badge bg-white/8 text-neutral-400 border border-white/10">
@@ -191,8 +195,8 @@ export default function Hero({ resumenData }) {
           className="fade-up flex flex-col sm:flex-row gap-3 mt-10"
           style={{ animationDelay: '480ms' }}
         >
-          <a
-            href="#mapa"
+          <Link
+            to="/mapa"
             className="
               inline-flex items-center justify-center gap-2
               bg-[#4A60D8] hover:bg-[#3A50C8]
@@ -205,9 +209,9 @@ export default function Hero({ resumenData }) {
           >
             <MapPin size={15} aria-hidden="true" />
             Explorar mapa de estaciones
-          </a>
-          <a
-            href="#datos"
+          </Link>
+          <Link
+            to="/datos"
             className="
               inline-flex items-center justify-center gap-2
               bg-white/8 hover:bg-white/12
@@ -219,7 +223,7 @@ export default function Hero({ resumenData }) {
           >
             <Database size={15} aria-hidden="true" />
             Descargar datos
-          </a>
+          </Link>
         </div>
 
         {/* Indicador de periodo de datos */}
@@ -235,6 +239,55 @@ export default function Hero({ resumenData }) {
             <span>Fuente: CCYVCE_DB · SGR Conv. 124/2015</span>
           </div>
         )}
+
+          </div>
+          {/* /Columna izquierda */}
+
+          {/* Columna derecha: portada Plan Huila 2050 */}
+          <div
+            className="fade-up flex justify-center lg:justify-end"
+            style={{ animationDelay: '180ms' }}
+          >
+            <figure className="relative max-w-[440px] w-full">
+              <div
+                className="
+                  relative aspect-[1394/1760] rounded-2xl overflow-hidden
+                  shadow-2xl ring-1 ring-white/15
+                  bg-[#0f1830]
+                "
+              >
+                <picture>
+                  <source
+                    srcSet="/assets/Portada_Plan_Huila2050.webp"
+                    type="image/webp"
+                  />
+                  <img
+                    src="/assets/Portada_Plan_Huila2050.png"
+                    alt="Portada del Plan de Cambio Climático Huila 2050 — Gobernación del Huila y CAM"
+                    width={1394}
+                    height={1760}
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                    fetchpriority="high"
+                  />
+                </picture>
+                {/* Glow brand-blue de profundidad */}
+                <div
+                  className="absolute -inset-px rounded-2xl pointer-events-none"
+                  aria-hidden="true"
+                  style={{
+                    boxShadow: 'inset 0 0 0 1px rgba(74,96,216,0.15)',
+                  }}
+                />
+              </div>
+              <figcaption className="mt-3 text-center text-[11.5px] tracking-[0.12em] uppercase text-neutral-500">
+                Plan de Cambio Climático <span className="text-neutral-300 font-semibold">Huila 2050</span>
+              </figcaption>
+            </figure>
+          </div>
+
+        </div>
+        {/* /grid 2-col */}
       </div>
 
       {/* ── Indicador scroll ───────────────────────────────── */}

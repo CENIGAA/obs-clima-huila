@@ -135,8 +135,8 @@ export default function ComoFunciona() {
         </div>
 
         <div className="mt-12 flex flex-col items-center gap-5 text-center">
-          <a
-            href="#mapa"
+          <Link
+            to="/mapa"
             className="
               inline-flex items-center gap-2 px-5 py-2.5 rounded-full
               bg-[#162341] hover:bg-[#4A60D8]
@@ -146,7 +146,7 @@ export default function ComoFunciona() {
           >
             Ver metodología en el mapa
             <ArrowRight size={15} aria-hidden="true" />
-          </a>
+          </Link>
 
           <p className="inline-flex items-center gap-2 text-[12px] text-neutral-500 italic">
             <BookOpen size={13} className="text-[#4A60D8]" aria-hidden="true" />

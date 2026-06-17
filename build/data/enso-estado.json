@@ -1,0 +1,201 @@
+{
+  "_meta": {
+    "ultima_actualizacion": "2026-06-17",
+    "proxima_actualizacion": "2026-06-24",
+    "fuente_principal": "NOAA/CPC — Índice RONI",
+    "ciclo": "Actualización semanal manual — transición a API NOAA prevista julio 2026"
+  },
+  "estado_actual": {
+    "fase": "El Niño",
+    "alerta": "Advertencia de El Niño",
+    "indice": "RONI",
+    "nino34_anomalia": "+0.9",
+    "nino34_unidad": "°C",
+    "estado_color": "warning",
+    "descripcion_corta": "El Niño confirmado y en fortalecimiento",
+    "probabilidad_siguiente_trimestre": 98,
+    "horizonte_proyeccion": "Invierno boreal 2026-27",
+    "intensidad_proyectada": "Moderado a fuerte"
+  },
+  "linea_tiempo": [
+    {
+      "id": "lt-01",
+      "fecha": "Nov 2023 – Abr 2024",
+      "titulo": "El Niño 2023/2024 — evento previo",
+      "descripcion": "Pico del evento El Niño anterior. Uno de los más intensos registrados. Anomalía Niño3.4 superó +2.0°C bajo el índice ONI.",
+      "tipo": "pasado",
+      "fuente": "NOAA/CPC"
+    },
+    {
+      "id": "lt-02",
+      "fecha": "Abr – Jun 2024",
+      "titulo": "Transición a condiciones neutras",
+      "descripcion": "El Pacífico ecuatorial regresó a condiciones ENSO-neutral. Inicio del período de calma entre eventos.",
+      "tipo": "pasado",
+      "fuente": "NOAA/CPC"
+    },
+    {
+      "id": "lt-03",
+      "fecha": "Oct – Nov 2025",
+      "titulo": "Inicio La Niña débil",
+      "descripcion": "Se instalaron condiciones de La Niña débil. Anomalía Niño3.4 llegó a -0.7°C. Tendencia hacia enfriamiento del Pacífico central.",
+      "tipo": "pasado",
+      "fuente": "NOAA/IRI"
+    },
+    {
+      "id": "lt-04",
+      "fecha": "Feb 2026",
+      "titulo": "NOAA adopta el índice RONI como estándar oficial",
+      "descripcion": "El Centro de Predicción Climática (CPC) adopta el Índice Oceánico Niño Relativo (RONI) como referencia oficial. El RONI descuenta el calentamiento global de fondo, permitiendo comparar eventos de diferentes décadas en igualdad de condiciones.",
+      "tipo": "hito",
+      "fuente": "NOAA/CPC — NWS Public Information Statement 26-05"
+    },
+    {
+      "id": "lt-05",
+      "fecha": "Feb – Mar 2026",
+      "titulo": "Fin de La Niña — transición a neutro",
+      "descripcion": "La Niña decayó más rápido de lo previsto. Las temperaturas superficiales del Pacífico ecuatorial retornaron a condiciones neutras con 96% de probabilidad según el pronóstico IRI.",
+      "tipo": "pasado",
+      "fuente": "NOAA/CPC · IRI/Columbia"
+    },
+    {
+      "id": "lt-06",
+      "fecha": "May 2026",
+      "titulo": "Advertencia de El Niño emitida",
+      "descripcion": "El CPC emite Advertencia de El Niño. Los valores semanales del índice Niño3.4 superaron +0.9°C. El pronóstico IRI-CCSR asignó 98% de probabilidad a El Niño para mayo-julio 2026.",
+      "tipo": "presente",
+      "fuente": "NOAA/CPC · IRI/Columbia — Mayo 2026"
+    },
+    {
+      "id": "lt-07",
+      "fecha": "Jun 2026 — actualidad",
+      "titulo": "El Niño presente y en fortalecimiento",
+      "descripcion": "Condiciones de El Niño confirmadas. Se proyecta fortalecimiento progresivo hacia el invierno boreal 2026-27, con 96-98% de probabilidad de persistencia. El evento se anticipa de intensidad moderada a fuerte.",
+      "tipo": "presente",
+      "fuente": "NOAA/CPC · Copernicus C3S · IRI/Columbia"
+    }
+  ],
+  "indicadores": [
+    {
+      "id": "ind-01",
+      "etiqueta": "Anomalía Niño3.4 (RONI)",
+      "valor": "+0.9°C",
+      "estado": "El Niño activo",
+      "nota": "Umbral El Niño: +0.5°C. Fuente: NOAA/CPC. Semana del 13 mayo 2026.",
+      "color": "warning"
+    },
+    {
+      "id": "ind-02",
+      "etiqueta": "Probabilidad El Niño (May–Jul 2026)",
+      "valor": "98%",
+      "estado": "Muy probable",
+      "nota": "Pronóstico IRI-CCSR multimodelo. Fuente: IRI/Columbia.",
+      "color": "warning"
+    },
+    {
+      "id": "ind-03",
+      "etiqueta": "Proyección invierno 2026-27",
+      "valor": "96-98%",
+      "estado": "El Niño persistente",
+      "nota": "Probabilidad de persistencia hasta DJF 2026-27. Fuente: NOAA/CPC · IRI.",
+      "color": "warning"
+    }
+  ],
+  "geovisores": [
+    {
+      "id": "geo-01",
+      "agencia": "NOAA / PSL",
+      "nombre_completo": "NOAA Physical Sciences Laboratory — ENSO Current Conditions",
+      "descripcion": "Mapas de anomalía de temperatura superficial del mar (SST) semanal, mensual y estacional. Animaciones OLR, diagrama tiempo-latitud (Hovmoller) y panel multi-índice con comparación histórica entre eventos.",
+      "url": "https://psl.noaa.gov/enso/current.html",
+      "url_probabilities": "https://cpc.ncep.noaa.gov/products/analysis_monitoring/enso/roni/probabilities/",
+      "url_advisory": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml",
+      "frecuencia": "Semanal (SST) · Mensual (discusión diagnóstica, segunda semana)",
+      "tipo": "Monitoreo operacional oficial",
+      "logo_texto": "NOAA"
+    },
+    {
+      "id": "geo-02",
+      "agencia": "Copernicus / ECMWF",
+      "nombre_completo": "Copernicus Climate Change Service — Seasonal Forecasts",
+      "descripcion": "Pronóstico estacional multi-modelo europeo actualizado el día 10 de cada mes. Participan ECMWF, Met Office UK, Météo-France, DWD, CMCC, NCEP, JMA, ECCC y BOM. Datos y productos gráficos de libre acceso y redistribución.",
+      "url": "https://climate.copernicus.eu/seasonal-forecasts",
+      "url_charts": "https://climate.copernicus.eu/charts/packages/c3s_seasonal/",
+      "frecuencia": "Mensual — día 10 de cada mes",
+      "tipo": "Pronóstico estacional multi-sistema",
+      "logo_texto": "C3S"
+    },
+    {
+      "id": "geo-03",
+      "agencia": "IRI / Columbia",
+      "nombre_completo": "IRI — ENSO Quick Look y Pluma de Modelos",
+      "descripcion": "Pronóstico probabilístico mensual basado en la pluma de modelos dinámicos y estadísticos IRI-CCSR. Actualizado la tercera semana de cada mes. Incluye probabilidades para los próximos 9 trimestres superpuestos.",
+      "url": "https://iri.columbia.edu/our-expertise/climate/forecasts/enso/current/",
+      "frecuencia": "Mensual — tercera semana",
+      "tipo": "Pronóstico probabilístico científico",
+      "logo_texto": "IRI"
+    }
+  ],
+  "escala_nacional": {
+    "_meta": {
+      "fuente": "IDEAM Colombia — Comunicado oficial 11 junio 2026",
+      "url_fuente": "https://www.ideam.gov.co/sala-de-prensa/noticia/ideam-indica-que-las-condiciones-tipo-el-nino-ya-se-encuentran-presentes",
+      "fecha_confirmacion_ideam": "2026-06-11",
+      "ultima_actualizacion": "2026-06-17"
+    },
+    "alerta_ideam": {
+      "estado": "ACTIVA",
+      "texto": "El Niño confirmado en Colombia. Condiciones presentes en el océano Pacífico ecuatorial desde el 11 de junio de 2026, tres meses antes de lo previsto.",
+      "intensidad_proyectada": "muy fuerte",
+      "probabilidad_persistencia": 96,
+      "probabilidad_intensidad_muy_fuerte": 63,
+      "periodo_critico": "noviembre 2026 — enero 2027",
+      "referencia_historica": "Posible evento entre los más intensos desde 1950"
+    },
+    "impacto_por_region": [
+      {
+        "region": "Andina",
+        "nivel_impacto": "alto",
+        "descripcion": "Reducción de precipitación del 40% al 50% en los valles interandinos del Magdalena y Cauca. Aumento de temperaturas por encima de valores históricos.",
+        "huila_incluido": true
+      },
+      {
+        "region": "Caribe",
+        "nivel_impacto": "alto",
+        "descripcion": "Reducción de lluvias y aumento de temperaturas. Mayor estrés hídrico en cuencas del norte del país.",
+        "huila_incluido": false
+      },
+      {
+        "region": "Pacífica",
+        "nivel_impacto": "moderado",
+        "descripcion": "Reducción moderada de precipitaciones. Las zonas más lluviosas no quedarán secas, pero recibirán menos lluvia de lo normal.",
+        "huila_incluido": false
+      },
+      {
+        "region": "Orinoquía",
+        "nivel_impacto": "bajo",
+        "descripcion": "Impacto menor. Los patrones de lluvia en esta zona están más influenciados por la dinámica del Atlántico y la cuenca amazónica.",
+        "huila_incluido": false
+      },
+      {
+        "region": "Amazonía",
+        "nivel_impacto": "bajo",
+        "descripcion": "Comportamiento mixto. Menor sensibilidad directa al forzamiento ENSO desde el Pacífico.",
+        "huila_incluido": false
+      }
+    ],
+    "huila_en_contexto": {
+      "posicion": "Cabecera de la cuenca alta del río Magdalena",
+      "descripcion": "El Huila ocupa la cabecera del sistema hídrico más importante de Colombia. En eventos El Niño, la cuenca alta recibe reducciones de precipitación proporcionalmente mayores que la cuenca media y baja, por el debilitamiento de la ZCIT sobre las estribaciones andinas.",
+      "vulnerabilidad_diferenciada": "El norte del departamento (Neiva, Palermo, Villa Vieja) presenta las menores precipitaciones del Huila, por debajo de 1.000 mm anuales en algunas zonas. Esta condición base se agrava durante El Niño.",
+      "señal_actual": "Desde el 16 de junio de 2026, el IDEAM reporta tiempo seco con predominio en los valles interandinos del Huila y el Tolima. Es la primera manifestación observable en campo.",
+      "sectores_alerta": [
+        "Caficultura y cacao (Acevedo, Pitalito, La Plata)",
+        "Abastecimiento de agua potable en Neiva y municipios del norte",
+        "Riesgo de incendios forestales (norte del departamento: 18.000-19.000 ha históricas afectadas)",
+        "Caudales del río Magdalena y afluentes principales",
+        "Generación hidroeléctrica (cuenca alta)"
+      ]
+    }
+  }
+}
