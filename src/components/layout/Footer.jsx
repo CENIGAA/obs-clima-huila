@@ -7,7 +7,7 @@ function CenigaaLogoFooter() {
     <img
       src="/assets/logos/logo_cenigaa_T_Blanco.png"
       alt="CENIGAA"
-      className="h-8 w-auto"
+      className="h-14 sm:h-16 lg:h-20 w-auto"
     />
   )
 }
