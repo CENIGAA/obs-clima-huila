@@ -16,7 +16,7 @@ export const content = {
     observatory: {
       name:        'Observatorio Climático del Huila',
       dedicatedTo: 'Efraín Domínguez Calle',
-      network:     'Red ROGAA-Huila',
+      network:     'ROGAA-Huila',
       node:        'Nodo 1 de 5',
       slogan:      'Ideas para un desarrollo sustentable',
     },

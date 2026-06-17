@@ -164,7 +164,7 @@ export default function Header() {
               </NavItem>
             ))}
 
-            {/* CTA: Red ROGAA externo */}
+            {/* CTA: ROGAA externo */}
             <a
               href="https://www.cenigaa.org"
               target="_blank"
@@ -179,7 +179,7 @@ export default function Header() {
                 hover:shadow-md hover:shadow-[#4A60D8]/20
               "
             >
-              <span>Red ROGAA</span>
+              <span>ROGAA</span>
               <ExternalLink size={11} aria-hidden="true" />
             </a>
           </nav>
@@ -266,7 +266,7 @@ export default function Header() {
               hover:bg-[#4A60D8] transition-colors duration-200
             "
           >
-            <span>Red ROGAA-Huila · CENIGAA</span>
+            <span>ROGAA-Huila · CENIGAA</span>
             <ExternalLink size={13} aria-hidden="true" />
           </a>
 

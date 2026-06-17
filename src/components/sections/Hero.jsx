@@ -84,13 +84,13 @@ export default function Hero({ resumenData }) {
           {/* Columna izquierda: texto del hero */}
           <div className="min-w-0">
 
-        {/* Supra-título: red ROGAA */}
+        {/* Supra-título: ROGAA */}
         <div
           className="fade-in flex items-center gap-2 mb-6"
           style={{ animationDelay: '0ms' }}
         >
           <span className="data-badge bg-[#4A60D8]/20 text-[#8B9FE8] border border-[#4A60D8]/30">
-            Red ROGAA-Huila
+            ROGAA-Huila
           </span>
           <span className="text-neutral-600" aria-hidden="true">·</span>
           <span className="data-badge bg-white/8 text-neutral-400 border border-white/10">

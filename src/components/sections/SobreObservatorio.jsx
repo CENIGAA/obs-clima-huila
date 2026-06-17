@@ -10,7 +10,7 @@ const BLOQUES = [
   {
     id: 'red',
     icon: Network,
-    titulo: 'La red ROGAA-Huila',
+    titulo: 'ROGAA-Huila',
   },
   {
     id: 'apertura',

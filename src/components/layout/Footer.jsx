@@ -129,7 +129,7 @@ export default function Footer() {
 
             <div className="pt-2">
               <h3 className="text-[11px] font-bold tracking-[0.1em] uppercase text-neutral-500 mb-2.5">
-                Redes ROGAA-Huila
+                ROGAA-Huila
               </h3>
               <div className="flex flex-wrap gap-1.5">
                 {['Clima', 'Suelos', 'Hídrico', 'Cobertura', 'Socio-espacial'].map((nodo, i) => (
