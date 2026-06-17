@@ -5,9 +5,9 @@
 
 | Versión | Fecha | Branch | Último commit | Estado |
 |---|---|---|---|---|
-| v1.2.0 | 2026-06-14 | `main` | `c6496a9` — *feat: home solo Hero; cada item del nav pasa a ruta dedicada* | ✅ **Producción · Arquitectura multi-ruta + Fase 2 en scaffolding** |
+| v1.3.0 | 2026-06-17 | `main` | (pendiente del commit `feat: subpágina /enso`) | ✅ **Producción · Subpágina /enso operativa con datos JSON manuales** |
 
-> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-06-14. v1.2.0 cubre tres bloques de cambio sobre v1.1.0: (a) **refactor estructural** del sitio (la home queda exclusivamente con el Hero y cada item del nav pasa a su propia ruta), (b) **groundwork de Fase 2** del pipeline IDEAM 2017–2026 (notebook Jupyter, lista de 150 estaciones poblada, dependencias Python), y (c) **cierre de Fase 1** del commit externo `0b6ee0a` (lazy recharts, robots.txt, sitemap.xml, logos oficiales, WebP). Resuelve además 5 marcadores de conflicto de merge que el documento arrastraba desde el commit `e2b9aa2`.
+> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-06-17. v1.3.0 añade la subpágina **`/enso`** (Seguimiento El Niño 2026 en el Huila) como ruta dedicada con 7 bloques de contenido alimentados desde un único JSON de actualización manual (`public/data/enso-estado.json`). Incluye además la portada del Plan Huila 2050 en el Hero (con WebP), el item "El Niño 2026" en el nav y la limpieza completa de "Red ROGAA" → "ROGAA" en todo el sitio.
 
 ---
 
@@ -177,6 +177,7 @@ Hasta v1.1.0 todas las secciones se renderizaban apiladas en la home (`/`). **A 
 | `/biblioteca` | **Biblioteca** | `Biblioteca` (6 referencias curadas con APA y badges) | ✅ |
 | `/equipo` | **Equipo** | `Equipo` (Jorge Chavarro destacado + Grupo Hidroinformática + GAA+IA Lab) + banda `Dedicatoria` memorial a Efraín | ✅ |
 | `/datos` | **Datos** | `DatosAbiertos` (CSV catálogo descargable + cita APA + apuntador al panel de estación) | ✅ |
+| `/enso` | **El Niño 2026** | `Enso` — 7 bloques (Hero con alerta dinámica, editorial, línea de tiempo con pulse animado en estado actual, 3 indicadores en tiempo cuasi-real, 3 geovisores NOAA/C3S/IRI, correlación histórica Huila, placeholder seguimiento local 17 estaciones automáticas, créditos en 3 columnas). Todo el contenido dinámico viene de `public/data/enso-estado.json` con fetch + estados de carga/error | ✅ **v1.3.0** |
 | `/efrain` | (no en nav) | `HomenajeEfrain` (banner Nevado-Tatacoa, retrato, biografía, blockquote, ficha del libro con ISBN) | ✅ |
 
 ### Header de navegación
@@ -466,7 +467,8 @@ Cualquier uso académico o institucional debe citar:
 
 | Versión | Fecha | Commit | Hito |
 |---|---|---|---|
-| **v1.2.0** | **2026-06-14** | `c6496a9` | **Refactor arquitectónico + scaffolding Fase 2.** (a) Home queda solo con el Hero; cada item del nav (`Mapa`, `Sobre`, `Resumen`, `Política pública`, `Biblioteca`, `Equipo`, `Datos`) pasa a su propia ruta. Nuevo item "Inicio" + nombre del nodo clickable. Header con `NavLink` de react-router y estado activo visual. Footer `EcoLink` interno vs externo. Hero CTAs con `<Link>`. (b) Groundwork de Fase 2: `.gitignore` extendido a `data/ *.pdf *.db *.sqlite outputs/`, PDF del libro reubicado a `data/referencias/`, notebook Jupyter de 23 celdas con pipeline IDEAM 2017–2026, lista de 150 estaciones poblada desde producción, dependencias Python instaladas, smoke test celda 1 ejecutado. (c) Incorpora cambios externos: lazy `BarChart` en `/resumen`, `robots.txt`, `sitemap.xml`, logos oficiales SIC en Header, 5 imágenes WebP. Resuelve 5 marcadores de conflicto de merge en este propio documento. |
+| **v1.3.0** | **2026-06-17** | pendiente | **Subpágina `/enso` — Seguimiento El Niño 2026.** Nueva ruta dedicada con 7 bloques alimentados desde `public/data/enso-estado.json` (datos JSON de actualización manual semanal). Componente único `Enso.jsx` con fetch + estados loading/error. Hero con badge de alerta dinámico (color por fase ENSO), línea de tiempo vertical con marcador `animate-ping` en el ítem "presente" y borde verde en hitos, indicadores en tiempo cuasi-real con valor grande en naranja, geovisores NOAA/C3S/IRI con botones que abren cada sitio en pestaña nueva (target=_blank rel=noopener), correlación histórica Huila 25/12/112, placeholder de seguimiento local con 17 estaciones automáticas. Cambios complementarios: portada Plan Huila 2050 en el Hero (WebP 244 KB con fallback PNG 2.93 MB · `<picture>`), logo CENIGAA del menú reemplazado por wordmark de texto, logo CENIGAA del footer agrandado (h-14 → h-20), purga global "Red ROGAA" → "ROGAA" en 11 ocurrencias, item "El Niño 2026" añadido al nav, `sitemap.xml` ampliado de 2 a 10 URLs. |
+| v1.2.0 | 2026-06-14 | `c6496a9` | **Refactor arquitectónico + scaffolding Fase 2.** (a) Home queda solo con el Hero; cada item del nav (`Mapa`, `Sobre`, `Resumen`, `Política pública`, `Biblioteca`, `Equipo`, `Datos`) pasa a su propia ruta. Nuevo item "Inicio" + nombre del nodo clickable. Header con `NavLink` de react-router y estado activo visual. Footer `EcoLink` interno vs externo. Hero CTAs con `<Link>`. (b) Groundwork de Fase 2: `.gitignore` extendido a `data/ *.pdf *.db *.sqlite outputs/`, PDF del libro reubicado a `data/referencias/`, notebook Jupyter de 23 celdas con pipeline IDEAM 2017–2026, lista de 150 estaciones poblada desde producción, dependencias Python instaladas, smoke test celda 1 ejecutado. (c) Incorpora cambios externos: lazy `BarChart` en `/resumen`, `robots.txt`, `sitemap.xml`, logos oficiales SIC en Header, 5 imágenes WebP. Resuelve 5 marcadores de conflicto de merge en este propio documento. |
 | v1.1.0 | 2026-06-03 | `77c135f` | MVP completo (11/11 secciones). Cierre de la última sección pendiente `#resumen` (Hallazgos: 3 métricas grandes, `BarChart` Mann-Kendall, 4 tarjetas de hallazgos y nota metodológica con cita ISBN) + pasada tipográfica eliminando 56 em-dashes visibles + eliminación del componente muerto `PlaceholderSection`. |
 | v1.0.1 | 2026-05-18 | `4b95d1c` / `5c40948` | Cierre de P0 SEO (favicon + apple-touch-icon + og-image), ocultamiento del enlace prematuro a `obs-suelos-huila` e implementación de la sección `#politica` con 12 instrumentos oficiales en 4 niveles (Global / Nacional / Departamental / Municipal). |
 | v1.0.0 | 2026-05-18 | `7eb02e0` | Creación del documento. Estado del nodo tras cierre del MVP (Sesiones 1–5 + correcciones de período de datos, filtros del mapa, catálogo descargable, sección Sobre, sección Equipo y pasada de calidad). |
@@ -500,6 +502,39 @@ ea54cef  fix: add postcss config so Tailwind directives compile
 
 ---
 
-*CENIGAA_STATUS_obs-clima-huila.md v1.2.0 — 2026-06-14*
+*CENIGAA_STATUS_obs-clima-huila.md v1.3.0 — 2026-06-17*
 *Auditor: agente Claude Code · Branch `main` · Repositorio `cenigaa-obs-clima-huila`*
-*Próxima revisión sugerida: al regenerar `sitemap.xml` con las 9 rutas (P1), al correr la primera Lighthouse baseline tras el refactor multi-ruta (P1), o al ejecutar la primera corrida real del Módulo 1 del notebook de Fase 2 (P1).*
+*Próxima revisión sugerida: al automatizar la actualización del `enso-estado.json` con la API NOAA (prevista jul 2026), al correr la primera Lighthouse baseline tras `/enso` (P1), o al ejecutar la primera corrida real del Módulo 1 del notebook de Fase 2 (P1).*
+
+---
+
+## Anexo v1.3.0 — Subpágina `/enso`
+
+### Archivos creados
+
+| Ruta | Tipo | Notas |
+|---|---|---|
+| `public/data/enso-estado.json` | Datos JSON | Único archivo fuente de verdad para todos los bloques dinámicos. Estructura: `_meta`, `estado_actual`, `linea_tiempo` (7 ítems), `indicadores` (3), `geovisores` (3 — NOAA, C3S, IRI). Actualización manual semanal hasta integración con API NOAA prevista jul 2026. |
+| `src/components/sections/Enso.jsx` | Componente | Página única con 8 bloques (Hero + 7 contenido). Hook `useEnsoData` con `fetch` + `AbortController` y estados loading/error explícitos. Sin dependencias npm nuevas. |
+
+### Archivos modificados
+
+- `src/App.jsx` — import + `<Route path="/enso" element={<Layout><Enso /></Layout>} />`
+- `src/components/layout/Header.jsx` — nuevo item `{ to: '/enso', label: 'El Niño 2026' }` en `NAV_LINKS`
+- `public/sitemap.xml` — expandido de 2 a 10 URLs con `/enso` en prioridad 0.9
+
+### Decisiones técnicas
+
+1. **Sin react-helmet.** El proyecto no tiene helmet ni mecanismo de meta tags por ruta — el `<title>` y `<meta description>` viven en `index.html` y aplican globalmente. Por eso se omitió el PASO 6 (SEO por ruta) del prompt y queda como pendiente menor.
+2. **Tailwind arbitrary values mantenidos.** La restricción "sin JIT custom values" entra en contradicción con la convención del resto del repo (uso intensivo de `[#4A60D8]`, `[#162341]`, etc.). Se mantuvo la convención existente para no crear inconsistencia visual; mover los colores brand a `tailwind.config.js` queda como refactor amplio fuera del scope de esta sesión.
+3. **Em-dashes preservados en el JSON.** El JSON pegado por el usuario contiene em-dashes (U+2014) en varios títulos y fuentes. Se conservó literalmente (instrucción "contenido exacto") aunque la regla de estilo del proyecto los desaconseja. Para limpiarlos sin alterar la fuente: hacer una pasada manual sobre `enso-estado.json` reemplazando ` — ` por ` · ` o `, ` según contexto.
+4. **`animate-ping` para el ítem "presente"** de la línea de tiempo en lugar de un keyframe custom — usa la utilidad nativa de Tailwind, sin CSS extra.
+5. **Botones por geovisor diferenciados por `id`** (geo-01 / geo-02 / geo-03) en lugar de un schema genérico, porque cada agencia expone URLs distintas (NOAA: condiciones + probabilidades; C3S: pronóstico + gráficos; IRI: Quick Look único).
+6. **Sitemap regenerado completo.** Aprovechando la actualización, se incluyeron las 10 rutas reales del sitio (cumpliendo el P1 abierto desde v1.2.0).
+
+### Pendientes detectados
+
+- 🟠 **Automatizar actualización JSON.** El campo `_meta.ciclo` ya documenta que es manual hasta jul 2026. Implementar un fetch semanal a NOAA/CPC ENSO advisory cuando se aborde la integración API.
+- 🟡 **Em-dashes en `enso-estado.json`.** Pendiente pasada tipográfica si se quiere alinear con la regla de estilo del resto del sitio.
+- 🟡 **SEO por ruta.** `/enso` hereda el `<title>` global. Considerar agregar react-helmet o `<title>` dinámico vía `useEffect` si se quiere SEO/share preview específico por subpágina.
+- 🟢 **Bloque 6 placeholder.** El "Seguimiento con estaciones automáticas del Huila" queda explícitamente marcado "en construcción" hasta Q3 2026 (alineado con la descripción del propio prompt).

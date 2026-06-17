@@ -11,6 +11,7 @@ import Equipo            from './components/sections/Equipo'
 import DatosAbiertos     from './components/sections/DatosAbiertos'
 import Aliados           from './components/sections/Aliados'
 import HomenajeEfrain    from './components/sections/HomenajeEfrain'
+import Enso              from './components/sections/Enso'
 import PoliticaSection   from './components/sections/PoliticaSection'
 import ResumenSection    from './components/sections/ResumenSection'
 import { useResumenDepartamento, useEstaciones } from './hooks/useDataLoader'
@@ -181,6 +182,7 @@ export default function App() {
         <Route path="/biblioteca"  element={<Layout><BibliotecaPage /></Layout>} />
         <Route path="/equipo"      element={<Layout><EquipoPage /></Layout>} />
         <Route path="/datos"       element={<Layout><DatosPage /></Layout>} />
+        <Route path="/enso"        element={<Layout><Enso /></Layout>} />
         <Route path="/efrain"      element={<Layout><HomenajeEfrain /></Layout>} />
       </Routes>
 

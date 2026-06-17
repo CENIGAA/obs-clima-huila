@@ -48,6 +48,7 @@ function MobileNavItem({ to, children, onClick }) {
 const NAV_LINKS = [
   { to: '/',           label: 'Inicio' },
   { to: '/mapa',       label: 'Mapa' },
+  { to: '/enso',       label: 'El Niño 2026' },
   { to: '/sobre',      label: 'Sobre' },
   { to: '/resumen',    label: 'Resumen' },
   { to: '/politica',   label: 'Política pública' },
