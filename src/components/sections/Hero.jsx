@@ -79,6 +79,10 @@ export default function Hero({ resumenData }) {
 
       {/* ── Contenido ──────────────────────────────────────── */}
       <div className="container-main relative z-10 py-16 lg:py-24">
+        <div className="grid gap-12 lg:grid-cols-[1fr_minmax(0,440px)] lg:gap-14 lg:items-center">
+
+          {/* Columna izquierda: texto del hero */}
+          <div className="min-w-0">
 
         {/* Supra-título: red ROGAA */}
         <div
@@ -235,6 +239,47 @@ export default function Hero({ resumenData }) {
             <span>Fuente: CCYVCE_DB · SGR Conv. 124/2015</span>
           </div>
         )}
+
+          </div>
+          {/* /Columna izquierda */}
+
+          {/* Columna derecha: portada Plan Huila 2050 */}
+          <div
+            className="fade-up flex justify-center lg:justify-end"
+            style={{ animationDelay: '180ms' }}
+          >
+            <figure className="relative max-w-[440px] w-full">
+              <div
+                className="
+                  relative aspect-[1394/1760] rounded-2xl overflow-hidden
+                  shadow-2xl ring-1 ring-white/15
+                  bg-[#0f1830]
+                "
+              >
+                <img
+                  src="/assets/Portada_Plan_Huila2050.png"
+                  alt="Portada del Plan de Cambio Climático Huila 2050 — Gobernación del Huila y CAM"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  fetchpriority="high"
+                />
+                {/* Glow brand-blue de profundidad */}
+                <div
+                  className="absolute -inset-px rounded-2xl pointer-events-none"
+                  aria-hidden="true"
+                  style={{
+                    boxShadow: 'inset 0 0 0 1px rgba(74,96,216,0.15)',
+                  }}
+                />
+              </div>
+              <figcaption className="mt-3 text-center text-[11.5px] tracking-[0.12em] uppercase text-neutral-500">
+                Plan de Cambio Climático <span className="text-neutral-300 font-semibold">Huila 2050</span>
+              </figcaption>
+            </figure>
+          </div>
+
+        </div>
+        {/* /grid 2-col */}
       </div>
 
       {/* ── Indicador scroll ───────────────────────────────── */}
