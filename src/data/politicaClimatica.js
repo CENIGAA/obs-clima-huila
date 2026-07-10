@@ -34,6 +34,7 @@ export const politicaClimatica = [
         descripcion:
           'Objetivo de Desarrollo Sostenible 13 de la Agenda 2030. Metas de resiliencia, adaptación e integración del cambio climático en políticas nacionales.',
         url: 'https://www.un.org/sustainabledevelopment/es/climate-action/',
+        logo: '/assets/logos/S-WEB-Goal-13.png',
         vigente: true,
       },
     ],

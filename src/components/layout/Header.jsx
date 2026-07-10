@@ -1,8 +1,36 @@
-import { useState, useEffect, useCallback } from 'react'
-import { NavLink as RouterNavLink, Link } from 'react-router-dom'
-import { Menu, X, Cloud, ChevronRight, ExternalLink } from 'lucide-react'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { NavLink as RouterNavLink, Link, useLocation } from 'react-router-dom'
+import { Menu, X, Cloud, ChevronRight, ChevronDown, ExternalLink } from 'lucide-react'
 
-// ─── Item nav desktop — usa NavLink de react-router para estado activo ──────
+// ─── Navegación agrupada por temática ───────────────────────────────────────
+// Cada entrada es o bien un enlace directo (to) o un grupo desplegable (items).
+const NAV_GROUPS = [
+  {
+    label: 'Datos y Monitoreo',
+    items: [
+      { to: '/mapa',    label: 'Mapa' },
+      { to: '/resumen', label: 'Resumen' },
+      { to: '/enso',    label: 'El Niño 2026' },
+      { to: '/datos',   label: 'Datos' },
+    ],
+  },
+  {
+    label: 'Recursos',
+    items: [
+      { to: '/biblioteca', label: 'Biblioteca' },
+      { to: '/politica',   label: 'Política pública' },
+    ],
+  },
+  {
+    label: 'El Observatorio',
+    items: [
+      { to: '/sobre',  label: 'Sobre' },
+      { to: '/equipo', label: 'I+D+i' },
+    ],
+  },
+]
+
+// ─── Enlace directo desktop · NavLink con estado activo ─────────────────────
 function NavItem({ to, children, onClick }) {
   return (
     <RouterNavLink
@@ -23,7 +51,94 @@ function NavItem({ to, children, onClick }) {
   )
 }
 
-// ─── Item nav móvil ─────────────────────────────────────────────────────────
+// ─── Grupo desplegable desktop ───────────────────────────────────────────────
+function NavDropdown({ group }) {
+  const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+  const closeTimer = useRef(null)
+
+  // ¿Alguna ruta del grupo está activa?
+  const groupActive = group.items.some(item => pathname === item.to)
+
+  // Cerrar al cambiar de ruta
+  useEffect(() => { setOpen(false) }, [pathname])
+
+  // Abrir/cerrar con retraso suave para el hover
+  const openNow = useCallback(() => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    setOpen(true)
+  }, [])
+  const closeSoon = useCallback(() => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    closeTimer.current = setTimeout(() => setOpen(false), 120)
+  }, [])
+  useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current) }, [])
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={openNow}
+      onMouseLeave={closeSoon}
+      onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false) }}
+    >
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        onKeyDown={(e) => { if (e.key === 'Escape') setOpen(false) }}
+        aria-haspopup="true"
+        aria-expanded={open}
+        className={`
+          flex items-center gap-1 text-[13.5px] font-medium
+          transition-colors duration-200
+          ${groupActive || open ? 'text-[#4A60D8]' : 'text-neutral-600 hover:text-[#4A60D8]'}
+        `}
+      >
+        {group.label}
+        <ChevronDown
+          size={14}
+          className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          aria-hidden="true"
+        />
+      </button>
+
+      {/* Panel desplegable */}
+      <div
+        className={`
+          absolute top-full left-1/2 -translate-x-1/2 mt-2 min-w-[190px]
+          bg-white rounded-xl border border-neutral-100
+          shadow-[0_12px_32px_-8px_rgba(22,35,65,0.18)]
+          p-1.5 origin-top
+          transition-all duration-200
+          ${open
+            ? 'opacity-100 translate-y-0 pointer-events-auto'
+            : 'opacity-0 -translate-y-1 pointer-events-none'
+          }
+        `}
+        role="menu"
+      >
+        {group.items.map(item => (
+          <RouterNavLink
+            key={item.to}
+            to={item.to}
+            role="menuitem"
+            className={({ isActive }) => `
+              block px-3 py-2 rounded-lg text-[13.5px] font-medium whitespace-nowrap
+              transition-colors duration-150
+              ${isActive
+                ? 'text-[#4A60D8] bg-[#EEF1FB]'
+                : 'text-neutral-600 hover:text-[#4A60D8] hover:bg-[#EEF1FB]'
+              }
+            `}
+          >
+            {item.label}
+          </RouterNavLink>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ─── Enlace directo móvil ────────────────────────────────────────────────────
 function MobileNavItem({ to, children, onClick }) {
   return (
     <RouterNavLink
@@ -44,18 +159,56 @@ function MobileNavItem({ to, children, onClick }) {
   )
 }
 
-// ─── Items del menú: una ruta por entrada ───────────────────────────────────
-const NAV_LINKS = [
-  { to: '/',           label: 'Inicio' },
-  { to: '/mapa',       label: 'Mapa' },
-  { to: '/enso',       label: 'El Niño 2026' },
-  { to: '/sobre',      label: 'Sobre' },
-  { to: '/resumen',    label: 'Resumen' },
-  { to: '/politica',   label: 'Política pública' },
-  { to: '/biblioteca', label: 'Biblioteca' },
-  { to: '/equipo',     label: 'Equipo' },
-  { to: '/datos',      label: 'Datos' },
-]
+// ─── Grupo desplegable móvil (acordeón) ──────────────────────────────────────
+function MobileNavGroup({ group, onNavigate }) {
+  const { pathname } = useLocation()
+  const groupActive = group.items.some(item => pathname === item.to)
+  const [open, setOpen] = useState(groupActive)
+
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={() => setOpen(v => !v)}
+        aria-expanded={open}
+        className={`
+          flex items-center justify-between w-full py-3 px-4 rounded-lg
+          text-[15px] font-medium transition-colors duration-150
+          ${groupActive ? 'text-[#4A60D8]' : 'text-neutral-700 hover:text-[#4A60D8] hover:bg-[#EEF1FB]'}
+        `}
+      >
+        <span>{group.label}</span>
+        <ChevronDown
+          size={16}
+          className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          aria-hidden="true"
+        />
+      </button>
+
+      {open && (
+        <div className="ml-3 pl-2 border-l border-neutral-200 mt-0.5 mb-1">
+          {group.items.map(item => (
+            <RouterNavLink
+              key={item.to}
+              to={item.to}
+              onClick={onNavigate}
+              className={({ isActive }) => `
+                flex items-center py-2.5 px-4 text-[14px] font-medium rounded-lg
+                transition-colors duration-150
+                ${isActive
+                  ? 'text-[#4A60D8] bg-[#EEF1FB]'
+                  : 'text-neutral-600 hover:text-[#4A60D8] hover:bg-[#EEF1FB]'
+                }
+              `}
+            >
+              {item.label}
+            </RouterNavLink>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -159,15 +312,15 @@ export default function Header() {
             className="hidden lg:flex items-center gap-5 xl:gap-6"
             aria-label="Navegación principal"
           >
-            {NAV_LINKS.map(link => (
-              <NavItem key={link.to} to={link.to}>
-                {link.label}
-              </NavItem>
+            {NAV_GROUPS.map(group => (
+              group.items
+                ? <NavDropdown key={group.label} group={group} />
+                : <NavItem key={group.to} to={group.to}>{group.label}</NavItem>
             ))}
 
             {/* CTA: ROGAA externo */}
             <a
-              href="https://www.cenigaa.org"
+              href="https://www.cenigaa.org/views/rogaa.html"
               target="_blank"
               rel="noopener noreferrer"
               className="
@@ -234,6 +387,7 @@ export default function Header() {
           lg:hidden
           bg-white border-b border-neutral-200
           shadow-xl
+          max-h-[calc(100vh-var(--header-height))] overflow-y-auto
           transition-all duration-300 ease-out
           ${menuOpen
             ? 'opacity-100 translate-y-0 pointer-events-auto'
@@ -244,10 +398,10 @@ export default function Header() {
         aria-hidden={!menuOpen}
       >
         <div className="container-main py-3">
-          {NAV_LINKS.map(link => (
-            <MobileNavItem key={link.to} to={link.to} onClick={closeMenu}>
-              {link.label}
-            </MobileNavItem>
+          {NAV_GROUPS.map(group => (
+            group.items
+              ? <MobileNavGroup key={group.label} group={group} onNavigate={closeMenu} />
+              : <MobileNavItem key={group.to} to={group.to} onClick={closeMenu}>{group.label}</MobileNavItem>
           ))}
 
           {/* Separador */}
@@ -255,7 +409,7 @@ export default function Header() {
 
           {/* CTA móvil */}
           <a
-            href="https://www.cenigaa.org"
+            href="https://www.cenigaa.org/views/rogaa.html"
             target="_blank"
             rel="noopener noreferrer"
             onClick={closeMenu}

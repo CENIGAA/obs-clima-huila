@@ -1,5 +1,5 @@
 # CENIGAA_CONTEXT.md
-**Archivo de contexto institucional — ecosistema web CENIGAA**
+**Archivo de contexto institucional · ecosistema web CENIGAA**
 **Para uso de Claude Code en todos los repositorios del ecosistema**
 Versión: 1.1 | Fecha: Mayo 2026 | Administrador: Jorge I. Chavarro D.
 
@@ -15,10 +15,10 @@ Eres el agente de desarrollo web del ecosistema CENIGAA. Antes de ejecutar cualq
 
 ## 1. IDENTIDAD INSTITUCIONAL
 
-**Nombre completo:** Centro de Investigación en Ciencias y Recursos GeoAgroAmbientales — CENIGAA
+**Nombre completo:** Centro de Investigación en Ciencias y Recursos GeoAgroAmbientales · CENIGAA
 **Concepto GeoAgroAmbiental:** Enfoque transversal Energía–Agricultura–Ambiente orientado al desarrollo territorial sostenible
 **Slogan registrado SIC:** **DESARROLLO SUSTENTABLE**
-**Naturaleza jurídica:** ESAL — Entidad Sin Ánimo de Lucro, derecho privado, carácter científico y tecnológico
+**Naturaleza jurídica:** ESAL · Entidad Sin Ánimo de Lucro, derecho privado, carácter científico y tecnológico
 **NIT:** 900345215-2
 **Origen:** Neiva, Huila, Colombia. Fundada marzo 2010 como spin-off de grupos de investigación
 **Marca registrada:** SIC (Superintendencia de Industria y Comercio)
@@ -30,10 +30,10 @@ Eres el agente de desarrollo web del ecosistema CENIGAA. Antes de ejecutar cualq
 ## 2. INFRAESTRUCTURA TÉCNICA
 
 ### Stack tecnológico
-- **Cloud:** Microsoft Azure (licencia nonprofit — $2.000 USD/año cómputo)
+- **Cloud:** Microsoft Azure (licencia nonprofit · $2.000 USD/año cómputo)
 - **Hosting:** Azure Static Web Apps
 - **Backend/dinámica:** Azure Functions (serverless)
-- **Repositorios:** GitHub — un repositorio por proyecto, sin mezcla
+- **Repositorios:** GitHub · un repositorio por proyecto, sin mezcla
 - **Identidad visual:** Manual de marca SIC (Canva Pro, licencia nonprofit)
 - **CI/CD:** GitHub Actions → Azure Static Web Apps
 
@@ -52,17 +52,17 @@ staticwebapp.config.json        ← configuración Azure SWA
 
 ### Tokens de color oficiales (Manual de Marca SIC)
 ```css
---color-brand-blue:    #4A60D8;   /* Pantone 2726c — Agua/Ambiente */
---color-brand-green:   #43B02A;   /* Pantone 361c  — Agricultura   */
---color-brand-orange:  #F4511E;   /* Pantone 171c  — Energía       */
---color-brand-navy:    #162341;   /* Pantone 282c  — Institucional  */
+--color-brand-blue:    #4A60D8;   /* Pantone 2726c · Agua/Ambiente */
+--color-brand-green:   #43B02A;   /* Pantone 361c  · Agricultura   */
+--color-brand-orange:  #F4511E;   /* Pantone 171c  · Energía       */
+--color-brand-navy:    #162341;   /* Pantone 282c  · Institucional  */
 ```
 
 ### Tipografía oficial web
-- **Inter** (Google Fonts) — fuente oficial para todas las aplicaciones digitales
-- Familia Astera — exclusiva del wordmark del imagotipo, no disponible en web
+- **Inter** (Google Fonts) · fuente oficial para todas las aplicaciones digitales
+- Familia Astera · exclusiva del wordmark del imagotipo, no disponible en web
 
-### Lección aprendida — staticwebapp.config.json
+### Lección aprendida · staticwebapp.config.json
 ```
 ⚠️ navigationFallback NO usar en sitios HTML estático con paths
 relativos en subpáginas (/views/). Rompe carga de CSS/JS.
@@ -73,23 +73,23 @@ Solo usar en SPAs (React/Vue). Reintroducir solo tras pruebas en staging.
 
 ## 3. MAPA DE NODOS WEB DEL ECOSISTEMA
 
-### CAPA A — Producción activa
+### CAPA A · Producción activa
 
 | Subdominio | Repositorio | Tipo | Estado |
 |---|---|---|---|
-| www.cenigaa.org | cenigaa-www | Estático — HTML/CSS/JS vanilla | ✅ Activo |
-| gaaialab.cenigaa.org | cenigaa-gaaialab | Dinámico — React + Vite | ✅ Activo |
-| obs-clima-huila.cenigaa.org | cenigaa-obs-clima-huila | Dinámico — React + Vite + Leaflet | ✅ Activo — ROGAA Nodo 1 |
+| www.cenigaa.org | cenigaa-www | Estático · HTML/CSS/JS vanilla | ✅ Activo |
+| gaaialab.cenigaa.org | cenigaa-gaaialab | Dinámico · React + Vite | ✅ Activo |
+| obs-clima-huila.cenigaa.org | cenigaa-obs-clima-huila | Dinámico · React + Vite + Leaflet | ✅ Activo · ROGAA Nodo 1 |
 
-### CAPA B — Desarrollo prioritario
+### CAPA B · Desarrollo prioritario
 
 | Subdominio | Tipo | Prioridad | Estado |
 |---|---|---|---|
-| museosuelos.cenigaa.org | Dinámico — React + Leaflet + Azure Functions | 1 | 🔧 En desarrollo |
-| observatorio.cenigaa.org | Hub ROGAA — agrupa 5 observatorios | 2 | 📋 Por iniciar |
-| cacao.cenigaa.org | Dinámico — datos territoriales | 3 | 📋 Doc técnico disponible |
+| museosuelos.cenigaa.org | Dinámico · React + Leaflet + Azure Functions | 1 | 🔧 En desarrollo |
+| observatorio.cenigaa.org | Hub ROGAA · agrupa 5 observatorios | 2 | 📋 Por iniciar |
+| cacao.cenigaa.org | Dinámico · datos territoriales | 3 | 📋 Doc técnico disponible |
 
-### CAPA C — Pendientes con identidad definida
+### CAPA C · Pendientes con identidad definida
 
 | Subdominio | Tipo | Estado |
 |---|---|---|
@@ -103,7 +103,7 @@ Solo usar en SPAs (React/Vue). Reintroducir solo tras pruebas en staging.
 | dengue.cenigaa.org | Servicio IA | Sin doc técnico |
 | dona.cenigaa.org | Donaciones ESAL | ⏸ Revisión legal |
 
-### CAPA D — Fase futura
+### CAPA D · Fase futura
 
 | Subdominio | Tipo | Estado |
 |---|---|---|
@@ -111,18 +111,18 @@ Solo usar en SPAs (React/Vue). Reintroducir solo tras pruebas en staging.
 
 ---
 
-## 4. ARQUITECTURA INSTITUCIONAL — LAS TRES CAPAS
+## 4. ARQUITECTURA INSTITUCIONAL · LAS TRES CAPAS
 
 ### Capa 1: Grupos de Investigación
 Producen conocimiento científico → publicaciones, proyectos CTI
 
 | Grupo | Líder | Nota |
 |---|---|---|
-| DSGAA — Dinámica de Sistemas GeoAgroAmbientales | PhD Wilfredo Marimon Bolívar | Minciencias Categoría A |
-| GHIDA — HidroIngeniería y Desarrollo Agropecuario | PhD Jaime Izquierdo Bautista | |
-| ECOSURC — Ecosistemas Surcolombianos | PhD Alfredo Olaya Amaya | |
-| GIPE — Productivity and Environment | PhD Freddy Humberto Escobar Macualo | |
-| COFA — Comportamiento de Fases | MSc Jairo Antonio Sepúlveda Gaona | |
+| DSGAA · Dinámica de Sistemas GeoAgroAmbientales | PhD Wilfredo Marimon Bolívar | Minciencias Categoría A |
+| GHIDA · HidroIngeniería y Desarrollo Agropecuario | PhD Jaime Izquierdo Bautista | |
+| ECOSURC · Ecosistemas Surcolombianos | PhD Alfredo Olaya Amaya | |
+| GIPE · Productivity and Environment | PhD Freddy Humberto Escobar Macualo | |
+| COFA · Comportamiento de Fases | MSc Jairo Antonio Sepúlveda Gaona | |
 | Food Science & Agroenvironmental Quality | Amalia Molina Chaux | |
 | GeoIA | Juan Camilo Salas Díaz | |
 | Hidroinformática | Jorge I. Chavarro D. | |
@@ -130,20 +130,20 @@ Producen conocimiento científico → publicaciones, proyectos CTI
 ### Capa 2: Unidades Especializadas de Servicios Tecnológicos
 Traducen conocimiento en servicios contratables
 
-- **INTECC** — Inteligencia Competitiva CENIGAA → sección en www.cenigaa.org
-- **Academy for Scientists** — Apropiación social del conocimiento → sección en www.cenigaa.org
-- **LABGAA Mobile** — Laboratorio móvil de reacción inmediata → sección en www.cenigaa.org
-- **GAA+IA Lab** — Cómputo científico e IA → **gaaialab.cenigaa.org** (subdominio propio)
-- **Innovación Exponencial** — Plataforma de emprendimiento → sección en www.cenigaa.org
+- **INTECC** · Inteligencia Competitiva CENIGAA → sección en www.cenigaa.org
+- **Academy for Scientists** · Apropiación social del conocimiento → sección en www.cenigaa.org
+- **LABGAA Mobile** · Laboratorio móvil de reacción inmediata → sección en www.cenigaa.org
+- **GAA+IA Lab** · Cómputo científico e IA → **gaaialab.cenigaa.org** (subdominio propio)
+- **Innovación Exponencial** · Plataforma de emprendimiento → sección en www.cenigaa.org
 
 ### Capa 3: Marcas EBT (registro SIC)
 Emprendimientos de base tecnológica derivados de investigación
 
-- **DOUBLEE** — Energía–Ambiente
-- **HBS HidroBioSistemas** — Agricultura–Ambiente
-- **INTECC** — Inteligencia Competitiva
-- **GEO Processing** — Data Science, ML, HPC
-- **Agribusiness 4.0 (AGB4)** — Agronegocios sostenibles
+- **DOUBLEE** · Energía–Ambiente
+- **HBS HidroBioSistemas** · Agricultura–Ambiente
+- **INTECC** · Inteligencia Competitiva
+- **GEO Processing** · Data Science, ML, HPC
+- **Agribusiness 4.0 (AGB4)** · Agronegocios sostenibles
 
 ---
 
@@ -155,11 +155,11 @@ de datos territorial de CENIGAA. Cinco nodos temáticos + un hub central.
 | Nodo | Subdominio | Estado |
 |---|---|---|
 | Hub central | observatorios.cenigaa.org | 📋 Por crear |
-| Nodo 1 — Climático | obs-clima-huila.cenigaa.org | ✅ En producción |
-| Nodo 2 — Suelos | obs-suelos-huila.cenigaa.org | 📋 Futuro |
-| Nodo 3 — Hídrico | obs-hidrico-huila.cenigaa.org | 📋 Futuro |
-| Nodo 4 — Cobertura | obs-cobertura-huila.cenigaa.org | 📋 Futuro |
-| Nodo 5 — Socio-Espacial | obs-socio-huila.cenigaa.org | 📋 Futuro |
+| Nodo 1 · Climático | obs-clima-huila.cenigaa.org | ✅ En producción |
+| Nodo 2 · Suelos | obs-suelos-huila.cenigaa.org | 📋 Futuro |
+| Nodo 3 · Hídrico | obs-hidrico-huila.cenigaa.org | 📋 Futuro |
+| Nodo 4 · Cobertura | obs-cobertura-huila.cenigaa.org | 📋 Futuro |
+| Nodo 5 · Socio-Espacial | obs-socio-huila.cenigaa.org | 📋 Futuro |
 
 ---
 
@@ -168,7 +168,7 @@ de datos territorial de CENIGAA. Cinco nodos temáticos + un hub central.
 ### Identidad visual
 - Aplicar siempre el manual de marca CENIGAA (tokens SIC en sección 2)
 - Nunca improvisar paletas o tipografías fuera del manual
-- El logo tiene registro SIC — usarlo exactamente como está definido
+- El logo tiene registro SIC · usarlo exactamente como está definido
 - Slogan en aplicaciones digitales: **DESARROLLO SUSTENTABLE** (versalitas)
 
 ### Comunicación científica
@@ -197,7 +197,7 @@ de datos territorial de CENIGAA. Cinco nodos temáticos + un hub central.
 | Director General | Jorge I. Chavarro D. | jorge.chavarro@cenigaa.org |
 | Director Científico | Dr. Armando Torrente Trujillo | armando.torrente@cenigaa.org |
 | Secretario General | Cristian Eduardo Cifuentes Céspedes | cristian.cifuentes@cenigaa.org |
-| Directora CENIGAA EU | Amalia Molina Chaux | — |
+| Directora CENIGAA EU | Amalia Molina Chaux | · |
 
 ---
 
@@ -217,7 +217,7 @@ de datos territorial de CENIGAA. Cinco nodos temáticos + un hub central.
 
 ---
 
-*CENIGAA_CONTEXT.md v1.1 — Mayo 2026*
+*CENIGAA_CONTEXT.md v1.1 · Mayo 2026*
 *Reemplaza la versión v1.0. Cambios: slogan corregido a "DESARROLLO SUSTENTABLE",
 obs-clima-huila añadido a CAPA A, red ROGAA-Huila documentada,
 líderes de grupos incorporados, lección staticwebapp.config.json registrada.*

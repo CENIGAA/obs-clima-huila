@@ -147,7 +147,7 @@ vite.config.ts.timestamp-*
 .claude/
 .DS_Store
 
-# Fase 2 — datos locales, no van al sitio web (data/ en la raíz; public/data/ SÍ se publica)
+# Fase 2 · datos locales, no van al sitio web (data/ en la raíz; public/data/ SÍ se publica)
 /data/
 *.pdf
 *.db

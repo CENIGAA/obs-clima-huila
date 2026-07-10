@@ -1,11 +1,11 @@
-# Observatorio Climático del Huila — "Efraín Domínguez Calle"
+# Observatorio Climático del Huila · "Efraín Domínguez Calle"
 
 **CENIGAA · Red ROGAA-Huila · Nodo 1 de 5**
 
 > Primera plataforma pública de referencia climática departamental del Huila.
 
 🌐 **Web:** [obs-clima-huila.cenigaa.org](https://obs-clima-huila.cenigaa.org)  
-🏛 **Institución:** [CENIGAA](https://www.cenigaa.org) — Centro de Investigación en Ciencias y Recursos GeoAgroAmbientales  
+🏛 **Institución:** [CENIGAA](https://www.cenigaa.org) · Centro de Investigación en Ciencias y Recursos GeoAgroAmbientales  
 🔬 **Grupo:** Hidroinformática CENIGAA  
 ⚗ **Infraestructura:** [GAA+IA Lab](https://gaaialab.cenigaa.org)  
 
@@ -66,7 +66,7 @@ npm run preview  # Preview del build
 - ✅ Plan Huila 2050: Preparándose para el Cambio Climático (CAM - Gobernación del Huila)
 - ✅ Plan de Cambio Climático del Municipio de Neiva
 - ✅ ODS 13: Acción por el clima
-- ✅ Horizonte Europa — Clusters 5 y 6
+- ✅ Horizonte Europa · Clusters 5 y 6
 
 ---
 
@@ -78,7 +78,7 @@ Este observatorio está dedicado a **Efraín Antonio Domínguez Calle (1960–20
 
 ## Licencia
 
-MIT License — Datos abiertos bajo política CENIGAA de ciencia abierta.
+MIT License · Datos abiertos bajo política CENIGAA de ciencia abierta.
 
 ---
 

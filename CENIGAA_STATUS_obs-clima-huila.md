@@ -1,13 +1,16 @@
 # CENIGAA_STATUS_obs-clima-huila.md
-**Estado del nodo — obs-clima-huila.cenigaa.org**
+**Estado del nodo · obs-clima-huila.cenigaa.org**
 **Observatorio Climático del Huila «Efraín Antonio Domínguez Calle»**
 **Nodo 1 de la Red ROGAA-Huila**
 
 | Versión | Fecha | Branch | Último commit | Estado |
 |---|---|---|---|---|
-| v1.5.0 | 2026-06-17 | `main` | `6ba6bc2` — *feat(enso): mapa Leaflet regiones hidrologicas Colombia #N2* | ✅ **Producción · `/enso` con mapa Leaflet real (escala nacional)** |
+| v1.6.0 | 2026-07-10 | `main` | (pendiente del commit `feat: menú desplegable + footer mínimo + I+D+i reestructurado`) | ✅ **Producción · navegación agrupada, footer institucional mínimo, sección I+D+i con grupos de investigación** |
+| v1.5.0 | 2026-06-17 | `main` | `6ba6bc2` · *feat(enso): mapa Leaflet regiones hidrologicas Colombia #N2* | ✅ `/enso` con mapa Leaflet real (escala nacional) |
 
-> Documento de auditoría — refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-06-17. v1.5.0 sustituye el mapa SVG conceptual del sub-bloque N2 (Bloque Escala Nacional de `/enso`) por un mapa **Leaflet real** con capa GeoJSON de las 5 regiones hidrológicas de Colombia (Natural Earth/IDEAM) sobre tiles CartoDB Light. Incluye tooltips por región con nivel de impacto El Niño 2026, hover con cambio de opacidad y un pin azul CENIGAA en el centroide real del Huila (2.5414°N, -75.6168°W). Adicionalmente, este commit consolida 33 marcadores de conflicto de merge que el documento arrastraba desde el merge `71c0c56`.
+> Documento de auditoría · refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-07-10. v1.6.0 reorganiza la navegación y el equipo: **menú agrupado en desplegables temáticos** (Datos y Monitoreo · Recursos · El Observatorio), se elimina el item redundante "Inicio" (el nombre del nodo ya enlaza a `/`), "Equipo" pasa a **"I+D+i"** y el CTA ROGAA apunta a `cenigaa.org/views/rogaa.html`. El **footer se reduce al mínimo** (fondo blanco) e incluye los logos de las entidades a cargo (Gobernación del Huila · CAM · CENIGAA · IDEAM). La sección **I+D+i** se divide en tres subcategorías (Talento Humano · Grupos de Investigación · Infraestructura): perfil de Jorge Chavarro con foto y LinkedIn + checklist de roles, nuevo **Grupo DSGAA**, y tarjetas horizontales con logo lateral grande (DSGAA, GAA+IA Lab). La dedicatoria a Efraín se movió a `/sobre`; se añadió el logo del ODS 13 en `/politica`. Se **eliminó el carácter em dash** de todo el proyecto (reemplazo por ·, -, N/D o :).
+>
+> v1.5.0 sustituyó el mapa SVG conceptual del sub-bloque N2 (Bloque Escala Nacional de `/enso`) por un mapa **Leaflet real** con capa GeoJSON de las 5 regiones hidrológicas de Colombia (Natural Earth/IDEAM) sobre tiles CartoDB Light. Incluye tooltips por región con nivel de impacto El Niño 2026, hover con cambio de opacidad y un pin azul CENIGAA en el centroide real del Huila (2.5414°N, -75.6168°W).
 
 ---
 
@@ -17,9 +20,9 @@
 |---|---|
 | Nombre público | Observatorio Climático del Huila «Efraín Antonio Domínguez Calle» |
 | Subdominio | `obs-clima-huila.cenigaa.org` |
-| Posición ecosistema | CAPA A · CENIGAA_CONTEXT.md §3 — **Nodo 1 ROGAA-Huila** |
+| Posición ecosistema | CAPA A · CENIGAA_CONTEXT.md §3 · **Nodo 1 ROGAA-Huila** |
 | Repositorio | `cenigaa-obs-clima-huila` (GitHub · CENIGAA) |
-| Tipo | Dinámico — SPA React + Vite + Leaflet + Recharts |
+| Tipo | Dinámico · SPA React + Vite + Leaflet + Recharts |
 | Hosting | Azure Static Web Apps (Standard) |
 | CI/CD | GitHub Actions → Azure SWA, deploy automático en push a `main` |
 | Dedicado a | Dr. Efraín Antonio Domínguez Calle (1969–2021) |
@@ -69,11 +72,16 @@ cenigaa-obs-clima-huila/
 │   ├── assets/
 │   │   ├── Nevado tatacoa.jpg / .webp                    ← .webp en v1.2.0 (14 MB → 2.1 MB)
 │   │   ├── efrain/                                       (6 retratos JPG + 4 .webp)
+│   │   ├── equipo/                                       ← v1.6.0 · fotos de perfil (Jorge_Chavarro.jpg + README)
 │   │   └── logos/
 │   │       ├── CAM.svg
 │   │       ├── CENIGAA.svg                               ← Header (fondo claro)
 │   │       ├── Gobernacion_Huila.png
-│   │       └── logo_cenigaa_T_Blanco.png                 ← Footer (fondo navy)
+│   │       ├── IDEAM.png                                 ← v1.6.0 · footer entidades
+│   │       ├── DSGAA.png                                 ← v1.6.0 · card grupo DSGAA
+│   │       ├── Logo_GAA+IA.png                           ← v1.6.0 · card GAA+IA Lab
+│   │       ├── S-WEB-Goal-13.png                         ← v1.6.0 · logo ODS 13 en /politica
+│   │       └── logo_cenigaa_T_Blanco.png                 ← (legacy footer navy · v1.6.0 footer usa fondo blanco)
 │   └── data/
 │       ├── catalogo_estaciones_CENIGAA.csv               ← descargable público
 │       ├── estaciones.json                               (150 estaciones)
@@ -94,8 +102,8 @@ cenigaa-obs-clima-huila/
     │   ├── tokens.css                                    (tokens SIC)
     │   └── global.css                                    (reset + @tailwind + utilidades)
     ├── components/layout/
-    │   ├── Header.jsx                                    ← v1.2.0 NavLink · v1.3.0 wordmark · v1.3.0 item /enso
-    │   └── Footer.jsx                                    ← v1.2.0 EcoLink to/href · v1.3.0 logo h-14→h-20
+    │   ├── Header.jsx                                    ← v1.6.0 menú agrupado en desplegables (desktop hover+click, móvil acordeón); CTA ROGAA → /views/rogaa.html
+    │   └── Footer.jsx                                    ← v1.6.0 rediseño mínimo (fondo blanco) + logos entidades a cargo (Gob. Huila · CAM · CENIGAA · IDEAM)
     └── components/sections/
         ├── Hero.jsx                                      ← v1.3.0 portada Plan Huila 2050 WebP+fallback
         ├── MapaEstaciones.jsx                            (con Filtros y Leyenda inline)
@@ -103,7 +111,7 @@ cenigaa-obs-clima-huila/
         ├── SobreObservatorio.jsx
         ├── ComoFunciona.jsx
         ├── Biblioteca.jsx
-        ├── Equipo.jsx
+        ├── Equipo.jsx                                    ← v1.6.0 "I+D+i": 3 subcategorías + perfil Jorge (foto/LinkedIn/roles) + Grupo DSGAA + tarjetas horizontales
         ├── DatosAbiertos.jsx
         ├── Aliados.jsx
         ├── PoliticaSection.jsx                           ← v1.0.1 · /politica
@@ -176,12 +184,12 @@ Hasta v1.1.0 todas las secciones se renderizaban apiladas en la home (`/`). **A 
 |---|---|---|---|
 | `/` | **Inicio** | `Hero` (94 años de registros, 150 estaciones, 37 municipios, CTAs a /mapa y /datos, portada Plan Huila 2050 WebP) | ✅ |
 | `/mapa` | **Mapa** | `MapaEstaciones` (filtros municipio/tendencia/estado, leyenda en vivo, panel 4 tabs vía `PanelEstacion`) | ✅ |
-| `/enso` | **El Niño 2026** | `Enso` — 8 bloques (Hero con alerta dinámica, editorial, línea de tiempo, 3 indicadores, 3 geovisores, **Escala nacional v1.4.0 con mapa Leaflet v1.5.0**, correlación histórica Huila, placeholder seguimiento local) | ✅ |
-| `/sobre` | **Sobre** | `SobreObservatorio` + `ComoFunciona` (6 componentes metodológicos) + `Aliados` (Gobernación, CAM, CENIGAA, IDEAM) | ✅ |
+| `/enso` | **El Niño 2026** | `Enso` · 8 bloques (Hero con alerta dinámica, editorial, línea de tiempo, 3 indicadores, 3 geovisores, **Escala nacional v1.4.0 con mapa Leaflet v1.5.0**, correlación histórica Huila, placeholder seguimiento local) | ✅ |
+| `/sobre` | **Sobre** | `SobreObservatorio` + `ComoFunciona` (6 componentes metodológicos) + `Aliados` (Gobernación, CAM, CENIGAA, IDEAM) + banda `Dedicatoria` memorial a Efraín (movida desde `/equipo` en v1.6.0) | ✅ |
 | `/resumen` | **Resumen** | `ResumenSection` (3 métricas, `LazyBarChart` Mann-Kendall 25/112/12, 4 hallazgos, nota metodológica con cita ISBN) | ✅ |
 | `/politica` | **Política pública** | `PoliticaSection` (12 instrumentos en 4 niveles: Global · Nacional · Departamental · Municipal) | ✅ |
 | `/biblioteca` | **Biblioteca** | `Biblioteca` (6 referencias curadas con APA y badges) | ✅ |
-| `/equipo` | **Equipo** | `Equipo` (Jorge Chavarro destacado + Grupo Hidroinformática + GAA+IA Lab) + banda `Dedicatoria` memorial a Efraín | ✅ |
+| `/equipo` | **I+D+i** | `Equipo` · 3 subcategorías: Talento Humano (Jorge Chavarro con foto, LinkedIn y checklist de roles) · Grupos de Investigación (Hidroinformática + DSGAA, tarjetas horizontales con logo lateral) · Infraestructura (GAA+IA Lab). Dedicatoria a Efraín movida a `/sobre` | ✅ **v1.6.0** |
 | `/datos` | **Datos** | `DatosAbiertos` (CSV catálogo descargable + cita APA + apuntador al panel de estación) | ✅ |
 | `/efrain` | (no en nav) | `HomenajeEfrain` (banner Nevado-Tatacoa WebP, retrato WebP, biografía, blockquote, ficha del libro con ISBN) | ✅ |
 
@@ -190,32 +198,35 @@ Hasta v1.1.0 todas las secciones se renderizaban apiladas en la home (`/`). **A 
 8 bloques alimentados desde `public/data/enso-estado.json` (actualización manual semanal hasta integración API NOAA prevista jul 2026):
 
 1. **Hero ENSO** con badge de alerta dinámico (color según fase: El Niño = naranja, La Niña = azul, Neutral = gris).
-2. **Editorial** — contexto científico del evento.
+2. **Editorial** · contexto científico del evento.
 3. **Línea de tiempo vertical** con marcador `animate-ping` en el ítem "presente" y borde verde en hitos.
-4. **Indicadores cuasi-real** — 3 cards con valor grande en naranja.
-5. **Geovisores internacionales** — botones que abren NOAA/PSL, Copernicus/ECMWF, IRI/Columbia en pestaña nueva.
-6. **Escala Nacional Colombia (v1.4.0 · refinado en v1.5.0)** — 4 sub-bloques:
+4. **Indicadores cuasi-real** · 3 cards con valor grande en naranja.
+5. **Geovisores internacionales** · botones que abren NOAA/PSL, Copernicus/ECMWF, IRI/Columbia en pestaña nueva.
+6. **Escala Nacional Colombia (v1.4.0 · refinado en v1.5.0)** · 4 sub-bloques:
    - **N1** · Tarjeta navy de alerta IDEAM (96% persistencia · 63% intensidad muy fuerte) con pulse animado.
    - **N2** · Grid 2 columnas con **mapa Leaflet real** (380 px) sobre tiles CartoDB Light + tabla de regiones con badges por nivel y row resaltado para Andina.
    - **N3** · Tarjeta blanca con blockquote "Señal en campo".
    - **N4** · Grid de 5 sectores en seguimiento.
-7. **Correlación histórica Huila** — 25/12/112 con LazyBarChart.
-8. **Placeholder seguimiento local** — 17 estaciones automáticas, Q3 2026.
+7. **Correlación histórica Huila** · 25/12/112 con LazyBarChart.
+8. **Placeholder seguimiento local** · 17 estaciones automáticas, Q3 2026.
 
-### Header de navegación
+### Header de navegación (reorganizado en v1.6.0)
 
-- **Desktop**: 9 items (`Inicio · Mapa · El Niño 2026 · Sobre · Resumen · Política pública · Biblioteca · Equipo · Datos`) + CTA externo "ROGAA → www.cenigaa.org" como pill navy.
-- **Item activo**: `NavLink` de react-router pinta el label en `#4A60D8` y la barra inferior queda al 100%.
-- **Wordmark de texto** desde v1.3.0 (commit `6e69dee`): se reemplazó el placeholder de imagen del logo en el menú por texto plano para evitar problemas de alineación responsive.
-- **Móvil**: mismas 9 entradas en overlay con estado activo `bg-[#EEF1FB]`.
+- **Navegación agrupada en desplegables temáticos** (ya no items planos). Se eliminó el item "Inicio" porque el nombre del nodo ya enlaza a `/`:
+  - **Datos y Monitoreo** → Mapa · Resumen · El Niño 2026 · Datos
+  - **Recursos** → Biblioteca · Política pública
+  - **El Observatorio** → Sobre · **I+D+i** (antes "Equipo", misma ruta `/equipo`)
+- **Desktop**: cada grupo abre panel al hover (cierre suave 120 ms) y con clic; chevron que rota, grupo resaltado si su ruta está activa, cierre con `Escape`/blur/navegación. Accesible (`aria-haspopup`, `aria-expanded`, `role="menu"`).
+- **Móvil**: cada grupo es un acordeón que se autoexpande si contiene la ruta activa; panel con scroll interno.
+- **CTA ROGAA**: pill navy que apunta a `www.cenigaa.org/views/rogaa.html`. El breadcrumb "CENIGAA" del logo sigue apuntando a la home principal.
+- **Wordmark de texto** desde v1.3.0 (commit `6e69dee`).
 
-### Footer
+### Footer (rediseño mínimo en v1.6.0)
 
-- **`EcoLink` refactorizado** (v1.2.0): acepta `to` (rutas internas via `<Link>`, sin reload) o `href` (URLs externas con `target=_blank rel=noopener`).
-- **Logo blanco agrandado** en v1.3.0 (`h-14 sm:h-16 lg:h-20`).
-- **Recursos** apunta a `/datos`, `/biblioteca`, `/mapa`, `/efrain` y el repo de GitHub (externo).
-- **Ecosistema CENIGAA** apunta a `www.cenigaa.org`, `gaaialab.cenigaa.org`, y el "← estás aquí" usa `to="/"`.
-- El enlace prematuro a `obs-suelos-huila.cenigaa.org` sigue comentado desde v1.0.1.
+- Reducido de 4 columnas + badges + dedicatoria a un footer mínimo: banda de color ROGAA + logos institucionales + una línea de copyright.
+- **Fondo blanco** con borde superior; texto oscuro (invertido respecto al navy previo).
+- **Logos de entidades a cargo** en orden oficial: Gobernación del Huila · CAM · CENIGAA · IDEAM (`h-12`, `object-contain`).
+- Se eliminaron `EcoLink`, columnas de Ecosistema/Recursos y los enlaces que solo vivían en el footer (repo GitHub, homenaje, datos abiertos, biblioteca).
 
 ---
 
@@ -236,9 +247,9 @@ Hasta v1.1.0 todas las secciones se renderizaban apiladas en la home (`/`). **A 
 
 ### JSON-LD
 
-- ✅ `ResearchOrganization` (CENIGAA) — name, alternateName, url, logo, address, contactPoint
-- ✅ `WebSite` — name, description, publisher (`@id` cruzado a la organización), `inLanguage: es-CO`
-- ✅ `Dataset` — 150 estaciones, `temporalCoverage: 1930-01-01/2017-12-31`, `spatialCoverage` con bounding box del Huila, `sourceOrganization: IDEAM`, `variableMeasured` (precipitación, MK, ENSO, distribuciones), `license: CC-BY 4.0`, `citation` APA al libro CC_VCE Huila
+- ✅ `ResearchOrganization` (CENIGAA) · name, alternateName, url, logo, address, contactPoint
+- ✅ `WebSite` · name, description, publisher (`@id` cruzado a la organización), `inLanguage: es-CO`
+- ✅ `Dataset` · 150 estaciones, `temporalCoverage: 1930-01-01/2017-12-31`, `spatialCoverage` con bounding box del Huila, `sourceOrganization: IDEAM`, `variableMeasured` (precipitación, MK, ENSO, distribuciones), `license: CC-BY 4.0`, `citation` APA al libro CC_VCE Huila
 
 ### Activos SEO
 
@@ -263,8 +274,8 @@ Hasta v1.1.0 todas las secciones se renderizaban apiladas en la home (`/`). **A 
 `vite.config.js` define `manualChunks` separando `leaflet`, `react-leaflet`, `recharts` y `lucide-react`. Tras el refactor multi-ruta de v1.2.0, cada chunk pesado se carga sólo donde aplica:
 
 - **`/`** carga sólo `index + vendor + icons + css` (≈ 244 KB sin gzip, ≈ 67 KB gzip)
-- **`/mapa`** suma `map-*.js` (289 KB) — Leaflet en panel de estaciones
-- **`/enso`** suma `map-*.js` (289 KB) y descarga `colombia-regiones-hidrologicas.geojson` (24 KB) — mapa Leaflet de regiones nacionales (v1.5.0)
+- **`/mapa`** suma `map-*.js` (289 KB) · Leaflet en panel de estaciones
+- **`/enso`** suma `map-*.js` (289 KB) y descarga `colombia-regiones-hidrologicas.geojson` (24 KB) · mapa Leaflet de regiones nacionales (v1.5.0)
 - **`/resumen`** y panel de estación suman `charts-*.js` (374 KB) bajo demanda
 - **`ResumenSection`** además usa `React.lazy(() => import('./LazyBarChart'))` para que `charts-*.js` se importe después del primer paint de la ruta
 
@@ -304,12 +315,12 @@ Objetivo `CENIGAA_CONTEXT.md §6`: ≥ 90 en Performance / Accessibility / Best 
 ### Otras optimizaciones
 
 - ✅ Carga lazy de datos por estación: `useEstacion(codigo)` con `AbortController` para cancelar fetches obsoletos
-- ✅ Mapa: `scrollWheelZoom: false` (consistente entre `/mapa` y el mapa nacional de `/enso`) — evita captura accidental del scroll de la página
-- ✅ Tiles CartoDB Positron (CDN público, gratis, atribuido) — preconnect implícito por subdominio
+- ✅ Mapa: `scrollWheelZoom: false` (consistente entre `/mapa` y el mapa nacional de `/enso`) · evita captura accidental del scroll de la página
+- ✅ Tiles CartoDB Positron (CDN público, gratis, atribuido) · preconnect implícito por subdominio
 - ✅ Google Fonts con `preconnect` a `fonts.googleapis.com` y `fonts.gstatic.com`
 - ✅ CSP estricta en `staticwebapp.config.json` (script-src 'self' + img-src https permite tiles)
 - ✅ `React.lazy(LazyBarChart)` para diferir Recharts en `/resumen` (v1.2.0)
-- ✅ Cleanup explícito del mapa Leaflet de `/enso` en el unmount (`map.remove()` + ref guard) — evita memory leak en navegación SPA
+- ✅ Cleanup explícito del mapa Leaflet de `/enso` en el unmount (`map.remove()` + ref guard) · evita memory leak en navegación SPA
 
 ---
 
@@ -319,19 +330,19 @@ Objetivo `CENIGAA_CONTEXT.md §6`: ≥ 90 en Performance / Accessibility / Best 
 
 | Ubicación | Tratamiento | rel/target |
 |---|---|---|
-| [Header.jsx](src/components/layout/Header.jsx) — breadcrumb superior izquierdo | Texto "CENIGAA" wordmark + chevron | ✅ `target=_blank` `rel=noopener noreferrer` |
-| [Header.jsx](src/components/layout/Header.jsx) — CTA desktop "ROGAA" | Pill navy → www.cenigaa.org | ✅ |
-| [Footer.jsx](src/components/layout/Footer.jsx) — logo footer | Link al sitio principal | ✅ |
-| [Footer.jsx](src/components/layout/Footer.jsx) — columna Ecosistema | "www.cenigaa.org - Inicio" | ✅ |
-| [Footer.jsx](src/components/layout/Footer.jsx) — copyright | "www.cenigaa.org" inline | ✅ |
+| [Header.jsx](src/components/layout/Header.jsx) · breadcrumb superior izquierdo | Texto "CENIGAA" wordmark + chevron | ✅ `target=_blank` `rel=noopener noreferrer` |
+| [Header.jsx](src/components/layout/Header.jsx) · CTA desktop "ROGAA" | Pill navy → www.cenigaa.org | ✅ |
+| [Footer.jsx](src/components/layout/Footer.jsx) · logo footer | Link al sitio principal | ✅ |
+| [Footer.jsx](src/components/layout/Footer.jsx) · columna Ecosistema | "www.cenigaa.org - Inicio" | ✅ |
+| [Footer.jsx](src/components/layout/Footer.jsx) · copyright | "www.cenigaa.org" inline | ✅ |
 
 ✅ Conforme a `CENIGAA_CONTEXT.md §6 (Coherencia ecosistémica)`.
 
 ### Enlaces a gaaialab.cenigaa.org
 
-- ✅ [Footer.jsx](src/components/layout/Footer.jsx) — columna Ecosistema CENIGAA + sub-columna "Desarrollado por"
-- ✅ [Equipo.jsx](src/components/sections/Equipo.jsx) — card destacada Jorge Chavarro + card GAA+IA Lab
-- ✅ [SobreObservatorio.jsx](src/components/sections/SobreObservatorio.jsx) — bloque "La red ROGAA-Huila"
+- ✅ [Footer.jsx](src/components/layout/Footer.jsx) · columna Ecosistema CENIGAA + sub-columna "Desarrollado por"
+- ✅ [Equipo.jsx](src/components/sections/Equipo.jsx) · card destacada Jorge Chavarro + card GAA+IA Lab
+- ✅ [SobreObservatorio.jsx](src/components/sections/SobreObservatorio.jsx) · bloque "La red ROGAA-Huila"
 
 Todos con `target=_blank rel=noopener noreferrer`.
 
@@ -350,24 +361,24 @@ Todos con `target=_blank rel=noopener noreferrer`.
 
 ### Hub central observatorios
 
-🟡 No hay enlace a `observatorios.cenigaa.org` — el hub aún no existe (`CENIGAA_CONTEXT.md §3` lo marca "📋 Por crear"). El enlace a `obs-suelos-huila.cenigaa.org` sigue comentado en Footer desde v1.0.1.
+🟡 No hay enlace a `observatorios.cenigaa.org` · el hub aún no existe (`CENIGAA_CONTEXT.md §3` lo marca "📋 Por crear"). El enlace a `obs-suelos-huila.cenigaa.org` sigue comentado en Footer desde v1.0.1.
 
 ### Audit de enlaces externos
 
-✅ Todos los `target="_blank"` tienen `rel="noopener noreferrer"`, incluyendo el atributo HTML del attribution de Leaflet (OpenStreetMap / CARTO) — tanto en `/mapa` como en el nuevo mapa de `/enso` (v1.5.0).
+✅ Todos los `target="_blank"` tienen `rel="noopener noreferrer"`, incluyendo el atributo HTML del attribution de Leaflet (OpenStreetMap / CARTO) · tanto en `/mapa` como en el nuevo mapa de `/enso` (v1.5.0).
 
 ---
 
 ## 8. Datos científicos
 
-### Cobertura (web pública — Fase 1)
+### Cobertura (web pública · Fase 1)
 
 | Métrica | Valor |
 |---|---|
 | Total de estaciones aptas | **150** |
 | Estaciones con sensor de precipitación PT_4 | 149 |
 | Período de la línea base | **1930 – 2017 · 87 años** |
-| Estación más antigua | **APTO BENITO SALAS** (Neiva, código `21115020`) — inicio 1930 |
+| Estación más antigua | **APTO BENITO SALAS** (Neiva, código `21115020`) · inicio 1930 |
 | Municipios cubiertos | **37** (todo el departamento del Huila) |
 | Bounding box | `1.55, -76.65` ↔ `3.85, -74.50` |
 
@@ -375,22 +386,22 @@ Todos con `target=_blank rel=noopener noreferrer`.
 
 | Capa | Origen |
 |---|---|
-| Datos primarios | **IDEAM** — Red Nacional de Estaciones Climatológicas |
+| Datos primarios | **IDEAM** · Red Nacional de Estaciones Climatológicas |
 | Procesamiento | **CENIGAA** vía base `CCYVCE_DB.db` |
 | Convenio que financió la sistematización | **SGR-FCTeI Convenio Especial de Cooperación 124 de 2015** |
-| Metodología | **Domínguez Calle, E.A. (2018)** — *Cambio climático y variabilidad climática extrema en el Huila*. ISBN 978-620-2-16957-8 |
-| Regiones hidrológicas (v1.5.0) | **Natural Earth / IDEAM** — 5 polígonos para `/enso` mapa nacional |
+| Metodología | **Domínguez Calle, E.A. (2018)** · *Cambio climático y variabilidad climática extrema en el Huila*. ISBN 978-620-2-16957-8 |
+| Regiones hidrológicas (v1.5.0) | **Natural Earth / IDEAM** · 5 polígonos para `/enso` mapa nacional |
 
 ### Variables analizadas por estación
 
 Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total mensual, mm/mes):
 - Serie mensual completa (`serie_mensual.fechas`, `valores`) y serie anual (`serie_anual`)
-- **Estacionalidad** — medias multianuales por mes + `mes_max` / `mes_min` (patrón bimodal Huila: Abr-May y Oct-Nov)
-- **Inercia** — `acf_lag1`, `acf_lag12`, serie ACF 1–12
-- **Tendencia** — Mann-Kendall: `direccion`, `significativa`, `p_valor`, `pendiente_anual` (Theil-Sen), `cambio_total`
-- **Ciclos seculares** — medias móviles 10 años
-- **ENSO** — nota cualitativa, interpretación y fuente (correlación inversa con Niño 3.4, MEI, OMI)
-- **Distribución** — ajuste (Gumbel mayoritariamente en mensual; Log-Gamma para anual), KS p-valor, parámetros, media, desv. std.
+- **Estacionalidad** · medias multianuales por mes + `mes_max` / `mes_min` (patrón bimodal Huila: Abr-May y Oct-Nov)
+- **Inercia** · `acf_lag1`, `acf_lag12`, serie ACF 1–12
+- **Tendencia** · Mann-Kendall: `direccion`, `significativa`, `p_valor`, `pendiente_anual` (Theil-Sen), `cambio_total`
+- **Ciclos seculares** · medias móviles 10 años
+- **ENSO** · nota cualitativa, interpretación y fuente (correlación inversa con Niño 3.4, MEI, OMI)
+- **Distribución** · ajuste (Gumbel mayoritariamente en mensual; Log-Gamma para anual), KS p-valor, parámetros, media, desv. std.
 
 ### Resumen departamental (`resumen_departamento.json`)
 
@@ -407,10 +418,10 @@ Cada archivo `estacion_{CODIGO}.json` contiene, para PT_4 (Precipitación total 
 
 ### Descargas públicas
 
-- ✅ **CSV catálogo** — `/data/catalogo_estaciones_CENIGAA.csv` (151 líneas, ~12 KB; 9 campos: NOMBRE, CODIGO, MUNICIPIO, CORRIENTE, ALTITUD_msnm, INICIO, FIN, N_MESES, ESTADO). Botón en `/datos`.
-- ✅ **JSON por estación** — `/data/estacion_{CODIGO}.json` accesible vía URL; el cliente lo recibe al click vía `useEstacion`.
+- ✅ **CSV catálogo** · `/data/catalogo_estaciones_CENIGAA.csv` (151 líneas, ~12 KB; 9 campos: NOMBRE, CODIGO, MUNICIPIO, CORRIENTE, ALTITUD_msnm, INICIO, FIN, N_MESES, ESTADO). Botón en `/datos`.
+- ✅ **JSON por estación** · `/data/estacion_{CODIGO}.json` accesible vía URL; el cliente lo recibe al click vía `useEstacion`.
 
-### Fase 2 — Pipeline IDEAM 2017–2026 (groundwork v1.2.0, local-only)
+### Fase 2 · Pipeline IDEAM 2017–2026 (groundwork v1.2.0, local-only)
 
 Infraestructura preparada en `data/pipeline/` (ignorada por git):
 
@@ -422,8 +433,8 @@ Infraestructura preparada en `data/pipeline/` (ignorada por git):
 | `referencias/CC_VCE_Huila_2018.pdf` | ✅ Libro fuente reubicado |
 | Dependencias Python | ✅ Instaladas: pandas 2.2.3, numpy 2.0.2, scipy 1.13.1, matplotlib 3.9.4, seaborn 0.13.2, sodapy 2.2.0, jupyter 4.5.8 |
 | Smoke test celda 1 | ✅ Ejecutado limpio |
-| Corrida real Módulo 1+ (catálogo IDEAM) | 📋 Pendiente — requiere conectividad a `datos.gov.co` |
-| Integración con `CCYVCE_DB.db` (Módulo 4) | 📋 Pendiente — requiere copiar la base original a `data/` |
+| Corrida real Módulo 1+ (catálogo IDEAM) | 📋 Pendiente · requiere conectividad a `datos.gov.co` |
+| Integración con `CCYVCE_DB.db` (Módulo 4) | 📋 Pendiente · requiere copiar la base original a `data/` |
 
 > El campo **`fuente=IDEAM_API_2026`** en cada registro nuevo es el mecanismo de trazabilidad que permitirá distinguir los datos del estudio original (`CCYVCE_DB`) de los datos del API en publicaciones derivadas, sin perder linaje.
 
@@ -441,23 +452,23 @@ Infraestructura preparada en `data/pipeline/` (ignorada por git):
 - ✅ Coherencia ecosistémica completa: header y footer enlazan a `www.cenigaa.org` y `gaaialab.cenigaa.org` con `rel` correcto
 - ✅ JSON-LD multi-entidad (`ResearchOrganization` + `WebSite` + `Dataset`) bien estructurado para Google Dataset Search
 - ✅ Routing SPA con `navigationFallback` de Azure correctamente configurado (deep-links resuelven directamente)
-- ✅ Code splitting agresivo — `charts-*.js` no se carga en home; `map-*.js` sólo en `/mapa` y `/enso`; `LazyBarChart` también lazy en `/resumen`
+- ✅ Code splitting agresivo · `charts-*.js` no se carga en home; `map-*.js` sólo en `/mapa` y `/enso`; `LazyBarChart` también lazy en `/resumen`
 - ✅ Pasada de calidad: alts descriptivos en todos los `<img>`, `rel=noopener` en todos los externos, attribution de Leaflet correcta en ambos mapas
 - ✅ Filtros del mapa con conteo de leyenda derivado de la misma lista filtrada (imposible que se desincronicen)
-- ✅ Sección **/politica** (v1.0.1) — 12 instrumentos oficiales en 4 niveles con enlaces directos
-- ✅ Sección **/resumen** (v1.1.0) — visualización Mann-Kendall + 4 hallazgos + bloque metodológico con cita ISBN
-- ✅ **Refactor multi-ruta v1.2.0** — cada item del nav es una ruta dedicada con estado activo visual
-- ✅ **Subpágina `/enso` (v1.3.0)** — 8 bloques alimentados desde JSON con fetch + AbortController
-- ✅ **Bloque Escala Nacional (v1.4.0)** — alerta IDEAM dinámica, 5 regiones hidrológicas, vulnerabilidad del Huila, sectores en seguimiento
-- ✅ **Mapa Leaflet real del Bloque Nacional (v1.5.0)** — sustitución del SVG conceptual por capa GeoJSON sobre tiles CartoDB Light con hover, tooltips por región y pin del Huila en el centroide cartográfico real
-- ✅ **Fase 2 scaffolding v1.2.0** — notebook completo de 23 celdas con metodología documentada, lista de 150 estaciones poblada, deps Python instaladas
+- ✅ Sección **/politica** (v1.0.1) · 12 instrumentos oficiales en 4 niveles con enlaces directos
+- ✅ Sección **/resumen** (v1.1.0) · visualización Mann-Kendall + 4 hallazgos + bloque metodológico con cita ISBN
+- ✅ **Refactor multi-ruta v1.2.0** · cada item del nav es una ruta dedicada con estado activo visual
+- ✅ **Subpágina `/enso` (v1.3.0)** · 8 bloques alimentados desde JSON con fetch + AbortController
+- ✅ **Bloque Escala Nacional (v1.4.0)** · alerta IDEAM dinámica, 5 regiones hidrológicas, vulnerabilidad del Huila, sectores en seguimiento
+- ✅ **Mapa Leaflet real del Bloque Nacional (v1.5.0)** · sustitución del SVG conceptual por capa GeoJSON sobre tiles CartoDB Light con hover, tooltips por región y pin del Huila en el centroide cartográfico real
+- ✅ **Fase 2 scaffolding v1.2.0** · notebook completo de 23 celdas con metodología documentada, lista de 150 estaciones poblada, deps Python instaladas
 
 ### Cerrado en v1.5.0 (desde v1.4.0)
 
-- ✅ ~~Mapa SVG conceptual en `/enso` sub-bloque N2~~ — sustituido por mapa Leaflet real (commit `6ba6bc2`); componente `MapaColombiaLeaflet` con `L.map` + `L.tileLayer` (CartoDB Light) + `L.geoJSON` + 2 `L.circleMarker` para halo y pin del Huila; cleanup explícito al unmount
-- ✅ ~~`colombia-regiones-hidrologicas.geojson` ausente en `public/data/`~~ — incorporado (24 KB · 5 features · Polygon/MultiPolygon · Natural Earth + IDEAM)
-- ✅ ~~Código muerto `REGIONES_SVG` + `NIVEL_IMPACTO_FILL` + componente `MapaColombiaConceptual`~~ — eliminado (≈ 110 líneas) al integrar el Leaflet real
-- ✅ ~~33 marcadores de conflicto de merge sin resolver en el propio STATUS doc~~ — resueltos al consolidar a v1.5.0
+- ✅ ~~Mapa SVG conceptual en `/enso` sub-bloque N2~~ · sustituido por mapa Leaflet real (commit `6ba6bc2`); componente `MapaColombiaLeaflet` con `L.map` + `L.tileLayer` (CartoDB Light) + `L.geoJSON` + 2 `L.circleMarker` para halo y pin del Huila; cleanup explícito al unmount
+- ✅ ~~`colombia-regiones-hidrologicas.geojson` ausente en `public/data/`~~ · incorporado (24 KB · 5 features · Polygon/MultiPolygon · Natural Earth + IDEAM)
+- ✅ ~~Código muerto `REGIONES_SVG` + `NIVEL_IMPACTO_FILL` + componente `MapaColombiaConceptual`~~ · eliminado (≈ 110 líneas) al integrar el Leaflet real
+- ✅ ~~33 marcadores de conflicto de merge sin resolver en el propio STATUS doc~~ · resueltos al consolidar a v1.5.0
 
 ### Cerrado en v1.4.0 (desde v1.3.0)
 
@@ -496,12 +507,12 @@ Infraestructura preparada en `data/pipeline/` (ignorada por git):
 | Prio | Item | Notas |
 |---|---|---|
 | 🟠 P1 | Correr Lighthouse y registrar baseline | Especialmente relevante tras v1.5.0 (Leaflet ya carga en `/enso`); home debería estar por encima de 90 |
-| 🟠 P1 | Ejecutar primera corrida real del notebook Fase 2 — Módulo 1 (catálogo IDEAM) | Confirma conectividad al API `datos.gov.co/resource/hp9r-jxuu` |
+| 🟠 P1 | Ejecutar primera corrida real del notebook Fase 2 · Módulo 1 (catálogo IDEAM) | Confirma conectividad al API `datos.gov.co/resource/hp9r-jxuu` |
 | 🟡 P2 | Reemplazar `municipios_huila.geojson` por polígonos reales | El `style` polygon ya está cableado; sólo cambiar el archivo |
 | 🟡 P2 | Convertir a WebP las imágenes restantes | Pendientes: `Gobernacion_Huila.png`, `Efrain-Dominguez3.jpg`, `Efrain_isologo.jpg` |
 | 🟡 P2 | Copiar `CCYVCE_DB.db` a `data/` para habilitar Módulo 4 del pipeline | Sin esto, Módulo 4 emite advertencia y se salta |
 | 🟡 P2 | Lazy-load del componente `Enso` completo en `App.jsx` | El chunk `index-*.js` creció de 130 KB a 161 KB en v1.5.0 por el código Leaflet inline; envolverlo en `React.lazy` lo saca del bundle de home |
-| 🟢 P3 | Habilitar contenido EN cuando se traduzca | `src/data/content.js` ya tiene estructura — sólo cambiar `LANG = 'en'` |
+| 🟢 P3 | Habilitar contenido EN cuando se traduzca | `src/data/content.js` ya tiene estructura · sólo cambiar `LANG = 'en'` |
 | 🟢 P3 | Implementar Módulo 5b ENSO (17 índices NOAA-CPC) en el notebook | Marcado explícitamente como "versión futura" |
 | 🟢 P3 | Automatizar actualización de `enso-estado.json` con API NOAA/CPC | Prevista jul 2026 |
 | 🟢 P3 | Enviar `sitemap.xml` a Google Search Console y Bing Webmaster Tools | Acelera la primera indexación |
@@ -510,16 +521,16 @@ Infraestructura preparada en `data/pipeline/` (ignorada por git):
 
 ### Riesgos operacionales
 
-- 🟡 La estructura ES/EN en `src/data/content.js` **no está conectada** a los componentes — Hero, Header y Footer tienen los strings hardcoded. Activar EN requiere refactor.
+- 🟡 La estructura ES/EN en `src/data/content.js` **no está conectada** a los componentes · Hero, Header y Footer tienen los strings hardcoded. Activar EN requiere refactor.
 - 🟡 **`/enso` depende de actualización manual semanal** de `enso-estado.json` hasta la automatización con API NOAA. El `_meta.ciclo` lo documenta.
-- 🟢 `staticwebapp.config.json` usa `navigationFallback: /index.html` — correcto para SPA según la advertencia explícita de `CENIGAA_CONTEXT.md §2` ("Solo usar en SPAs").
-- 🟢 El mapa Leaflet de `/enso` (v1.5.0) tiene cleanup explícito al desmontar (`map.remove()` + ref guard) — evita memory leak en navegación SPA.
+- 🟢 `staticwebapp.config.json` usa `navigationFallback: /index.html` · correcto para SPA según la advertencia explícita de `CENIGAA_CONTEXT.md §2` ("Solo usar en SPAs").
+- 🟢 El mapa Leaflet de `/enso` (v1.5.0) tiene cleanup explícito al desmontar (`map.remove()` + ref guard) · evita memory leak en navegación SPA.
 
 ### Atribución científica
 
 Cualquier uso académico o institucional debe citar:
 > Domínguez Calle, E.A., Chavarro Díaz, J.A., Velasco Sánchez, A.N., Chavarro Díaz, J.I., De León Pérez, D.R., Garrido, A.E., Cañón Ramos, M.Á., & Parra Díaz, C.F. (2018). *Cambio Climático y Variabilidad Climática Extrema en el Huila: Herramientas para la Caracterización de la Amenaza Hidroclimática*. Editorial Académica Española. ISBN 978-620-2-16957-8.
-> + **CENIGAA (2026)** — Observatorio Climático del Huila «Efraín Domínguez Calle», procesamiento y publicación de los datos 1930–2017. Última actualización del nodo: junio 2026.
+> + **CENIGAA (2026)** · Observatorio Climático del Huila «Efraín Domínguez Calle», procesamiento y publicación de los datos 1930–2017. Última actualización del nodo: junio 2026.
 
 ---
 
@@ -529,7 +540,7 @@ Cualquier uso académico o institucional debe citar:
 |---|---|---|---|
 | **v1.5.0** | **2026-06-17** | `6ba6bc2` | **Mapa Leaflet real en `/enso` sub-bloque N2.** Sustitución del SVG conceptual `MapaColombiaConceptual` (5 paths poligonales sobre viewBox 400×600) por `MapaColombiaLeaflet`: instancia `L.map` con `scrollWheelZoom:false` y `dragging:true`, tile CartoDB Light al 0.7 de opacidad, capa `L.geoJSON` de `colombia-regiones-hidrologicas.geojson` (24 KB · 5 features) con estilo por `properties.color` y opacidad de hover (0.55 → 0.75), tooltips bilingües por región con nivel de impacto, doble `L.circleMarker` para el Huila (halo `radius:16 fillOpacity:0.18` + pin `radius:9 fillColor:#4A60D8`) en el centroide real (2.5414°N, -75.6168°W), cleanup del mapa en el unmount. Eliminadas constantes `REGIONES_SVG`, `NIVEL_IMPACTO_FILL` y componente `MapaColombiaConceptual` (≈ 110 líneas muertas). Build 2277 módulos, 0 warnings. También: resolución de 33 marcadores de conflicto de merge en este propio documento. |
 | v1.4.0 | 2026-06-17 | `e5fe11d` | Bloque Escala Nacional Colombia en `/enso`. Nueva clave `escala_nacional` en JSON con `alerta_ideam`, `impacto_por_region` (5 regiones), `huila_en_contexto`, `sectores_alerta` (5). Componente `BloqueEscalaNacional` con N1 alerta IDEAM navy + pulse, N2 grid 2 columnas con mapa SVG conceptual + tabla, N3 blockquote "Señal en campo", N4 grid sectores. (El mapa SVG fue sustituido por Leaflet en v1.5.0.) |
-| v1.3.0 | 2026-06-17 | `7625afc` | Subpágina `/enso` — Seguimiento El Niño 2026. Nueva ruta con 7 bloques alimentados desde `enso-estado.json`. Componente único `Enso.jsx` con fetch + AbortController. Hero con badge de alerta dinámico, línea de tiempo con `animate-ping`, indicadores cuasi-real, geovisores NOAA/C3S/IRI. Cambios complementarios: portada Plan Huila 2050 WebP+fallback, wordmark de texto en Header, logo footer agrandado, purga global "Red ROGAA" → "ROGAA", sitemap ampliado de 2 a 10 URLs. |
+| v1.3.0 | 2026-06-17 | `7625afc` | Subpágina `/enso` · Seguimiento El Niño 2026. Nueva ruta con 7 bloques alimentados desde `enso-estado.json`. Componente único `Enso.jsx` con fetch + AbortController. Hero con badge de alerta dinámico, línea de tiempo con `animate-ping`, indicadores cuasi-real, geovisores NOAA/C3S/IRI. Cambios complementarios: portada Plan Huila 2050 WebP+fallback, wordmark de texto en Header, logo footer agrandado, purga global "Red ROGAA" → "ROGAA", sitemap ampliado de 2 a 10 URLs. |
 | v1.2.0 | 2026-06-14 | `c6496a9` | Refactor arquitectónico + scaffolding Fase 2. Home queda solo con el Hero; cada item del nav pasa a su propia ruta. Header con `NavLink` y estado activo visual. Footer `EcoLink` interno/externo. Incorpora cambios externos: lazy `BarChart` en `/resumen`, `robots.txt`, `sitemap.xml`, logos SIC en Header, 5 imágenes WebP. Notebook Fase 2 de 23 celdas + lista de 150 estaciones + deps Python instaladas. |
 | v1.1.0 | 2026-06-03 | `77c135f` | MVP completo (11/11 secciones). Cierre de `#resumen` (3 métricas, BarChart Mann-Kendall, 4 hallazgos, nota metodológica con cita ISBN) + pasada tipográfica eliminando 56 em-dashes visibles + eliminación de `PlaceholderSection`. |
 | v1.0.1 | 2026-05-18 | `4b95d1c` / `5c40948` | Cierre de P0 SEO (favicon + apple-touch-icon + og-image), ocultamiento del enlace prematuro a `obs-suelos-huila`, implementación de `#politica` con 12 instrumentos oficiales. |
@@ -542,7 +553,7 @@ Cualquier uso académico o institucional debe citar:
 71c0c56  Resolve merge conflict keeping remote status
 a3975c2  Trabajo local antes de sincronizar
 e5fe11d  feat(enso): bloque escala nacional Colombia #N2                       ← v1.4.0
-7625afc  feat: subpágina /enso — Seguimiento El Niño 2026 — datos JSON manuales ← v1.3.0
+7625afc  feat: subpágina /enso · Seguimiento El Niño 2026 · datos JSON manuales ← v1.3.0
 f259020  content: 'Red ROGAA' → 'ROGAA' en todo el sitio
 982a218  ui: agrandar logo CENIGAA en el footer
 6e69dee  ui: quitar logo CENIGAA del menu bar; reemplazar por texto
@@ -571,6 +582,6 @@ ea54cef  fix: add postcss config so Tailwind directives compile
 
 ---
 
-*CENIGAA_STATUS_obs-clima-huila.md v1.5.0 — 2026-06-17*
+*CENIGAA_STATUS_obs-clima-huila.md v1.5.0 · 2026-06-17*
 *Auditor: agente Claude Code · Branch `main` · Repositorio `cenigaa-obs-clima-huila`*
 *Próxima revisión sugerida: al añadir el bloque regional con las 17 estaciones automáticas del Huila (cierra la narrativa global → nacional → regional, Q3 2026), al ejecutar la primera corrida real del Módulo 1 del notebook de Fase 2, o al envolver `Enso.jsx` con `React.lazy` para regresar `index-*.js` al rango de 130 KB.*

@@ -38,6 +38,14 @@ function InstrumentoCard({ instrumento, color }) {
     <article
       className={`rounded-2xl border ${styles.border} ${styles.bg} p-5 flex flex-col h-full transition-shadow hover:shadow-md`}
     >
+      {instrumento.logo && (
+        <img
+          src={instrumento.logo}
+          alt={instrumento.nombre}
+          className="w-12 h-12 rounded-lg object-contain mb-3"
+          loading="lazy"
+        />
+      )}
       <div className="flex items-start justify-between gap-3 mb-3">
         <span
           className={`inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide ${styles.badge}`}

@@ -180,10 +180,10 @@ function TabEstacionalidad({ pt }) {
 
       <div className="mt-4 flex flex-wrap gap-3 text-[12px]">
         <span className="inline-flex items-center gap-2 text-neutral-500">
-          <span className="w-3 h-3 rounded bg-[#4A60D8]" /> Máximo: <strong className="text-[#162341]">{mesMax ?? '—'}</strong>
+          <span className="w-3 h-3 rounded bg-[#4A60D8]" /> Máximo: <strong className="text-[#162341]">{mesMax ?? 'N/D'}</strong>
         </span>
         <span className="inline-flex items-center gap-2 text-neutral-500">
-          <span className="w-3 h-3 rounded bg-[#94A3B8]" /> Mínimo: <strong className="text-[#162341]">{mesMin ?? '—'}</strong>
+          <span className="w-3 h-3 rounded bg-[#94A3B8]" /> Mínimo: <strong className="text-[#162341]">{mesMin ?? 'N/D'}</strong>
         </span>
       </div>
     </div>
@@ -201,7 +201,7 @@ function TabTendencia({ pt }) {
 
   const pValor = tend?.p_valor
   const pTexto =
-    pValor == null ? '—'
+    pValor == null ? 'N/D'
     : pValor < 0.001 ? '< 0.001'
     : pValor.toFixed(3)
 
@@ -240,7 +240,7 @@ function TabTendencia({ pt }) {
             <RTooltip
               contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E5E7EB' }}
               formatter={(v, name) => [
-                v != null ? `${Number(v).toFixed(1)} mm` : '—',
+                v != null ? `${Number(v).toFixed(1)} mm` : 'N/D',
                 name === 'valor' ? 'Anual' : 'Theil-Sen',
               ]}
             />
@@ -335,7 +335,7 @@ function TabDistribucion({ pt }) {
   }
 
   const ks = dist.ks_p_valor
-  const ksTexto = ks == null ? '—' : ks < 0.001 ? '< 0.001' : ks.toFixed(3)
+  const ksTexto = ks == null ? 'N/D' : ks < 0.001 ? '< 0.001' : ks.toFixed(3)
 
   return (
     <div>
@@ -385,10 +385,10 @@ function TabDistribucion({ pt }) {
       </div>
 
       <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <StatCard label="Media"      value={`${dist.media?.toFixed(1) ?? '—'} mm`} />
-        <StatCard label="Desv. std." value={`${dist.desv_std?.toFixed(1) ?? '—'} mm`} />
-        <StatCard label="Parám. 1"   value={dist.parametros?.[0]?.toFixed(2) ?? '—'} />
-        <StatCard label="Parám. 2"   value={dist.parametros?.[1]?.toFixed(2) ?? '—'} />
+        <StatCard label="Media"      value={`${dist.media?.toFixed(1) ?? 'N/D'} mm`} />
+        <StatCard label="Desv. std." value={`${dist.desv_std?.toFixed(1) ?? 'N/D'} mm`} />
+        <StatCard label="Parám. 1"   value={dist.parametros?.[0]?.toFixed(2) ?? 'N/D'} />
+        <StatCard label="Parám. 2"   value={dist.parametros?.[1]?.toFixed(2) ?? 'N/D'} />
       </div>
     </div>
   )
@@ -488,7 +488,7 @@ export default function PanelEstacion({ estacion, onClose }) {
 
         {!loading && !error && !pt && (
           <p className="text-[13px] text-neutral-500">
-            La estación no tiene datos del sensor {sensor ?? '—'}.
+            La estación no tiene datos del sensor {sensor ?? 'N/D'}.
           </p>
         )}
       </div>

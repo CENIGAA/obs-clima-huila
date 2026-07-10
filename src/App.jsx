@@ -124,27 +124,20 @@ function MapaPage()       { return <MapaEstaciones /> }
 
 function SobrePage() {
   // /sobre concentra todo el contexto del observatorio: origen + metodología +
-  // respaldo institucional.
+  // respaldo institucional, y cierra con la dedicatoria como banda memorial.
   return (
     <>
       <SobreObservatorio />
       <ComoFunciona />
       <Aliados />
+      <DedicatoriaBanda />
     </>
   )
 }
 
 function BibliotecaPage() { return <Biblioteca /> }
 
-function EquipoPage() {
-  // /equipo cierra con la dedicatoria como banda memorial.
-  return (
-    <>
-      <Equipo />
-      <DedicatoriaBanda />
-    </>
-  )
-}
+function EquipoPage() { return <Equipo /> }
 
 function DatosPage()  { return <DatosAbiertos /> }
 function ResumenPage(){ return <ResumenSection /> }

@@ -1,13 +1,13 @@
 #!/bin/bash
 # =============================================================================
-# SESIÓN 1 — obs-clima-huila.cenigaa.org
+# SESIÓN 1 · obs-clima-huila.cenigaa.org
 # Script de commit para GitHub
 # Ejecutar desde la raíz del repositorio clonado
 # =============================================================================
 
 set -e  # Detener si hay error
 
-echo "🌤  Observatorio Climático del Huila — Sesión 1 Claude Code"
+echo "🌤  Observatorio Climático del Huila · Sesión 1 Claude Code"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
 # Verificar que estamos en el repo correcto
@@ -38,7 +38,7 @@ echo ""
 echo "💬 Commit: feat: initialize React base structure for Observatorio Climático del Huila"
 git commit -m "feat: initialize React base structure
 
-Sesión 1 de 6 — Observatorio Climático del Huila (Efraín Domínguez Calle)
+Sesión 1 de 6 · Observatorio Climático del Huila (Efraín Domínguez Calle)
 CENIGAA · Red ROGAA-Huila · Nodo 1 de 5
 
 - React 18 + Vite + Tailwind CSS initialized

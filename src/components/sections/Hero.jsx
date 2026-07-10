@@ -263,7 +263,7 @@ export default function Hero({ resumenData }) {
                   />
                   <img
                     src="/assets/Portada_Plan_Huila2050.png"
-                    alt="Portada del Plan de Cambio Climático Huila 2050 — Gobernación del Huila y CAM"
+                    alt="Portada del Plan de Cambio Climático Huila 2050 · Gobernación del Huila y CAM"
                     width={1394}
                     height={1760}
                     className="w-full h-full object-cover"
