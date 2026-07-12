@@ -1,4 +1,6 @@
-import { BookOpen, Bookmark, LibraryBig, Mail, Microscope } from 'lucide-react'
+import { useState } from 'react'
+import { Bookmark, LibraryBig, Mail, Microscope } from 'lucide-react'
+import SubpageHeroNav from '../layout/SubpageHeroNav'
 
 const REFERENCIAS = [
   {
@@ -171,105 +173,89 @@ function CategoryPanel({ categoria, items }) {
 export default function Biblioteca() {
   const destacada = REFERENCIAS.find((ref) => ref.destacada)
   const categorias = ['Fundacional', 'Institucional', 'Contexto científico']
+  const sections = [
+    { id: 'destacada', label: 'Principal' },
+    { id: 'Fundacional', label: 'Fundacional' },
+    { id: 'Institucional', label: 'Institucional' },
+    { id: 'Contexto científico', label: 'Científico' },
+  ]
+  const [activeSection, setActiveSection] = useState(sections[0].id)
 
   return (
-    <section
-      id="biblioteca"
-      className="py-20 border-t border-neutral-100 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)]"
-      aria-labelledby="biblioteca-heading"
-    >
-      <div className="container-main">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] xl:items-start">
-          <div>
-            <span className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.14em] uppercase text-[#4A60D8]">
-              <BookOpen size={14} aria-hidden="true" />
-              Biblioteca curada
-            </span>
-            <h2
-              id="biblioteca-heading"
-              className="mt-4 text-3xl sm:text-4xl font-bold text-[#162341] tracking-tight text-balance max-w-4xl"
-            >
-              Referencias clave para entender el clima del Huila desde el territorio y la ciencia.
-            </h2>
-            <p className="mt-4 max-w-3xl text-[15px] text-neutral-600 leading-relaxed">
-              Esta biblioteca no busca exhaustividad, sino orientar. Reúne el libro base del
-              observatorio, documentos institucionales y literatura científica útil para
-              contextualizar riesgos, variabilidad y decisiones públicas.
-            </p>
-          </div>
+    <>
+      <SubpageHeroNav
+        eyebrow="Biblioteca curada"
+        title="Referencias clave para entender el clima del Huila desde el territorio y la ciencia."
+        description="Explora por vistas la referencia principal del observatorio y las categorías de documentos fundacionales, institucionales y científicos."
+        sections={sections}
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+        aside="La curaduría prioriza orientación y trazabilidad antes que exhaustividad, para que el usuario llegue rápido a la fuente más útil."
+      />
 
-          <aside className="rounded-[28px] border border-[#C5CEEF] bg-[#162341] p-6 text-white shadow-[0_20px_50px_-30px_rgba(22,35,65,0.8)] xl:sticky xl:top-24">
-            <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#8B9FE8]">
-              Uso recomendado
-            </p>
-            <h3 className="mt-3 text-[1.45rem] font-bold leading-tight">
-              Empieza por la obra fundacional y amplía con contexto institucional y científico.
-            </h3>
-            <p className="mt-3 text-[13.5px] leading-relaxed text-white/75">
-              La curaduría está pensada para equipos técnicos, tomadores de decisión, docentes
-              e investigadores que necesitan una ruta breve, confiable y trazable.
-            </p>
-          </aside>
-        </div>
+      <section
+        id={`panel-${activeSection}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${activeSection}`}
+        className="py-20 border-t border-neutral-100 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)]"
+      >
+        <div className="container-main">
+          {activeSection === 'destacada' && destacada && (
+            <article className="rounded-[30px] border border-[#C5CEEF] bg-[linear-gradient(135deg,#162341_0%,#20315a_100%)] p-6 sm:p-7 text-white shadow-[0_22px_60px_-34px_rgba(22,35,65,0.85)]">
+              <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#8B9FE8]">
+                Referencia principal
+              </p>
+              <div className="mt-4 grid gap-5 xl:grid-cols-[minmax(0,1fr)_240px] xl:items-end">
+                <div>
+                  <h3 className="text-[1.7rem] sm:text-[2.05rem] font-bold tracking-tight leading-tight text-balance">
+                    {destacada.titulo}
+                  </h3>
+                  <p className="mt-3 text-[14px] text-white/70">
+                    {destacada.autores} · {destacada.año}
+                  </p>
+                  <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-white/82">
+                    {destacada.nota}
+                  </p>
+                  <p className="mt-4 text-[12px] text-white/62">
+                    {destacada.fuente}
+                    {destacada.detalle ? ` · ${destacada.detalle}` : ''}
+                  </p>
+                </div>
 
-        {destacada && (
-          <article className="mt-8 rounded-[30px] border border-[#C5CEEF] bg-[linear-gradient(135deg,#162341_0%,#20315a_100%)] p-6 sm:p-7 text-white shadow-[0_22px_60px_-34px_rgba(22,35,65,0.85)]">
-            <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#8B9FE8]">
-              Referencia principal
-            </p>
-            <div className="mt-4 grid gap-5 xl:grid-cols-[minmax(0,1fr)_240px] xl:items-end">
-              <div>
-                <h3 className="text-[1.7rem] sm:text-[2.05rem] font-bold tracking-tight leading-tight text-balance">
-                  {destacada.titulo}
-                </h3>
-                <p className="mt-3 text-[14px] text-white/70">
-                  {destacada.autores} · {destacada.año}
-                </p>
-                <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-white/82">
-                  {destacada.nota}
-                </p>
-                <p className="mt-4 text-[12px] text-white/62">
-                  {destacada.fuente}
-                  {destacada.detalle ? ` · ${destacada.detalle}` : ''}
-                </p>
-              </div>
-
-              <div className="rounded-[24px] border border-white/10 bg-white/6 p-5">
-                <p className="text-[11px] uppercase tracking-[0.12em] text-white/50">
-                  Por qué abrir aquí
-                </p>
-                <div className="mt-3 space-y-3 text-[12.5px] text-white/78 leading-relaxed">
-                  <p>Define la base científica y territorial del observatorio.</p>
-                  <p>Conecta variabilidad climática extrema con el contexto del Huila.</p>
-                  <p>Sirve como referencia transversal para lectura del resto del sitio.</p>
+                <div className="rounded-[24px] border border-white/10 bg-white/6 p-5">
+                  <p className="text-[11px] uppercase tracking-[0.12em] text-white/50">
+                    Por qué abrir aquí
+                  </p>
+                  <div className="mt-3 space-y-3 text-[12.5px] text-white/78 leading-relaxed">
+                    <p>Define la base científica y territorial del observatorio.</p>
+                    <p>Conecta variabilidad climática extrema con el contexto del Huila.</p>
+                    <p>Sirve como referencia transversal para lectura del resto del sitio.</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </article>
-        )}
+            </article>
+          )}
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2 2xl:grid-cols-3 items-stretch">
-          {categorias.map((categoria) => (
+          {categorias.includes(activeSection) && (
             <CategoryPanel
-              key={categoria}
-              categoria={categoria}
-              items={REFERENCIAS.filter((ref) => ref.categoria === categoria)}
+              categoria={activeSection}
+              items={REFERENCIAS.filter((ref) => ref.categoria === activeSection)}
             />
-          ))}
-        </div>
+          )}
 
-        <p className="mt-10 inline-flex flex-wrap items-center gap-2 text-[13px] text-neutral-600">
-          <Mail size={14} className="text-[#4A60D8]" aria-hidden="true" />
-          ¿Tienes una investigación sobre el clima del Huila? Escríbenos a{' '}
-          <a
-            href="mailto:info@cenigaa.org"
-            className="font-medium text-[#4A60D8] hover:text-[#162341] underline underline-offset-2"
-          >
-            info@cenigaa.org
-          </a>{' '}
-          para evaluarla e incluirla en esta curaduría.
-        </p>
-      </div>
-    </section>
+          <p className="mt-10 inline-flex flex-wrap items-center gap-2 text-[13px] text-neutral-600">
+            <Mail size={14} className="text-[#4A60D8]" aria-hidden="true" />
+            ¿Tienes una investigación sobre el clima del Huila? Escríbenos a{' '}
+            <a
+              href="mailto:info@cenigaa.org"
+              className="font-medium text-[#4A60D8] hover:text-[#162341] underline underline-offset-2"
+            >
+              info@cenigaa.org
+            </a>{' '}
+            para evaluarla e incluirla en esta curaduría.
+          </p>
+        </div>
+      </section>
+    </>
   )
 }

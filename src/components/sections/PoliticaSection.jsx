@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { ArrowUpRight, CheckCircle2, Globe2, Landmark, Map, Scale } from 'lucide-react'
 import { politicaClimatica } from '../../data/politicaClimatica'
+import SubpageHeroNav from '../layout/SubpageHeroNav'
 
 const colorMap = {
   blue: {
@@ -151,6 +153,11 @@ function LevelNavigator({ nivel, color, total }) {
 }
 
 export default function PoliticaSection() {
+  const sectionDefs = [
+    { id: 'panorama', label: 'Panorama' },
+    ...politicaClimatica.map((nivel) => ({ id: nivel.nivel, label: nivel.nivel })),
+  ]
+  const [activeSection, setActiveSection] = useState(sectionDefs[0].id)
   const totalInstrumentos = politicaClimatica.reduce(
     (acc, nivel) => acc + nivel.instrumentos.length,
     0,
@@ -163,149 +170,131 @@ export default function PoliticaSection() {
   const ultimoAno = Math.max(...politicaClimatica.flatMap((nivel) => nivel.instrumentos.map((i) => i.ano)))
 
   return (
-    <section
-      id="politica"
-      className="py-20 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)]"
-      aria-labelledby="politica-heading"
-    >
-      <div className="container-main">
-        <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(280px,340px)] xl:items-start">
-          <div>
-            <span className="inline-flex items-center gap-2 text-[11px] font-semibold tracking-[0.14em] uppercase text-[#4A60D8]">
-              <Scale size={14} aria-hidden="true" />
-              Gobernanza climática
-            </span>
-            <h2
-              id="politica-heading"
-              className="mt-4 text-3xl sm:text-4xl font-bold text-[#162341] tracking-tight text-balance max-w-4xl"
-            >
-              Arquitectura normativa que enmarca la acción climática del Huila.
-            </h2>
-            <p className="mt-4 max-w-3xl text-[15px] text-neutral-600 leading-relaxed">
-              Esta sección organiza las fuentes oficiales desde el régimen climático
-              internacional hasta la escala municipal. El objetivo no es solo listar
-              documentos, sino mostrar cómo se conectan las decisiones que afectan la
-              planeación climática territorial.
-            </p>
-          </div>
+    <>
+      <SubpageHeroNav
+        eyebrow="Gobernanza climática"
+        title="Arquitectura normativa que enmarca la acción climática del Huila."
+        description="Consulta una vista panorámica o entra directamente al nivel institucional que necesites para revisar instrumentos, vigencia y trazabilidad oficial."
+        sections={sectionDefs}
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+        aside="De arriba hacia abajo: compromisos globales, obligación nacional, aterrizaje territorial y ejecución local."
+      />
 
-          <aside className="rounded-[28px] border border-[#C5CEEF] bg-[#162341] p-6 text-white shadow-[0_20px_50px_-30px_rgba(22,35,65,0.8)] xl:sticky xl:top-24">
-            <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-[#8B9FE8]">
-              Cómo leer esta ruta
-            </p>
-            <h3 className="mt-3 text-[1.45rem] font-bold leading-tight">
-              De arriba hacia abajo: compromisos, obligación, territorio y ejecución local.
-            </h3>
-            <p className="mt-3 text-[13.5px] leading-relaxed text-white/75">
-              Cada bloque agrupa normas e instrumentos por nivel institucional. Todas las
-              tarjetas enlazan a la fuente oficial para facilitar trazabilidad,
-              verificación jurídica y actualización editorial segura.
-            </p>
-          </aside>
-        </div>
+      <section
+        id={`panel-${activeSection}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${activeSection}`}
+        className="py-20 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)]"
+      >
+        <div className="container-main">
+          {activeSection === 'panorama' && (
+            <>
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 items-stretch">
+                <OverviewCard
+                  value={String(politicaClimatica.length)}
+                  label="niveles institucionales"
+                  help="Escala completa desde lo global hasta lo municipal."
+                  accent="#4A60D8"
+                />
+                <OverviewCard
+                  value={String(totalInstrumentos)}
+                  label="instrumentos trazados"
+                  help="Fuentes oficiales enlazadas para consulta y control de calidad."
+                  accent="#43B02A"
+                />
+                <OverviewCard
+                  value={String(totalVigentes)}
+                  label="instrumentos vigentes"
+                  help="Marco activo para referencia operativa y seguimiento."
+                  accent="#F4511E"
+                />
+                <OverviewCard
+                  value={`${primerAno}-${ultimoAno}`}
+                  label="rango temporal"
+                  help="Cobertura histórica del andamiaje regulatorio aquí documentado."
+                  accent="#162341"
+                />
+              </div>
 
-        <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4 items-stretch">
-          <OverviewCard
-            value={String(politicaClimatica.length)}
-            label="niveles institucionales"
-            help="Escala completa desde lo global hasta lo municipal."
-            accent="#4A60D8"
-          />
-          <OverviewCard
-            value={String(totalInstrumentos)}
-            label="instrumentos trazados"
-            help="Fuentes oficiales enlazadas para consulta y control de calidad."
-            accent="#43B02A"
-          />
-          <OverviewCard
-            value={String(totalVigentes)}
-            label="instrumentos vigentes"
-            help="Marco activo para referencia operativa y seguimiento."
-            accent="#F4511E"
-          />
-          <OverviewCard
-            value={`${primerAno}-${ultimoAno}`}
-            label="rango temporal"
-            help="Cobertura histórica del andamiaje regulatorio aquí documentado."
-            accent="#162341"
-          />
-        </div>
+              <div className="mt-8 grid gap-4 lg:grid-cols-2 xl:grid-cols-4 items-stretch">
+                {politicaClimatica.map((nivel) => (
+                  <LevelNavigator
+                    key={nivel.nivel}
+                    nivel={nivel.nivel}
+                    color={nivel.color}
+                    total={nivel.instrumentos.length}
+                  />
+                ))}
+              </div>
+            </>
+          )}
 
-        <div className="mt-8 grid gap-4 lg:grid-cols-2 xl:grid-cols-4 items-stretch">
-          {politicaClimatica.map((nivel) => (
-            <LevelNavigator
-              key={nivel.nivel}
-              nivel={nivel.nivel}
-              color={nivel.color}
-              total={nivel.instrumentos.length}
-            />
-          ))}
-        </div>
+          {politicaClimatica
+            .filter((nivel) => nivel.nivel === activeSection)
+            .map((nivel) => {
+              const styles = colorMap[nivel.color] ?? colorMap.blue
+              const Icon = LEVEL_ICONS[nivel.nivel] ?? Scale
 
-        <div className="mt-12 space-y-10">
-          {politicaClimatica.map((nivel) => {
-            const styles = colorMap[nivel.color] ?? colorMap.blue
-            const Icon = LEVEL_ICONS[nivel.nivel] ?? Scale
-
-            return (
-              <section key={nivel.nivel} aria-labelledby={`nivel-${nivel.nivel}`} className="rounded-[30px] border border-neutral-200 bg-white p-6 sm:p-7 shadow-sm overflow-hidden">
-                <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
-                  <div className="max-w-2xl">
-                    <div className="flex items-center gap-3">
-                      <span className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl ${styles.bg} ${styles.border} border`}>
-                        <Icon size={19} className="text-[#162341]" aria-hidden="true" />
-                      </span>
-                      <div>
-                        <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-neutral-400">
-                          Nivel institucional
-                        </p>
-                        <h3
-                          id={`nivel-${nivel.nivel}`}
-                          className="text-[1.5rem] sm:text-[1.7rem] font-bold tracking-tight text-[#162341]"
-                        >
-                          {nivel.nivel}
-                        </h3>
+              return (
+                <section key={nivel.nivel} aria-labelledby={`nivel-${nivel.nivel}`} className="rounded-[30px] border border-neutral-200 bg-white p-6 sm:p-7 shadow-sm overflow-hidden">
+                  <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
+                    <div className="max-w-2xl">
+                      <div className="flex items-center gap-3">
+                        <span className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl ${styles.bg} ${styles.border} border`}>
+                          <Icon size={19} className="text-[#162341]" aria-hidden="true" />
+                        </span>
+                        <div>
+                          <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-neutral-400">
+                            Nivel institucional
+                          </p>
+                          <h3
+                            id={`nivel-${nivel.nivel}`}
+                            className="text-[1.5rem] sm:text-[1.7rem] font-bold tracking-tight text-[#162341]"
+                          >
+                            {nivel.nivel}
+                          </h3>
+                        </div>
                       </div>
+
+                      <p className="mt-4 text-[14px] text-neutral-600 leading-relaxed">
+                        {LEVEL_DESCRIPTIONS[nivel.nivel]}
+                      </p>
                     </div>
 
-                    <p className="mt-4 text-[14px] text-neutral-600 leading-relaxed">
-                      {LEVEL_DESCRIPTIONS[nivel.nivel]}
-                    </p>
+                    <div className="rounded-[24px] border border-neutral-200 bg-[#F8FAFC] px-4 py-4 xl:min-w-[220px]">
+                      <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-neutral-400">
+                        Lectura rápida
+                      </p>
+                      <p className="mt-2 text-[22px] font-extrabold text-[#162341] tracking-tight">
+                        {nivel.instrumentos.length}
+                      </p>
+                      <p className="text-[12px] text-neutral-500">
+                        {nivel.instrumentos.length === 1 ? 'instrumento priorizado' : 'instrumentos priorizados'}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="rounded-[24px] border border-neutral-200 bg-[#F8FAFC] px-4 py-4 xl:min-w-[220px]">
-                    <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-neutral-400">
-                      Lectura rápida
-                    </p>
-                    <p className="mt-2 text-[22px] font-extrabold text-[#162341] tracking-tight">
-                      {nivel.instrumentos.length}
-                    </p>
-                    <p className="text-[12px] text-neutral-500">
-                      {nivel.instrumentos.length === 1 ? 'instrumento priorizado' : 'instrumentos priorizados'}
-                    </p>
+                  <div className="mt-6 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4">
+                    {nivel.instrumentos.map((instrumento) => (
+                      <InstrumentoCard
+                        key={instrumento.id}
+                        instrumento={instrumento}
+                        color={nivel.color}
+                        nivel={nivel.nivel}
+                      />
+                    ))}
                   </div>
-                </div>
+                </section>
+              )
+            })}
 
-                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4">
-                  {nivel.instrumentos.map((instrumento) => (
-                    <InstrumentoCard
-                      key={instrumento.id}
-                      instrumento={instrumento}
-                      color={nivel.color}
-                      nivel={nivel.nivel}
-                    />
-                  ))}
-                </div>
-              </section>
-            )
-          })}
+          <p className="mt-12 text-[12px] text-neutral-400 italic border-t border-neutral-100 pt-5 leading-relaxed">
+            Todos los enlaces apuntan a fuentes oficiales del Estado colombiano y
+            organismos internacionales. Última revisión editorial registrada: junio de 2026.
+          </p>
         </div>
-
-        <p className="mt-12 text-[12px] text-neutral-400 italic border-t border-neutral-100 pt-5 leading-relaxed">
-          Todos los enlaces apuntan a fuentes oficiales del Estado colombiano y
-          organismos internacionales. Última revisión editorial registrada: junio de 2026.
-        </p>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }

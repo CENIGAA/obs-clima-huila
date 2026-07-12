@@ -64,6 +64,17 @@ const REGION_COLOR_CLASS = {
   orange: 'text-[#F4511E]',
 }
 
+const ENSO_SECTIONS = [
+  { id: 'relevancia', label: 'Relevancia' },
+  { id: 'cronologia', label: 'Cronología' },
+  { id: 'indicadores', label: 'Indicadores' },
+  { id: 'geovisores', label: 'Geovisores' },
+  { id: 'escala_nacional', label: 'Escala nacional' },
+  { id: 'historico_huila', label: 'Histórico Huila' },
+  { id: 'seguimiento_local', label: 'Seguimiento local' },
+  { id: 'creditos', label: 'Fuentes' },
+]
+
 function getYearFromIsoDate(value) {
   if (typeof value !== 'string') return null
   const match = value.match(/^(\d{4})-\d{2}-\d{2}$/)
@@ -173,7 +184,7 @@ function useEnsoData() {
   return { data, loading, error }
 }
 
-function HeroEnso({ data, event, content }) {
+function HeroEnso({ data, event, content, sections, activeSection, onSectionChange }) {
   const fase = data?.estado_actual?.fase
   const tono = COLOR_FASE[fase] ?? { bg: '#94A3B8', label: 'estado' }
   const alerta = data?.estado_actual?.alerta
@@ -237,6 +248,54 @@ function HeroEnso({ data, event, content }) {
             <span className="mx-2 text-neutral-600">·</span>
             Próxima actualización: <span className="font-mono text-neutral-300">{proxima}</span>
           </p>
+        )}
+
+        {sections?.length > 0 && (
+          <div className="mt-8 rounded-[26px] border border-white/10 bg-white/5 p-4 sm:p-5">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#8B9FE8]">
+                  Menú de secciones
+                </p>
+                <p className="mt-2 text-[13.5px] text-neutral-300 leading-relaxed">
+                  Selecciona una vista para mostrar solo el bloque que quieres consultar y evitar scroll largo.
+                </p>
+              </div>
+              <p className="text-[12px] text-neutral-400">
+                Viendo: <span className="text-neutral-200 font-semibold">{sections.find((section) => section.id === activeSection)?.label}</span>
+              </p>
+            </div>
+
+            <div
+              className="mt-4 flex gap-2 overflow-x-auto pb-1"
+              role="tablist"
+              aria-label="Secciones ENSO"
+            >
+              {sections.map((section) => {
+                const isActive = section.id === activeSection
+                return (
+                  <button
+                    key={section.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`panel-${section.id}`}
+                    id={`tab-${section.id}`}
+                    onClick={() => onSectionChange(section.id)}
+                    className={`
+                      shrink-0 rounded-full border px-4 py-2.5 text-[12.5px] font-semibold transition-colors
+                      ${isActive
+                        ? 'border-white bg-white text-[#162341]'
+                        : 'border-white/15 bg-white/5 text-neutral-200 hover:bg-white/10'
+                      }
+                    `}
+                  >
+                    {section.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
         )}
       </div>
     </section>
@@ -943,6 +1002,7 @@ function EstadoError({ mensaje }) {
 export default function Enso() {
   const { data, loading, error } = useEnsoData()
   const { data: resumen } = useResumenDepartamento()
+  const [activeSection, setActiveSection] = useState(ENSO_SECTIONS[0].id)
   const {
     data: editorialContent,
     loading: loadingContent,
@@ -982,7 +1042,14 @@ export default function Enso() {
   if (loading || loadingContent) {
     return (
       <>
-        <HeroEnso data={null} event={event} content={fallbackHero} />
+        <HeroEnso
+          data={null}
+          event={event}
+          content={fallbackHero}
+          sections={[]}
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+        />
         <EstadoCarga />
       </>
     )
@@ -991,23 +1058,105 @@ export default function Enso() {
   if (error || errorContent || !data || !content) {
     return (
       <>
-        <HeroEnso data={null} event={event} content={fallbackHero} />
+        <HeroEnso
+          data={null}
+          event={event}
+          content={fallbackHero}
+          sections={[]}
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+        />
         <EstadoError mensaje={error ?? errorContent ?? 'Datos no disponibles'} />
       </>
     )
   }
 
+  const sectionViews = {
+    relevancia: (
+      <section
+        id="panel-relevancia"
+        role="tabpanel"
+        aria-labelledby="tab-relevancia"
+      >
+        <BloqueRelevancia content={content.relevancia} />
+      </section>
+    ),
+    cronologia: (
+      <section
+        id="panel-cronologia"
+        role="tabpanel"
+        aria-labelledby="tab-cronologia"
+      >
+        <BloqueLineaTiempo items={data.linea_tiempo} />
+      </section>
+    ),
+    indicadores: (
+      <section
+        id="panel-indicadores"
+        role="tabpanel"
+        aria-labelledby="tab-indicadores"
+      >
+        <BloqueIndicadores indicadores={data.indicadores} meta={data._meta} content={content.indicadores} />
+      </section>
+    ),
+    geovisores: (
+      <section
+        id="panel-geovisores"
+        role="tabpanel"
+        aria-labelledby="tab-geovisores"
+      >
+        <BloqueGeovisores geovisores={data.geovisores} content={content.geovisores} />
+      </section>
+    ),
+    escala_nacional: (
+      <section
+        id="panel-escala_nacional"
+        role="tabpanel"
+        aria-labelledby="tab-escala_nacional"
+      >
+        <BloqueEscalaNacional nacional={data.escala_nacional} event={event} content={content.escala_nacional} />
+      </section>
+    ),
+    historico_huila: (
+      <section
+        id="panel-historico_huila"
+        role="tabpanel"
+        aria-labelledby="tab-historico_huila"
+      >
+        <BloqueHistoricoHuila content={content.historico_huila} />
+      </section>
+    ),
+    seguimiento_local: (
+      <section
+        id="panel-seguimiento_local"
+        role="tabpanel"
+        aria-labelledby="tab-seguimiento_local"
+      >
+        <BloqueSeguimientoLocal content={content.seguimiento_local} />
+      </section>
+    ),
+    creditos: (
+      <section
+        id="panel-creditos"
+        role="tabpanel"
+        aria-labelledby="tab-creditos"
+      >
+        <BloqueCreditos meta={data._meta} content={content.creditos} />
+      </section>
+    ),
+  }
+
   return (
     <>
-      <HeroEnso data={data} event={event} content={content.hero} />
-      <BloqueRelevancia content={content.relevancia} />
-      <BloqueLineaTiempo items={data.linea_tiempo} />
-      <BloqueIndicadores indicadores={data.indicadores} meta={data._meta} content={content.indicadores} />
-      <BloqueGeovisores geovisores={data.geovisores} content={content.geovisores} />
-      <BloqueEscalaNacional nacional={data.escala_nacional} event={event} content={content.escala_nacional} />
-      <BloqueHistoricoHuila content={content.historico_huila} />
-      <BloqueSeguimientoLocal content={content.seguimiento_local} />
-      <BloqueCreditos meta={data._meta} content={content.creditos} />
+      <HeroEnso
+        data={data}
+        event={event}
+        content={content.hero}
+        sections={ENSO_SECTIONS}
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+      />
+      {sectionViews[activeSection] ?? sectionViews.relevancia}
     </>
   )
 }
