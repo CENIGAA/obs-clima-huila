@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
@@ -14,6 +14,7 @@ import HomenajeEfrain    from './components/sections/HomenajeEfrain'
 import Enso              from './components/sections/Enso'
 import PoliticaSection   from './components/sections/PoliticaSection'
 import ResumenSection    from './components/sections/ResumenSection'
+import SubpageHeroNav from './components/layout/SubpageHeroNav'
 import { useResumenDepartamento, useEstaciones } from './hooks/useDataLoader'
 
 // ─── Banner de verificación de datos (desarrollo) ────────────────────────────
@@ -123,14 +124,34 @@ function HomePage() {
 function MapaPage()       { return <MapaEstaciones /> }
 
 function SobrePage() {
-  // /sobre concentra todo el contexto del observatorio: origen + metodología +
-  // respaldo institucional, y cierra con la dedicatoria como banda memorial.
+  const sections = [
+    { id: 'sobre-observatorio', label: 'Origen' },
+    { id: 'metodologia', label: 'Metodología' },
+    { id: 'aliados', label: 'Instituciones' },
+    { id: 'dedicatoria', label: 'Dedicatoria' },
+  ]
+  const [activeSection, setActiveSection] = useState(sections[0].id)
+  const panels = {
+    'sobre-observatorio': <SobreObservatorio />,
+    metodologia: <ComoFunciona />,
+    aliados: <Aliados />,
+    dedicatoria: <DedicatoriaBanda />,
+  }
+
   return (
     <>
-      <SobreObservatorio />
-      <ComoFunciona />
-      <Aliados />
-      <DedicatoriaBanda />
+      <SubpageHeroNav
+        eyebrow="El Observatorio"
+        title="Contexto institucional, metodología y respaldo del Observatorio Climático del Huila."
+        description="Explora el origen del observatorio, la metodología aplicada, las entidades responsables y la dedicatoria científica que sostiene esta plataforma."
+        sections={sections}
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+        aside="Esta subpágina reúne el contexto estructural del observatorio. Cada vista resume una dimensión distinta del proyecto y su gobernanza."
+      />
+      <section id={`panel-${activeSection}`} role="tabpanel" aria-labelledby={`tab-${activeSection}`}>
+        {panels[activeSection] ?? panels['sobre-observatorio']}
+      </section>
     </>
   )
 }

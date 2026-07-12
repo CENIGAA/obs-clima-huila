@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, BookOpen, GraduationCap, Mountain, Scale } from 'lucide-react'
 
@@ -53,6 +54,14 @@ function Bullet({ titulo, children }) {
 }
 
 export default function HomenajeEfrain() {
+  const sections = [
+    { id: 'legado', label: 'Legado' },
+    { id: 'aporte', label: 'Aporte' },
+    { id: 'trayectoria', label: 'Trayectoria' },
+    { id: 'obra', label: 'Obra' },
+  ]
+  const [activeSection, setActiveSection] = useState(sections[0].id)
+
   return (
     <article className="bg-white">
       {/* ── Banner hero ─────────────────────────────────────── */}
@@ -115,109 +124,159 @@ export default function HomenajeEfrain() {
               </div>
             </div>
           </div>
+
+          <div className="mt-8 rounded-[26px] border border-white/10 bg-white/6 p-4 sm:p-5">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#8B9FE8]">
+                  Menú de subsecciones
+                </p>
+                <p className="mt-2 text-[13.5px] text-neutral-300 leading-relaxed">
+                  Consulta el homenaje por bloques temáticos para evitar scroll largo.
+                </p>
+              </div>
+              <p className="text-[12px] text-neutral-400">
+                Viendo: <span className="font-semibold text-neutral-100">{sections.find((section) => section.id === activeSection)?.label}</span>
+              </p>
+            </div>
+
+            <div className="mt-4 flex gap-2 overflow-x-auto pb-1" role="tablist" aria-label="Homenaje Efraín">
+              {sections.map((section) => {
+                const active = section.id === activeSection
+                return (
+                  <button
+                    key={section.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={active}
+                    aria-controls={`panel-${section.id}`}
+                    id={`tab-${section.id}`}
+                    onClick={() => setActiveSection(section.id)}
+                    className={`
+                      shrink-0 rounded-full border px-4 py-2.5 text-[12.5px] font-semibold transition-colors
+                      ${active
+                        ? 'border-white bg-white text-[#162341]'
+                        : 'border-white/15 bg-white/5 text-neutral-200 hover:bg-white/10'
+                      }
+                    `}
+                  >
+                    {section.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ── Cuerpo ──────────────────────────────────────────── */}
-      <section className="container-main py-14 lg:py-20 max-w-3xl">
-        <p className="text-[16px] sm:text-[17px] text-neutral-700 leading-relaxed">
-          El Observatorio Climático del Departamento del Huila rinde un profundo y
-          respetuoso homenaje al Dr. Efraín Antonio Domínguez Calle (1960–2021),
-          cuya brillantez intelectual, rigurosidad académica y calidad humana
-          transformaron la gestión del conocimiento ambiental en nuestro territorio.
-          Como uno de los científicos e hidrólogos más destacados de Colombia,
-          dedicó su vida a descifrar la complejidad de los sistemas hídricos y
-          climáticos a través del modelamiento matemático, dejando una huella
-          imborrable en el departamento del Huila.
-        </p>
+      <section className="container-main py-14 lg:py-20 max-w-3xl" id={`panel-${activeSection}`} role="tabpanel" aria-labelledby={`tab-${activeSection}`}>
+        {activeSection === 'legado' && (
+          <>
+            <p className="text-[16px] sm:text-[17px] text-neutral-700 leading-relaxed">
+              El Observatorio Climático del Departamento del Huila rinde un profundo y
+              respetuoso homenaje al Dr. Efraín Antonio Domínguez Calle (1960–2021),
+              cuya brillantez intelectual, rigurosidad académica y calidad humana
+              transformaron la gestión del conocimiento ambiental en nuestro territorio.
+              Como uno de los científicos e hidrólogos más destacados de Colombia,
+              dedicó su vida a descifrar la complejidad de los sistemas hídricos y
+              climáticos a través del modelamiento matemático, dejando una huella
+              imborrable en el departamento del Huila.
+            </p>
 
-        {/* Forjador del NRMA */}
-        <SeccionTitulo icon={Mountain}>
-          Forjador del Nodo Regional de Modelación Ambiental
-        </SeccionTitulo>
-        <p className="text-[15px] text-neutral-700 leading-relaxed">
-          Su visión estratégica y generosidad científica fueron pilares fundamentales
-          para CENIGAA. Como Asesor Científico, lideró el diseño técnico y
-          metodológico que dio vida al{' '}
-          <strong className="text-[#162341]">Nodo Regional de Modelación Ambiental (NRMA)</strong>,
-          consolidado como una infraestructura científica pionera capaz de simular
-          dinámicas territoriales y proveer herramientas tecnológicas avanzadas
-          para la toma de decisiones frente a la gestión del riesgo y el desarrollo
-          sostenible en la región.
-        </p>
+            <SeccionTitulo icon={Mountain}>
+              Forjador del Nodo Regional de Modelación Ambiental
+            </SeccionTitulo>
+            <p className="text-[15px] text-neutral-700 leading-relaxed">
+              Su visión estratégica y generosidad científica fueron pilares fundamentales
+              para CENIGAA. Como Asesor Científico, lideró el diseño técnico y
+              metodológico que dio vida al{' '}
+              <strong className="text-[#162341]">Nodo Regional de Modelación Ambiental (NRMA)</strong>,
+              consolidado como una infraestructura científica pionera capaz de simular
+              dinámicas territoriales y proveer herramientas tecnológicas avanzadas
+              para la toma de decisiones frente a la gestión del riesgo y el desarrollo
+              sostenible en la región.
+            </p>
+          </>
+        )}
 
-        {/* Aporte científico */}
-        <SeccionTitulo icon={Scale}>
-          Aporte científico clave para la resiliencia del Huila
-        </SeccionTitulo>
-        <p className="text-[15px] text-neutral-700 leading-relaxed">
-          Su obra cumbre para el territorio:{' '}
-          <em className="text-[#162341] font-medium">
-            Cambio climático y variabilidad climática extrema en el Huila:
-            Herramientas para la caracterización de la amenaza hidroclimática
-          </em>
-          , se convirtió en carta de navegación indispensable para la academia
-          y las instituciones públicas.
-        </p>
-        <ul className="mt-5 space-y-3">
-          <Bullet titulo="Interpretación hidroclimática avanzada">
-            Modelos estocásticos y determinísticos aplicados a las dinámicas locales
-            de la cuenca alta del Río Magdalena.
-          </Bullet>
-          <Bullet titulo="Caracterización de amenazas">
-            Herramientas metodológicas para evaluar escenarios futuros frente a la
-            variabilidad climática extrema.
-          </Bullet>
-          <Bullet titulo="Apropiación social del conocimiento">
-            Base científica diseñada para que comunidades e instituciones construyan
-            acciones de adaptación a mediano y largo plazo.
-          </Bullet>
-        </ul>
+        {activeSection === 'aporte' && (
+          <>
+            <SeccionTitulo icon={Scale}>
+              Aporte científico clave para la resiliencia del Huila
+            </SeccionTitulo>
+            <p className="text-[15px] text-neutral-700 leading-relaxed">
+              Su obra cumbre para el territorio:{' '}
+              <em className="text-[#162341] font-medium">
+                Cambio climático y variabilidad climática extrema en el Huila:
+                Herramientas para la caracterización de la amenaza hidroclimática
+              </em>
+              , se convirtió en carta de navegación indispensable para la academia
+              y las instituciones públicas.
+            </p>
+            <ul className="mt-5 space-y-3">
+              <Bullet titulo="Interpretación hidroclimática avanzada">
+                Modelos estocásticos y determinísticos aplicados a las dinámicas locales
+                de la cuenca alta del Río Magdalena.
+              </Bullet>
+              <Bullet titulo="Caracterización de amenazas">
+                Herramientas metodológicas para evaluar escenarios futuros frente a la
+                variabilidad climática extrema.
+              </Bullet>
+              <Bullet titulo="Apropiación social del conocimiento">
+                Base científica diseñada para que comunidades e instituciones construyan
+                acciones de adaptación a mediano y largo plazo.
+              </Bullet>
+            </ul>
+          </>
+        )}
 
-        {/* Trayectoria */}
-        <SeccionTitulo icon={GraduationCap}>
-          Una trayectoria de excelencia global
-        </SeccionTitulo>
-        <ul className="space-y-3">
-          <Bullet>
-            <strong className="text-[#162341] font-semibold">PhD en Ciencias Técnicas</strong>{' '}
-            (Hidrología, Recursos Hídricos e Hidroquímica) y{' '}
-            <strong className="text-[#162341] font-semibold">Maestría en Ecología
-            Hidrometeorológica</strong> - Universidad Estatal Hidrometeorológica de Rusia.
-          </Bullet>
-          <Bullet>
-            Ingeniero Hidrólogo e Investigador.
-          </Bullet>
-          <Bullet>
-            <strong className="text-[#162341] font-semibold">
-              Director del Departamento de Ecología y Territorio
-            </strong>
-            , Facultad de Estudios Ambientales y Rurales, Pontificia Universidad
-            Javeriana - formó generaciones de profesionales y lideró redes
-            científicas internacionales de cambio climático y biodiversidad.
-          </Bullet>
-        </ul>
+        {activeSection === 'trayectoria' && (
+          <>
+            <SeccionTitulo icon={GraduationCap}>
+              Una trayectoria de excelencia global
+            </SeccionTitulo>
+            <ul className="space-y-3">
+              <Bullet>
+                <strong className="text-[#162341] font-semibold">PhD en Ciencias Técnicas</strong>{' '}
+                (Hidrología, Recursos Hídricos e Hidroquímica) y{' '}
+                <strong className="text-[#162341] font-semibold">Maestría en Ecología
+                Hidrometeorológica</strong> - Universidad Estatal Hidrometeorológica de Rusia.
+              </Bullet>
+              <Bullet>
+                Ingeniero Hidrólogo e Investigador.
+              </Bullet>
+              <Bullet>
+                <strong className="text-[#162341] font-semibold">
+                  Director del Departamento de Ecología y Territorio
+                </strong>
+                , Facultad de Estudios Ambientales y Rurales, Pontificia Universidad
+                Javeriana - formó generaciones de profesionales y lideró redes
+                científicas internacionales de cambio climático y biodiversidad.
+              </Bullet>
+            </ul>
 
-        {/* Cita en bloque */}
-        <blockquote
-          className="
-            mt-14 pl-6 py-2 border-l-4 border-[#4A60D8]
-            text-[16px] sm:text-[17px] text-[#162341] leading-relaxed italic
-          "
-        >
-          “Su memoria vive en cada dato analizado, en cada modelo ejecutado y en
-          este Observatorio Climático, que hoy hereda su rigor metodológico para
-          salvaguardar la riqueza ambiental del Huila. Gracias, Dr. Efraín
-          Domínguez, por enseñarnos a modelar el futuro con la precisión de la
-          ciencia y el corazón puesto en el territorio.”
-        </blockquote>
+            <blockquote
+              className="
+                mt-14 pl-6 py-2 border-l-4 border-[#4A60D8]
+                text-[16px] sm:text-[17px] text-[#162341] leading-relaxed italic
+              "
+            >
+              “Su memoria vive en cada dato analizado, en cada modelo ejecutado y en
+              este Observatorio Climático, que hoy hereda su rigor metodológico para
+              salvaguardar la riqueza ambiental del Huila. Gracias, Dr. Efraín
+              Domínguez, por enseñarnos a modelar el futuro con la precisión de la
+              ciencia y el corazón puesto en el territorio.”
+            </blockquote>
+          </>
+        )}
 
-        {/* Referencia al libro */}
-        <div className="mt-14 rounded-2xl border border-neutral-200 bg-neutral-50 p-5 sm:p-6">
-          <div className="flex gap-5">
-            <div
-              className="shrink-0 w-[88px] sm:w-[110px] aspect-[3/4] rounded-lg overflow-hidden bg-[#162341] shadow-md ring-1 ring-black/5"
-              aria-hidden="true"
+        {activeSection === 'obra' && (
+          <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 sm:p-6">
+            <div className="flex gap-5">
+              <div
+                className="shrink-0 w-[88px] sm:w-[110px] aspect-[3/4] rounded-lg overflow-hidden bg-[#162341] shadow-md ring-1 ring-black/5"
+                aria-hidden="true"
               style={{
                 backgroundImage: `url('${HERO_BG}')`,
                 backgroundSize: 'cover',
@@ -242,7 +301,8 @@ export default function HomenajeEfrain() {
               </dl>
             </div>
           </div>
-        </div>
+          </div>
+        )}
 
         <div className="mt-14 flex justify-center">
           <Link

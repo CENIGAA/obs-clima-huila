@@ -1,4 +1,6 @@
-import { Users, ExternalLink, FlaskConical, Linkedin, Check } from 'lucide-react'
+import { useState } from 'react'
+import { ExternalLink, FlaskConical, Linkedin, Check } from 'lucide-react'
+import SubpageHeroNav from '../layout/SubpageHeroNav'
 
 // ─── Roles posibles dentro del equipo (checklist por miembro) ────────────────
 const ROLES = ['Researcher', 'Developer', 'Data Scientist', 'AI Engineer']
@@ -122,98 +124,106 @@ function SubCategoria({ titulo }) {
 }
 
 export default function Equipo() {
+  const sections = [
+    { id: 'talento', label: 'Talento' },
+    { id: 'grupos', label: 'Grupos' },
+    { id: 'infraestructura', label: 'Infraestructura' },
+  ]
+  const [activeSection, setActiveSection] = useState(sections[0].id)
+
   return (
-    <section
-      id="equipo"
-      className="py-20 border-t border-neutral-100"
-      aria-labelledby="equipo-heading"
-    >
-      <div className="container-main">
-        <div className="flex items-start gap-3 mb-3">
-          <span
-            className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#EEF1FB] text-[#4A60D8] shrink-0"
-            aria-hidden="true"
-          >
-            <Users size={18} />
-          </span>
-          <div>
-            <h2
-              id="equipo-heading"
-              className="text-[26px] sm:text-[28px] font-bold text-[#162341] tracking-tight"
-            >
-              I+D+i
-            </h2>
-            <p className="text-[14px] text-neutral-500 mt-1 leading-snug">
-              Investigación, desarrollo e innovación del Observatorio Climático del Huila.
-            </p>
-          </div>
-        </div>
+    <>
+      <SubpageHeroNav
+        eyebrow="I+D+i"
+        title="Investigación, desarrollo e innovación del Observatorio Climático del Huila."
+        description="Accede por separado al talento humano, los grupos de investigación y la infraestructura que sostienen el observatorio."
+        sections={sections}
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+        aside="Esta subpágina muestra la estructura de capacidades científicas y tecnológicas que opera el observatorio."
+      />
 
-        {/* ── Talento Humano ─────────────────────────────────── */}
-        <SubCategoria titulo="Talento Humano" />
-        <div className="grid gap-5 md:grid-cols-3 items-stretch">
-          {/* Director científico - destacado */}
-          <CardBase destacado>
-            <img
-              src="/assets/equipo/Jorge_Chavarro.jpg"
-              alt="Jorge I. Chavarro D."
-              className="w-16 h-16 rounded-full object-cover ring-2 ring-white shadow-sm"
-              loading="lazy"
-            />
-            <p className="text-[10.5px] font-mono uppercase tracking-[0.15em] text-[#4A60D8]">
-              Dirección científica
-            </p>
-            <h3 className="text-[18px] font-bold text-[#162341] leading-tight">
-              Jorge I. Chavarro D.
-            </h3>
-            <p className="text-[13.5px] text-neutral-700 leading-relaxed">
-              Director científico · Grupo Hidroinformática CENIGAA.
-            </p>
-            <RoleChecklist roles={ROLES} />
-            <a
-              href="https://www.linkedin.com/in/jorge-chavarro/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 mt-auto pt-2 text-[12.5px] font-medium text-[#4A60D8] hover:text-[#162341] transition-colors"
-            >
-              <Linkedin size={13} aria-hidden="true" />
-              LinkedIn
-            </a>
-          </CardBase>
-        </div>
+      <section
+        id={`panel-${activeSection}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${activeSection}`}
+        className="py-20 border-t border-neutral-100"
+      >
+        <div className="container-main">
+          {activeSection === 'talento' && (
+            <>
+              <SubCategoria titulo="Talento Humano" />
+              <div className="grid gap-5 md:grid-cols-3 items-stretch">
+                <CardBase destacado>
+                  <img
+                    src="/assets/equipo/Jorge_Chavarro.jpg"
+                    alt="Jorge I. Chavarro D."
+                    className="w-16 h-16 rounded-full object-cover ring-2 ring-white shadow-sm"
+                    loading="lazy"
+                  />
+                  <p className="text-[10.5px] font-mono uppercase tracking-[0.15em] text-[#4A60D8]">
+                    Dirección científica
+                  </p>
+                  <h3 className="text-[18px] font-bold text-[#162341] leading-tight">
+                    Jorge I. Chavarro D.
+                  </h3>
+                  <p className="text-[13.5px] text-neutral-700 leading-relaxed">
+                    Director científico · Grupo Hidroinformática CENIGAA.
+                  </p>
+                  <RoleChecklist roles={ROLES} />
+                  <a
+                    href="https://www.linkedin.com/in/jorge-chavarro/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mt-auto pt-2 text-[12.5px] font-medium text-[#4A60D8] hover:text-[#162341] transition-colors"
+                  >
+                    <Linkedin size={13} aria-hidden="true" />
+                    LinkedIn
+                  </a>
+                </CardBase>
+              </div>
+            </>
+          )}
 
-        {/* ── Grupos de Investigación ────────────────────────── */}
-        <SubCategoria titulo="Grupos de Investigación" />
-        <div className="grid gap-5 md:grid-cols-2 items-stretch">
-          <GrupoCard
-            icon={FlaskConical}
-            nombre="Grupo Hidroinformática CENIGAA"
-            descripcion="Análisis de series temporales, modelación hidrológica, ciencia de datos."
-          />
-          <GrupoCard
-            logo="/assets/logos/DSGAA.png"
-            alt="Grupo de Investigación en Dinámica de Sistemas GeoAgroAmbientales - DSGAA"
-            nombre="Dinámica de Sistemas GeoAgroAmbientales - DSGAA"
-            descripcion="Modelación de dinámica de sistemas aplicada a procesos geoagroambientales."
-          />
-        </div>
+          {activeSection === 'grupos' && (
+            <>
+              <SubCategoria titulo="Grupos de Investigación" />
+              <div className="grid gap-5 md:grid-cols-2 items-stretch">
+                <GrupoCard
+                  icon={FlaskConical}
+                  nombre="Grupo Hidroinformática CENIGAA"
+                  descripcion="Análisis de series temporales, modelación hidrológica, ciencia de datos."
+                />
+                <GrupoCard
+                  logo="/assets/logos/DSGAA.png"
+                  alt="Grupo de Investigación en Dinámica de Sistemas GeoAgroAmbientales - DSGAA"
+                  nombre="Dinámica de Sistemas GeoAgroAmbientales - DSGAA"
+                  descripcion="Modelación de dinámica de sistemas aplicada a procesos geoagroambientales."
+                />
+              </div>
+            </>
+          )}
 
-        {/* ── Infraestructura ────────────────────────────────── */}
-        <SubCategoria titulo="Infraestructura" />
-        <div className="grid gap-5 md:grid-cols-2 items-stretch">
-          <GrupoCard
-            logo="/assets/logos/Logo_GAA+IA.png"
-            alt="GAA+IA Lab"
-            eyebrow="Infraestructura"
-            nombre="GAA+IA Lab"
-            descripcion="Infraestructura computacional · Capa 2 ROGAA-Huila."
-          >
-            <ExternalLinkChip href="https://gaaialab.cenigaa.org">
-              gaaialab.cenigaa.org
-            </ExternalLinkChip>
-          </GrupoCard>
+          {activeSection === 'infraestructura' && (
+            <>
+              <SubCategoria titulo="Infraestructura" />
+              <div className="grid gap-5 md:grid-cols-2 items-stretch">
+                <GrupoCard
+                  logo="/assets/logos/Logo_GAA+IA.png"
+                  alt="GAA+IA Lab"
+                  eyebrow="Infraestructura"
+                  nombre="GAA+IA Lab"
+                  descripcion="Infraestructura computacional · Capa 2 ROGAA-Huila."
+                >
+                  <ExternalLinkChip href="https://gaaialab.cenigaa.org">
+                    gaaialab.cenigaa.org
+                  </ExternalLinkChip>
+                </GrupoCard>
+              </div>
+            </>
+          )}
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
