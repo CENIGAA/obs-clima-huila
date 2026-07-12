@@ -5,12 +5,15 @@
 
 | Versión | Fecha | Branch | Último commit | Estado |
 |---|---|---|---|---|
-| v1.6.0 | 2026-07-10 | `main` | (pendiente del commit `feat: menú desplegable + footer mínimo + I+D+i reestructurado`) | ✅ **Producción · navegación agrupada, footer institucional mínimo, sección I+D+i con grupos de investigación** |
+| v1.7.0 | 2026-07-12 | `main` | `f09ea37` · *chore: sincronizar restyle UI + infraestructura de calidad y CI* | ✅ **Producción · header azul, homepage blanca, suite de pruebas y CI endurecido** |
+| v1.6.0 | 2026-07-10 | `main` | *feat: menú desplegable + footer mínimo + I+D+i reestructurado* | ✅ Navegación agrupada, footer institucional mínimo, sección I+D+i con grupos de investigación |
 | v1.5.0 | 2026-06-17 | `main` | `6ba6bc2` · *feat(enso): mapa Leaflet regiones hidrologicas Colombia #N2* | ✅ `/enso` con mapa Leaflet real (escala nacional) |
 
-> Documento de auditoría · refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-07-10. v1.6.0 reorganiza la navegación y el equipo: **menú agrupado en desplegables temáticos** (Datos y Monitoreo · Recursos · El Observatorio), se elimina el item redundante "Inicio" (el nombre del nodo ya enlaza a `/`), "Equipo" pasa a **"I+D+i"** y el CTA ROGAA apunta a `cenigaa.org/views/rogaa.html`. El **footer se reduce al mínimo** (fondo blanco) e incluye los logos de las entidades a cargo (Gobernación del Huila · CAM · CENIGAA · IDEAM). La sección **I+D+i** se divide en tres subcategorías (Talento Humano · Grupos de Investigación · Infraestructura): perfil de Jorge Chavarro con foto y LinkedIn + checklist de roles, nuevo **Grupo DSGAA**, y tarjetas horizontales con logo lateral grande (DSGAA, GAA+IA Lab). La dedicatoria a Efraín se movió a `/sobre`; se añadió el logo del ODS 13 en `/politica`. Se **eliminó el carácter em dash** de todo el proyecto (reemplazo por ·, -, N/D o :).
+> Documento de auditoría · refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-07-12. v1.7.0 combina un **restyle de UI** con una capa de **calidad e infraestructura**. UI: el **header pasa a fondo azul `#4A60D8`** con todo su contenido en blanco; la **homepage (Hero) pasa a fondo blanco** con los colores del contenido invertidos para legibilidad (tarjetas de estadística claras, badges tenues, CTA secundario claro); el **footer adopta layout horizontal** (logos institucionales a la izquierda, copyright al frente); se elimina el indicador de scroll "Explorar" + flecha del Hero; y los fondos claros de sección (Resumen, Aliados, bloques de `/enso`) pasan a blanco. Infraestructura: **suite de pruebas** (`vitest` para UI + `node:test` para datos/CSP), script `scripts/validate-data.mjs`, config `.eslintrc.cjs`, y **CI endurecido** (lint + validate:data + test antes del build). Se **deja de trackear `build/`** (Vite output ahora se genera en CI, `build/` en `.gitignore`) y se elimina el `azure-static-web-apps.yml` legacy de la raíz. El contenido de `/enso` se refactoriza a `public/data/enso-contenido.json` con guía `MANTENIMIENTO_ENSO.md`.
 >
-> v1.5.0 sustituyó el mapa SVG conceptual del sub-bloque N2 (Bloque Escala Nacional de `/enso`) por un mapa **Leaflet real** con capa GeoJSON de las 5 regiones hidrológicas de Colombia (Natural Earth/IDEAM) sobre tiles CartoDB Light. Incluye tooltips por región con nivel de impacto El Niño 2026, hover con cambio de opacidad y un pin azul CENIGAA en el centroide real del Huila (2.5414°N, -75.6168°W).
+> v1.6.0 reorganizó la navegación y el equipo: **menú agrupado en desplegables temáticos** (Datos y Monitoreo · Recursos · El Observatorio), se eliminó el item redundante "Inicio", "Equipo" pasó a **"I+D+i"** y el CTA ROGAA apunta a `cenigaa.org/views/rogaa.html`. El footer se redujo al mínimo con los logos de las entidades a cargo (Gobernación del Huila · CAM · CENIGAA · IDEAM). La sección **I+D+i** se dividió en tres subcategorías (Talento Humano · Grupos de Investigación · Infraestructura): perfil de Jorge Chavarro con foto y LinkedIn + checklist de roles, nuevo **Grupo DSGAA**, y tarjetas horizontales con logo lateral. La dedicatoria a Efraín se movió a `/sobre`; se añadió el logo del ODS 13 en `/politica`. Se **eliminó el carácter em dash** de todo el proyecto.
+>
+> v1.5.0 sustituyó el mapa SVG conceptual del sub-bloque N2 (Bloque Escala Nacional de `/enso`) por un mapa **Leaflet real** con capa GeoJSON de las 5 regiones hidrológicas de Colombia (Natural Earth/IDEAM) sobre tiles CartoDB Light.
 
 ---
 
@@ -24,7 +27,7 @@
 | Repositorio | `cenigaa-obs-clima-huila` (GitHub · CENIGAA) |
 | Tipo | Dinámico · SPA React + Vite + Leaflet + Recharts |
 | Hosting | Azure Static Web Apps (Standard) |
-| CI/CD | GitHub Actions → Azure SWA, deploy automático en push a `main` |
+| CI/CD | GitHub Actions → Azure SWA en push a `main`. Desde v1.7.0 el pipeline corre `lint` + `validate:data` + `test` antes de `build`; el `build/` se genera en CI (ya no se commitea) |
 | Dedicado a | Dr. Efraín Antonio Domínguez Calle (1969–2021) |
 
 ---
@@ -43,7 +46,8 @@
 | Mapas | Leaflet + react-leaflet | ^1.9.4 / ^4.2.1 (Leaflet vanilla usado en `/enso` desde v1.5.0; `react-leaflet` en `/mapa` de estaciones) |
 | Gráficas | Recharts | ^3.8.1 (lazy desde v1.2.0) |
 | Iconografía | lucide-react | ^0.383.0 |
-| Calidad | ESLint + plugins react / hooks / refresh | ^8.57.0 |
+| Calidad | ESLint (`.eslintrc.cjs`) + plugins react / hooks / refresh | ^8.57.0 |
+| Pruebas | Vitest (UI) + `node:test` (datos/CSP) · script `validate-data.mjs` | v1.7.0 |
 
 ### Árbol de directorios (real, sin `node_modules` ni `build`)
 
@@ -51,17 +55,29 @@
 cenigaa-obs-clima-huila/
 ├── CENIGAA_CONTEXT.md
 ├── CENIGAA_STATUS_obs-clima-huila.md      ← este archivo
+├── MANTENIMIENTO_ENSO.md                  ← v1.7.0 · guía de actualización de contenido /enso
 ├── LICENSE
-├── README.md
+├── README.md                             ← v1.7.0 · documenta scripts de test/lint/validate
 ├── index.html
-├── package.json
+├── package.json                          ← v1.7.0 · scripts lint/validate:data/test/test:ui
 ├── package-lock.json
 ├── vite.config.js
+├── vitest.config.js                      ← v1.7.0 · config de pruebas UI
+├── .eslintrc.cjs                         ← v1.7.0 · config ESLint explícita
 ├── tailwind.config.js
 ├── postcss.config.js
-├── azure-static-web-apps.yml              ← raíz (legacy)
+├── scripts/
+│   └── validate-data.mjs                 ← v1.7.0 · validación de datos públicos (usado en CI)
+├── tests/                                ← v1.7.0 · vitest (UI) + node:test (datos/CSP)
+│   ├── data-quality.test.mjs
+│   ├── csp.test.mjs
+│   ├── header.ui.test.jsx
+│   ├── hero.ui.test.jsx
+│   ├── datos-abiertos.ui.test.jsx
+│   └── setup-vitest.js
+├── build/                                ← v1.7.0 · NO trackeado (en .gitignore; generado en CI)
 ├── .github/workflows/
-│   └── azure-static-web-apps-jolly-forest-0b932a410.yml
+│   └── azure-static-web-apps-jolly-forest-0b932a410.yml  ← v1.7.0 · lint + validate + test + build
 ├── public/
 │   ├── staticwebapp.config.json
 │   ├── favicon.svg                                       ← v1.0.1
@@ -89,6 +105,7 @@ cenigaa-obs-clima-huila/
 │       ├── municipios_huila.geojson                      (37 features tipo Point)
 │       ├── estacion_*.json                               (150 archivos por estación)
 │       ├── enso-estado.json                              ← v1.3.0 · datos ENSO + alerta nacional
+│       ├── enso-contenido.json                           ← v1.7.0 · narrativa /enso reutilizable (ver MANTENIMIENTO_ENSO.md)
 │       └── colombia-regiones-hidrologicas.geojson        ← v1.5.0 · 24 KB · 5 features (regiones)
 └── src/
     ├── main.jsx
@@ -102,10 +119,10 @@ cenigaa-obs-clima-huila/
     │   ├── tokens.css                                    (tokens SIC)
     │   └── global.css                                    (reset + @tailwind + utilidades)
     ├── components/layout/
-    │   ├── Header.jsx                                    ← v1.6.0 menú agrupado en desplegables (desktop hover+click, móvil acordeón); CTA ROGAA → /views/rogaa.html
-    │   └── Footer.jsx                                    ← v1.6.0 rediseño mínimo (fondo blanco) + logos entidades a cargo (Gob. Huila · CAM · CENIGAA · IDEAM)
+    │   ├── Header.jsx                                    ← v1.6.0 menú agrupado en desplegables · v1.7.0 fondo azul #4A60D8 (contenido en blanco)
+    │   └── Footer.jsx                                    ← v1.6.0 rediseño mínimo · v1.7.0 layout horizontal (logos izquierda, texto al frente)
     └── components/sections/
-        ├── Hero.jsx                                      ← v1.3.0 portada Plan Huila 2050 WebP+fallback
+        ├── Hero.jsx                                      ← v1.3.0 portada Plan Huila 2050 · v1.7.0 fondo blanco (colores invertidos), sin indicador "Explorar"
         ├── MapaEstaciones.jsx                            (con Filtros y Leyenda inline)
         ├── PanelEstacion.jsx                             (4 tabs: Estacionalidad / Tendencia / ENSO / Distribución)
         ├── SobreObservatorio.jsx
@@ -168,8 +185,8 @@ cenigaa-obs-clima-huila/
 
 | Ubicación | Archivo | Razón |
 |---|---|---|
-| [Header.jsx](src/components/layout/Header.jsx) (fondo `bg-white/95`) | desde v1.3.0 wordmark de texto en lugar de imagen | Decisión visual del usuario en commit `6e69dee` |
-| [Footer.jsx](src/components/layout/Footer.jsx) (fondo `bg-[#162341]` navy) | `/assets/logos/logo_cenigaa_T_Blanco.png` (h-14 sm:h-16 lg:h-20) | PNG en blanco para fondo oscuro · agrandado en v1.3.0 (`982a218`) |
+| [Header.jsx](src/components/layout/Header.jsx) (fondo azul `#4A60D8` desde v1.7.0) | wordmark de texto en blanco; CTA ROGAA como pill blanco con texto azul | v1.7.0 · antes `bg-white/95` con texto oscuro |
+| [Footer.jsx](src/components/layout/Footer.jsx) (fondo blanco desde v1.6.0) | logos institucionales a color (Gob. Huila · CAM · CENIGAA · IDEAM), layout horizontal v1.7.0 | v1.7.0 · antes navy con logo blanco |
 | [Aliados.jsx](src/components/sections/Aliados.jsx) | `/assets/logos/CENIGAA.svg` | (sin cambio) |
 
 ---
