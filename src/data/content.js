@@ -11,7 +11,7 @@ export const content = {
     meta: {
       title: 'Observatorio Climático del Huila "Efraín Domínguez Calle" | CENIGAA',
       description:
-        'Primera plataforma pública de datos climáticos del Departamento del Huila. 87 años de registros, 150 estaciones meteorológicas.',
+        'Primera plataforma pública de datos climáticos del Departamento del Huila. 87 años de registros, 150 estaciones meteorológicas y 36 municipios cubiertos.',
     },
     observatory: {
       name:        'Observatorio Climático del Huila',
@@ -34,7 +34,7 @@ export const content = {
     stats: {
       stations:        { value: '150', label: 'estaciones aptas' },
       years:           { value: '87',  label: 'años de registros' },
-      municipalities:  { value: '37',  label: 'municipios cubiertos' },
+      municipalities:  { value: '36',  label: 'municipios cubiertos' },
       components:      { value: '6',   label: 'componentes análisis' },
     },
     nav: [
@@ -70,7 +70,7 @@ export const content = {
     meta: {
       title: 'Climate Observatory of Huila "Efraín Domínguez Calle" | CENIGAA',
       description:
-        'First public climate data platform for the Huila Department. 87 years of records, 150 meteorological stations.',
+        'First public climate data platform for the Huila Department. 87 years of records, 150 meteorological stations and 36 municipalities covered.',
     },
     observatory: {
       name:        'Climate Observatory of Huila',
@@ -93,7 +93,7 @@ export const content = {
     stats: {
       stations:        { value: '150', label: 'suitable stations' },
       years:           { value: '87',  label: 'years of records' },
-      municipalities:  { value: '37',  label: 'municipalities covered' },
+      municipalities:  { value: '36',  label: 'municipalities covered' },
       components:      { value: '6',   label: 'analysis components' },
     },
     nav: [

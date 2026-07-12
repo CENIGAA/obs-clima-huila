@@ -5,9 +5,9 @@
       "allowedRoles": ["anonymous"]
     },
     {
-      "route": "/public/data/*",
+      "route": "/data/*",
       "headers": {
-        "Cache-Control": "public, max-age=86400"
+        "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400"
       }
     }
   ],
@@ -16,7 +16,7 @@
     "exclude": [
       "/assets/*.{png,jpg,gif,webp,svg,ico}",
       "/assets/*.{css,js}",
-      "/public/data/*.{json,geojson}",
+      "/data/*.{json,geojson,csv}",
       "/favicon.svg",
       "/apple-touch-icon.png",
       "/robots.txt",
@@ -30,9 +30,8 @@
     }
   },
   "globalHeaders": {
-    "content-security-policy": "default-src 'self' https:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; object-src 'none'; frame-ancestors 'none'",
+    "content-security-policy": "default-src 'self'; script-src 'self' 'sha256-Ow2QC/axaZX/E7dlZ1f1p1aL1aQ6x4KWhgwuBqOHWTQ='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.basemaps.cartocdn.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
     "X-Frame-Options": "DENY",
-    "X-XSS-Protection": "1; mode=block",
     "X-Content-Type-Options": "nosniff",
     "Referrer-Policy": "strict-origin-when-cross-origin",
     "Permissions-Policy": "camera=(), microphone=(), geolocation=(self)"

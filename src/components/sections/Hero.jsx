@@ -1,22 +1,21 @@
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { Cloud, Database, MapPin, ArrowDown, BookOpen, Droplets, Thermometer } from 'lucide-react'
+import { Cloud, Database, MapPin, BookOpen } from 'lucide-react'
 
 // ─── Tarjeta de estadística ───────────────────────────────────────────────────
 function StatCard({ icon: Icon, value, label, color = '#4A60D8', delay = 0 }) {
   return (
     <div
-      className="fade-up flex flex-col items-center gap-1 p-4 rounded-xl bg-white/8 border border-white/10 backdrop-blur-sm"
+      className="fade-up flex flex-col items-center gap-1 p-4 rounded-xl bg-[#F4F6FC] border border-neutral-200"
       style={{ animationDelay: `${delay}ms` }}
     >
       <Icon size={18} style={{ color }} aria-hidden="true" />
       <span
-        className="stat-number text-2xl font-extrabold text-white"
+        className="stat-number text-2xl font-extrabold text-[#162341]"
         style={{ letterSpacing: '-0.03em' }}
       >
         {value}
       </span>
-      <span className="text-[11px] font-medium text-neutral-400 text-center leading-tight uppercase tracking-wide">
+      <span className="text-[11px] font-medium text-neutral-500 text-center leading-tight uppercase tracking-wide">
         {label}
       </span>
     </div>
@@ -45,7 +44,7 @@ export default function Hero({ resumenData }) {
   return (
     <section
       id="hero"
-      className="relative overflow-hidden bg-[#162341] min-h-[92vh] flex flex-col justify-center"
+      className="relative overflow-hidden bg-white min-h-[92vh] flex flex-col justify-center"
       aria-labelledby="hero-heading"
     >
       {/* ── Fondo: grilla científica ────────────────────────── */}
@@ -73,7 +72,7 @@ export default function Hero({ resumenData }) {
         {/* Overlay inferior para transición suave */}
         <div
           className="absolute bottom-0 left-0 right-0 h-32"
-          style={{ background: 'linear-gradient(to bottom, transparent, rgba(22,35,65,0.4))' }}
+          style={{ background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.7))' }}
         />
       </div>
 
@@ -89,11 +88,11 @@ export default function Hero({ resumenData }) {
           className="fade-in flex items-center gap-2 mb-6"
           style={{ animationDelay: '0ms' }}
         >
-          <span className="data-badge bg-[#4A60D8]/20 text-[#8B9FE8] border border-[#4A60D8]/30">
+          <span className="data-badge bg-[#EEF1FB] text-[#4A60D8] border border-[#C5CEEF]">
             ROGAA-Huila
           </span>
-          <span className="text-neutral-600" aria-hidden="true">·</span>
-          <span className="data-badge bg-white/8 text-neutral-400 border border-white/10">
+          <span className="text-neutral-300" aria-hidden="true">·</span>
+          <span className="data-badge bg-neutral-100 text-neutral-500 border border-neutral-200">
             Nodo 1 de 5
           </span>
         </div>
@@ -107,7 +106,7 @@ export default function Hero({ resumenData }) {
           <span className="block text-[11px] sm:text-[12px] font-bold tracking-[0.15em] uppercase text-[#4A60D8] mb-2">
             Observatorio Climático del Huila
           </span>
-          <span className="block text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold text-white leading-[1.08] tracking-[-0.025em]">
+          <span className="block text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold text-[#162341] leading-[1.08] tracking-[-0.025em]">
             87 años de registros
           </span>
           <span className="block text-4xl sm:text-5xl lg:text-[3.5rem] font-extrabold leading-[1.08] tracking-[-0.025em]"
@@ -119,7 +118,7 @@ export default function Hero({ resumenData }) {
 
         {/* Subtítulo */}
         <p
-          className="fade-up mt-5 text-[16px] sm:text-[17px] text-neutral-400 max-w-xl leading-relaxed"
+          className="fade-up mt-5 text-[16px] sm:text-[17px] text-neutral-600 max-w-xl leading-relaxed"
           style={{ animationDelay: '160ms' }}
         >
           Primera plataforma pública de referencia climática departamental.
@@ -137,9 +136,9 @@ export default function Hero({ resumenData }) {
             En memoria de{' '}
             <Link
               to="/efrain"
-              className="text-neutral-400 hover:text-[#4A60D8] transition-colors not-italic font-medium underline underline-offset-2"
+              className="text-neutral-600 hover:text-[#4A60D8] transition-colors not-italic font-medium underline underline-offset-2"
             >
-              Efraín Antonio Domínguez Calle (1969–2021)
+              Efraín Antonio Domínguez Calle (1960–2021)
             </Link>
           </p>
         </div>
@@ -176,7 +175,7 @@ export default function Hero({ resumenData }) {
           />
           <StatCard
             icon={MapPin}
-            value="37"
+            value="36"
             label="municipios cubiertos"
             color="#F4511E"
             delay={520}
@@ -214,9 +213,9 @@ export default function Hero({ resumenData }) {
             to="/datos"
             className="
               inline-flex items-center justify-center gap-2
-              bg-white/8 hover:bg-white/12
-              border border-white/15 hover:border-white/25
-              text-neutral-300 text-[14px] font-medium
+              bg-neutral-100 hover:bg-neutral-200
+              border border-neutral-200 hover:border-neutral-300
+              text-neutral-700 text-[14px] font-medium
               px-6 py-3 rounded-full
               transition-all duration-200
             "
@@ -229,13 +228,13 @@ export default function Hero({ resumenData }) {
         {/* Indicador de periodo de datos */}
         {resumenData && (
           <div
-            className="fade-in mt-8 text-[12px] text-neutral-600"
+            className="fade-in mt-8 text-[12px] text-neutral-500"
             style={{ animationDelay: '600ms' }}
           >
             <span className="font-mono">
               Período: 1930 – 2017
             </span>
-            <span className="mx-2 text-neutral-700">·</span>
+            <span className="mx-2 text-neutral-300">·</span>
             <span>Fuente: CCYVCE_DB · SGR Conv. 124/2015</span>
           </div>
         )}
@@ -252,8 +251,8 @@ export default function Hero({ resumenData }) {
               <div
                 className="
                   relative aspect-[1394/1760] rounded-2xl overflow-hidden
-                  shadow-2xl ring-1 ring-white/15
-                  bg-[#0f1830]
+                  shadow-2xl ring-1 ring-black/10
+                  bg-neutral-100
                 "
               >
                 <picture>
@@ -268,7 +267,7 @@ export default function Hero({ resumenData }) {
                     height={1760}
                     className="w-full h-full object-cover"
                     loading="eager"
-                    fetchpriority="high"
+                    fetchPriority="high"
                   />
                 </picture>
                 {/* Glow brand-blue de profundidad */}
@@ -281,7 +280,7 @@ export default function Hero({ resumenData }) {
                 />
               </div>
               <figcaption className="mt-3 text-center text-[11.5px] tracking-[0.12em] uppercase text-neutral-500">
-                Plan de Cambio Climático <span className="text-neutral-300 font-semibold">Huila 2050</span>
+                Plan de Cambio Climático <span className="text-[#162341] font-semibold">Huila 2050</span>
               </figcaption>
             </figure>
           </div>
@@ -290,20 +289,6 @@ export default function Hero({ resumenData }) {
         {/* /grid 2-col */}
       </div>
 
-      {/* ── Indicador scroll ───────────────────────────────── */}
-      <div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40"
-        aria-hidden="true"
-      >
-        <span className="text-[10px] uppercase tracking-widest text-neutral-500 font-semibold">
-          Explorar
-        </span>
-        <ArrowDown
-          size={16}
-          className="text-neutral-500 animate-bounce"
-          style={{ animationDuration: '2s' }}
-        />
-      </div>
     </section>
   )
 }

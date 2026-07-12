@@ -1,0 +1,94 @@
+{
+  "hero": {
+    "eyebrow": "Seguimiento ENSO · Fase 2",
+    "subtitle": "Monitoreo científico del fenómeno ENSO y sus efectos sobre el departamento."
+  },
+  "relevancia": {
+    "heading": "¿Por qué este evento es relevante?",
+    "paragraphs": [
+      "{{eventPhaseWithYear}} marca una nueva fase de seguimiento del ciclo ENSO en el Huila. Según el estado operativo publicado por NOAA/CPC, el Pacífico ecuatorial se encuentra en la fase {{eventPhaseLower}} con una anomalía Niño3.4 de {{eventAnomalyWithUnit}} y una proyección de intensidad {{eventIntensityLower}} hacia {{eventHorizon}}.",
+      "Para el Huila, un departamento con {{historicalYears}} años de registros hidrometeorológicos sistematizados, {{eventPhase}} representa un patrón documentado: reducción en los totales de precipitación, especialmente en el norte del departamento, y mayor riesgo de déficit hídrico en los municipios del Alto Magdalena. El Observatorio Climático del Huila hace seguimiento a este fenómeno con datos de estaciones en tierra, complementando la observación satelital con medición directa."
+    ],
+    "quote": "Referencia metodológica: Domínguez Calle, E.A. et al. (2018). Cambio climático y variabilidad climática en el Huila. ISBN 978-620-2-16957-8. Convenio SGR 124/2015."
+  },
+  "indicadores": {
+    "heading": "Estado actual del fenómeno",
+    "roni_explainer": "El índice RONI (Relative Oceanic Niño Index) es el estándar oficial del NOAA/CPC desde febrero de {{eventYear}}. A diferencia del ONI histórico, el RONI sustrae la tendencia de calentamiento global de fondo, permitiendo comparar la intensidad de eventos de diferentes décadas en igualdad de condiciones."
+  },
+  "geovisores": {
+    "heading": "Geovisores de monitoreo internacional",
+    "intro": "Plataformas oficiales de seguimiento del ENSO. Selecciona cualquiera para acceder al visor en su sitio de origen.",
+    "outro": "CENIGAA complementa estos geovisores globales con datos de estaciones en tierra del Huila. La observación satelital y la medición directa son métodos complementarios, no equivalentes."
+  },
+  "escala_nacional": {
+    "eyebrow": "Escala nacional",
+    "heading": "{{eventPhaseWithYear}} en Colombia",
+    "intro": "El forzamiento global del Pacífico ecuatorial llega con intensidad diferenciada según la región hidrológica. El Huila, en la cabecera del Magdalena, ocupa una de las posiciones de mayor exposición del país.",
+    "alert_badge": "Alerta activa IDEAM",
+    "impacts_heading": "Impactos esperados por región hidrológica",
+    "map_caption": "Fuente: Natural Earth / IDEAM. Pasa el cursor sobre cada región para ver el nivel de impacto.",
+    "cuenca_heading": "La cuenca alta del Magdalena bajo {{eventPhase}}",
+    "field_signal_label": "Señal en campo. Corte al {{nationalUpdateDateLong}}",
+    "historical_bridge": "La correlación entre {{eventPhase}} y la precipitación histórica del Huila se documenta en la sección siguiente con datos de la serie CC_VCE ({{historicalPeriod}}, {{historicalYears}} años de registros propios de CENIGAA).",
+    "sectors_heading": "Sectores en seguimiento. Huila",
+    "sources": "Fuente: IDEAM Colombia, comunicado oficial {{ideamConfirmationDateLong}}. Corporación Autónoma Regional del Alto Magdalena."
+  },
+  "historico_huila": {
+    "heading": "{{eventPhase}} en el Huila: lo que dicen {{historicalYears}} años de datos",
+    "paragraphs": [
+      "El análisis de {{historicalTotalStations}} estaciones hidrometeorológicas del Huila con registros en el periodo {{historicalPeriod}} ({{historicalYears}} años) revela patrones documentados de respuesta a {{eventPhase}}. De las estaciones con tendencia estadísticamente significativa (p < 0.05), {{historicalTrendDecreasing}} muestran tendencia decreciente en precipitación y {{historicalTrendIncreasing}} tendencia creciente, con el grueso de las estaciones sin tendencia detectada ({{historicalTrendNoTrend}} de {{historicalPrecipitationStations}}). Este comportamiento heterogéneo refleja la complejidad del relieve huilense: la cordillera divide el departamento en subregiones con respuestas distintas al forzamiento ENSO.",
+      "Los eventos {{eventPhase}} históricos registrados en la base CCYVCE_DB ({{historicalPeriod}}) muestran consistentemente una reducción en los totales anuales de precipitación, más pronunciada en el norte del Huila (municipios del Alto Magdalena: Neiva, Palermo, Aipe, Villavieja) que en el sur (Pitalito, San Agustín, Saladoblanco). Este gradiente norte-sur es uno de los hallazgos centrales del análisis de variabilidad climática del Convenio SGR 124/2015.",
+      "El monitoreo cuasi-real de las 17 estaciones automáticas actualmente operativas en el departamento permitirá contrastar en tiempo real el comportamiento de {{eventPhaseWithYear}} con los patrones históricos documentados. Este seguimiento, en construcción, representa la primera capa de validación cruzada in situ disponible para el Huila."
+    ],
+    "quote": "Fuente primaria: Domínguez Calle, E.A., Cerón Bretón, W.L., Mejía Fernández, A.J., y Cabezas Calderón, J. (2018). Cambio climático y variabilidad climática en el departamento del Huila. Editorial Académica Española. ISBN: 978-620-2-16957-8. Convenio de Cooperación SGR No. 124 de 2015. Gobernación del Huila / CENIGAA."
+  },
+  "seguimiento_local": {
+    "heading": "Seguimiento con estaciones automáticas del Huila",
+    "eyebrow": "En construcción",
+    "description": "17 estaciones automáticas del departamento del Huila tienen datos operativos desde 2023. El componente de visualización en tiempo cuasi-real está en desarrollo. Estará disponible en esta sección a partir del tercer trimestre de {{eventYear}}.",
+    "regions": [
+      {
+        "zone": "Norte",
+        "color": "blue",
+        "municipios": "Neiva, Palermo, Aipe"
+      },
+      {
+        "zone": "Centro",
+        "color": "green",
+        "municipios": "La Plata, Algeciras, Campoalegre"
+      },
+      {
+        "zone": "Sur",
+        "color": "orange",
+        "municipios": "Pitalito, San Agustín"
+      }
+    ],
+    "badge": "17 estaciones activas · Red IDEAM · Datos 2023-{{eventYear}}"
+  },
+  "creditos": {
+    "sources_heading": "Fuentes de datos ENSO",
+    "sources_items": [
+      "NOAA/CPC. National Centers for Environmental Prediction",
+      "IRI/Columbia. International Research Institute for Climate and Society",
+      "Copernicus C3S. Copernicus Climate Change Service / ECMWF",
+      "Índice de referencia: RONI (Relative Oceanic Niño Index), vigente desde feb {{eventYear}}"
+    ],
+    "local_heading": "Referencia científica local",
+    "local_items": [
+      "Domínguez Calle, E.A. et al. (2018)",
+      "ISBN: 978-620-2-16957-8",
+      "{{historicalTotalStations}} estaciones · {{historicalYears}} años ({{historicalPeriod}})",
+      "Convenio SGR No. 124/2015"
+    ],
+    "observatory_heading": "Observatorio",
+    "observatory_items": [
+      "Observatorio Climático del Huila",
+      "«Efraín Antonio Domínguez Calle»",
+      "CENIGAA. NIT 900345215-2",
+      "Nodo 1 ROGAA-Huila",
+      "Actualización ENSO: semanal (manual)"
+    ],
+    "observatory_link_label": "Más sobre el Observatorio",
+    "updated_label": "Última actualización de datos ENSO:"
+  }
+}

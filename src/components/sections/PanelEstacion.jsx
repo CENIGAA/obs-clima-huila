@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import {
   BarChart, Bar, LineChart, Line, XAxis, YAxis,
   CartesianGrid, Tooltip as RTooltip, ResponsiveContainer,
-  ReferenceLine, Cell,
+  Cell,
 } from 'recharts'
 import { useEstacion } from '../../hooks/useDataLoader'
 

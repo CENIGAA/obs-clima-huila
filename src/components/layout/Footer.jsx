@@ -18,9 +18,9 @@ export default function Footer() {
         aria-hidden="true"
       />
 
-      <div className="container-main py-7 flex flex-col items-center gap-5">
-        {/* Entidades a cargo */}
-        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
+      <div className="container-main py-7 flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-8">
+        {/* Entidades a cargo · lateral izquierdo */}
+        <div className="flex flex-wrap items-center gap-4 sm:gap-6 shrink-0">
           {ENTIDADES.map(logo => (
             <img
               key={logo.alt}
@@ -33,8 +33,8 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Copyright */}
-        <p className="text-[12px] text-neutral-500 text-center">
+        {/* Copyright · al frente */}
+        <p className="text-[12px] text-neutral-500">
           © CENIGAA {year} · Observatorio Climático del Huila ·{' '}
           <a
             href="https://www.cenigaa.org"

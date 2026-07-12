@@ -76,7 +76,7 @@ export default function Aliados() {
   return (
     <section
       id="aliados"
-      className="py-20 border-t border-neutral-100 bg-neutral-50/40"
+      className="py-20 border-t border-neutral-100 bg-white"
       aria-labelledby="aliados-heading"
     >
       <div className="container-main">

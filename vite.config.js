@@ -8,11 +8,14 @@ export default defineConfig({
     outDir: 'build',
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor:  ['react', 'react-dom'],
-          icons:   ['lucide-react'],
-          map:     ['leaflet', 'react-leaflet'],
-          charts:  ['recharts'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('scheduler')) return 'vendor'
+            if (id.includes('lucide-react')) return 'icons'
+            if (id.includes('leaflet') || id.includes('react-leaflet')) return 'map'
+            if (id.includes('recharts') || id.includes('victory-vendor')) return 'charts'
+          }
+          return undefined
         },
       },
     },

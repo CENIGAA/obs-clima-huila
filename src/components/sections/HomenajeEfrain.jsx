@@ -108,7 +108,7 @@ export default function HomenajeEfrain() {
                 Dr. Efraín Antonio Domínguez Calle
               </h1>
               <p className="mt-3 text-[15px] sm:text-[16px] text-neutral-300 font-medium">
-                1969 – 2021 · Hidrólogo · Científico · Maestro
+                1960 – 2021 · Hidrólogo · Científico · Maestro
               </p>
               <div className="flex justify-center lg:justify-start mt-5">
                 <div className="h-1 w-16 bg-gradient-to-r from-[#4A60D8] via-[#43B02A] to-[#F4511E] rounded-full" />
@@ -122,7 +122,7 @@ export default function HomenajeEfrain() {
       <section className="container-main py-14 lg:py-20 max-w-3xl">
         <p className="text-[16px] sm:text-[17px] text-neutral-700 leading-relaxed">
           El Observatorio Climático del Departamento del Huila rinde un profundo y
-          respetuoso homenaje al Dr. Efraín Antonio Domínguez Calle (1969–2021),
+          respetuoso homenaje al Dr. Efraín Antonio Domínguez Calle (1960–2021),
           cuya brillantez intelectual, rigurosidad académica y calidad humana
           transformaron la gestión del conocimiento ambiental en nuestro territorio.
           Como uno de los científicos e hidrólogos más destacados de Colombia,

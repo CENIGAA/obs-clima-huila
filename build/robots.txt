@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://obs-clima-huila.cenigaa.org/sitemap.xml

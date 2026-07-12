@@ -13,8 +13,8 @@
 
 ## Descripción
 
-94 años de datos climáticos del Departamento del Huila (1923–2017).  
-150 estaciones meteorológicas aptas. 37 municipios cubiertos.  
+87 años de datos climáticos del Departamento del Huila (1930–2017).  
+150 estaciones meteorológicas aptas. 36 municipios cubiertos.  
 Análisis de tendencias Mann-Kendall, variabilidad hidroclimática y 6 componentes metodológicos del libro **CC_VCE Huila** (Domínguez Calle et al., 2018).
 
 **Red ROGAA-Huila:** Este observatorio es el Nodo 1 de la Red de Observatorios GeoAgroAmbientales del Huila.
@@ -39,7 +39,7 @@ Análisis de tendencias Mann-Kendall, variabilidad hidroclimática y 6 component
 ```
 public/data/
 ├── estaciones.json           # 150 estaciones + tendencias MK
-├── municipios_huila.geojson  # 37 municipios del Huila
+├── municipios_huila.geojson  # 36 municipios cubiertos por las estaciones
 ├── resumen_departamento.json # Hallazgos departamentales
 └── estacion_{CODIGO}.json    # Datos por estación (×150)
 ```
@@ -58,6 +58,14 @@ npm run dev
 npm run build    # Build de producción → /build
 npm run preview  # Preview del build
 ```
+
+## Mantenimiento editorial ENSO
+
+La sección `/enso` ya no se actualiza editando React directamente.
+
+- Guía operativa: [MANTENIMIENTO_ENSO.md](/Users/monox/webstack/obs-clima-huila/MANTENIMIENTO_ENSO.md)
+- Estado operativo: `public/data/enso-estado.json`
+- Narrativa institucional: `public/data/enso-contenido.json`
 
 ---
 

@@ -36,7 +36,7 @@ const hallazgos = [
     color: '#162341',
     titulo: 'Patrón bimodal estable',
     texto:
-      '112 de 149 estaciones no presentan tendencia significativa. El régimen bimodal del Huila (abril-mayo y octubre-noviembre) se mantiene como patrón dominante en el periodo analizado.',
+      '112 de 149 estaciones con precipitación no presentan tendencia significativa. El régimen bimodal del Huila (abril-mayo y octubre-noviembre) se mantiene como patrón dominante en el periodo analizado.',
   },
 ]
 
@@ -50,7 +50,7 @@ export default function ResumenSection() {
   return (
     <section
       id="resumen"
-      className="py-16 bg-slate-50"
+      className="py-16 bg-white"
       aria-labelledby="resumen-heading"
     >
       <div className="container-main">
@@ -66,7 +66,7 @@ export default function ResumenSection() {
             Qué nos dicen 87 años de registros
           </h2>
           <p className="text-[15px] text-neutral-600 leading-relaxed">
-            Análisis de 149 estaciones hidrometeorológicas del IDEAM procesadas
+            Análisis de 149 estaciones con series de precipitación del IDEAM procesadas
             por CENIGAA. Periodo: 1930-2017.
           </p>
         </div>

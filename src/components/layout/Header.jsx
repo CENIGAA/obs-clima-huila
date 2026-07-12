@@ -10,7 +10,7 @@ const NAV_GROUPS = [
     items: [
       { to: '/mapa',    label: 'Mapa' },
       { to: '/resumen', label: 'Resumen' },
-      { to: '/enso',    label: 'El Niño 2026' },
+      { to: '/enso',    label: 'ENSO' },
       { to: '/datos',   label: 'Datos' },
     ],
   },
@@ -39,10 +39,10 @@ function NavItem({ to, children, onClick }) {
       onClick={onClick}
       className={({ isActive }) => `
         relative text-[13.5px] font-medium
-        ${isActive ? 'text-[#4A60D8]' : 'text-neutral-600 hover:text-[#4A60D8]'}
+        ${isActive ? 'text-white' : 'text-white/80 hover:text-white'}
         transition-colors duration-200
         after:absolute after:bottom-[-2px] after:left-0 after:h-[2px]
-        after:bg-[#4A60D8] after:rounded-full after:transition-all after:duration-200
+        after:bg-white after:rounded-full after:transition-all after:duration-200
         ${isActive ? 'after:w-full' : 'after:w-0 hover:after:w-full'}
       `}
     >
@@ -90,7 +90,7 @@ function NavDropdown({ group }) {
         className={`
           flex items-center gap-1 text-[13.5px] font-medium
           transition-colors duration-200
-          ${groupActive || open ? 'text-[#4A60D8]' : 'text-neutral-600 hover:text-[#4A60D8]'}
+          ${groupActive || open ? 'text-white' : 'text-white/80 hover:text-white'}
         `}
       >
         {group.label}
@@ -250,8 +250,8 @@ export default function Header() {
           fixed top-0 left-0 right-0 z-50
           transition-all duration-300
           ${scrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-[0_1px_0_0_rgba(22,35,65,0.08)] py-0'
-            : 'bg-white/90 backdrop-blur-sm py-0'
+            ? 'bg-[#4A60D8]/95 backdrop-blur-md shadow-[0_2px_12px_-2px_rgba(22,35,65,0.25)] py-0'
+            : 'bg-[#4A60D8] py-0'
           }
         `}
         style={{ height: 'var(--header-height)' }}
@@ -269,14 +269,14 @@ export default function Header() {
                 rel="noopener noreferrer"
                 className="
                   text-[11px] font-extrabold tracking-[0.08em] uppercase
-                  text-neutral-500 hover:text-[#4A60D8] transition-colors duration-200
+                  text-white/70 hover:text-white transition-colors duration-200
                 "
                 aria-label="Ir al sitio principal de CENIGAA"
               >
                 CENIGAA
               </a>
-              <ChevronRight size={10} className="text-neutral-300 flex-shrink-0" />
-              <span className="text-[11px] font-semibold tracking-[0.06em] uppercase text-neutral-400 truncate hidden sm:block">
+              <ChevronRight size={10} className="text-white/40 flex-shrink-0" />
+              <span className="text-[11px] font-semibold tracking-[0.06em] uppercase text-white/60 truncate hidden sm:block">
                 Observatorio Climático
               </span>
             </div>
@@ -289,18 +289,18 @@ export default function Header() {
             >
               <Cloud
                 size={16}
-                className="text-[#4A60D8] flex-shrink-0 group-hover:scale-110 transition-transform"
+                className="text-white flex-shrink-0 group-hover:scale-110 transition-transform"
                 aria-hidden="true"
               />
               <div className="min-w-0">
                 <span className="
                   text-[14px] sm:text-[15px] font-bold tracking-[-0.01em]
-                  text-[#162341] group-hover:text-[#4A60D8] transition-colors
+                  text-white group-hover:text-white/80 transition-colors
                   truncate block leading-tight
                 ">
                   Observatorio Climático del Huila
                 </span>
-                <span className="text-[11px] text-neutral-400 font-normal hidden sm:block leading-none mt-0.5">
+                <span className="text-[11px] text-white/70 font-normal hidden sm:block leading-none mt-0.5">
                   Efraín Domínguez Calle · CENIGAA
                 </span>
               </div>
@@ -326,11 +326,11 @@ export default function Header() {
               className="
                 flex items-center gap-1.5
                 text-[12.5px] font-semibold
-                bg-[#162341] hover:bg-[#4A60D8]
-                text-white
+                bg-white hover:bg-white/90
+                text-[#4A60D8]
                 px-3.5 py-1.5 rounded-full
                 transition-all duration-200
-                hover:shadow-md hover:shadow-[#4A60D8]/20
+                hover:shadow-md hover:shadow-black/10
               "
             >
               <span>ROGAA</span>
@@ -345,8 +345,7 @@ export default function Header() {
             className="
               lg:hidden flex items-center justify-center
               w-9 h-9 rounded-lg
-              text-neutral-600 hover:text-[#4A60D8]
-              hover:bg-[#EEF1FB]
+              text-white hover:bg-white/15
               transition-colors duration-200
               flex-shrink-0
             "
