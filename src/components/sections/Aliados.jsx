@@ -1,6 +1,7 @@
 const ALIADOS = [
   {
     logo: '/assets/logos/Gobernacion_Huila.png',
+    logoWebp: '/assets/logos/Gobernacion_Huila.webp',
     logoMaxWidth: 160,
     nombre: 'Gobernación del Huila',
     rol: 'Responsable institucional',
@@ -36,7 +37,7 @@ const ALIADOS = [
   },
 ]
 
-function LogoTile({ logo, logoMaxWidth, nombre }) {
+function LogoTile({ logo, logoWebp, logoMaxWidth, nombre }) {
   if (!logo) {
     return (
       <div
@@ -61,13 +62,16 @@ function LogoTile({ logo, logoMaxWidth, nombre }) {
       "
       style={{ paddingTop: 16, paddingBottom: 16 }}
     >
-      <img
-        src={logo}
-        alt={`Logo ${nombre}`}
-        className="max-h-[80px] object-contain"
-        style={{ maxWidth: logoMaxWidth, width: '100%' }}
-        loading="lazy"
-      />
+      <picture>
+        {logoWebp && <source srcSet={logoWebp} type="image/webp" />}
+        <img
+          src={logo}
+          alt={`Logo ${nombre}`}
+          className="max-h-[80px] object-contain"
+          style={{ maxWidth: logoMaxWidth, width: '100%' }}
+          loading="lazy"
+        />
+      </picture>
     </div>
   )
 }
@@ -126,6 +130,7 @@ export default function Aliados() {
               )}
               <LogoTile
                 logo={a.logo}
+                logoWebp={a.logoWebp}
                 logoMaxWidth={a.logoMaxWidth}
                 nombre={a.nombre}
               />

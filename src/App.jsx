@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
@@ -11,11 +11,13 @@ import Equipo            from './components/sections/Equipo'
 import DatosAbiertos     from './components/sections/DatosAbiertos'
 import Aliados           from './components/sections/Aliados'
 import HomenajeEfrain    from './components/sections/HomenajeEfrain'
-import Enso              from './components/sections/Enso'
 import PoliticaSection   from './components/sections/PoliticaSection'
 import ResumenSection    from './components/sections/ResumenSection'
 import SubpageHeroNav from './components/layout/SubpageHeroNav'
 import { useResumenDepartamento, useEstaciones } from './hooks/useDataLoader'
+
+// ─── Carga diferida de /enso (chunk pesado: Leaflet + narrativa) ─────────────
+const Enso = lazy(() => import('./components/sections/Enso'))
 
 // ─── Banner de verificación de datos (desarrollo) ────────────────────────────
 function DataStatusBanner({ resumen, estaciones, error }) {
@@ -196,7 +198,13 @@ export default function App() {
         <Route path="/biblioteca"  element={<Layout><BibliotecaPage /></Layout>} />
         <Route path="/equipo"      element={<Layout><EquipoPage /></Layout>} />
         <Route path="/datos"       element={<Layout><DatosPage /></Layout>} />
-        <Route path="/enso"        element={<Layout><Enso /></Layout>} />
+        <Route path="/enso"        element={
+          <Layout>
+            <Suspense fallback={<div className="min-h-screen" />}>
+              <Enso />
+            </Suspense>
+          </Layout>
+        } />
         <Route path="/efrain"      element={<Layout><HomenajeEfrain /></Layout>} />
       </Routes>
 

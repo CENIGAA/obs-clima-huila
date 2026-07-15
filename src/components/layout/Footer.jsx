@@ -1,6 +1,6 @@
 // ─── Entidades a cargo del observatorio (orden oficial) ──────────────────────
 const ENTIDADES = [
-  { src: '/assets/logos/Gobernacion_Huila.png', alt: 'Gobernación del Huila' },
+  { src: '/assets/logos/Gobernacion_Huila.png', webp: '/assets/logos/Gobernacion_Huila.webp', alt: 'Gobernación del Huila' },
   { src: '/assets/logos/CAM.svg',               alt: 'CAM · Corporación Autónoma Regional del Alto Magdalena' },
   { src: '/assets/logos/CENIGAA.svg',           alt: 'CENIGAA' },
   { src: '/assets/logos/IDEAM.png',             alt: 'IDEAM' },
@@ -22,14 +22,16 @@ export default function Footer() {
         {/* Entidades a cargo · lateral izquierdo */}
         <div className="flex flex-wrap items-center gap-4 sm:gap-6 shrink-0">
           {ENTIDADES.map(logo => (
-            <img
-              key={logo.alt}
-              src={logo.src}
-              alt={logo.alt}
-              title={logo.alt}
-              className="h-12 w-auto object-contain"
-              loading="lazy"
-            />
+            <picture key={logo.alt}>
+              {logo.webp && <source srcSet={logo.webp} type="image/webp" />}
+              <img
+                src={logo.src}
+                alt={logo.alt}
+                title={logo.alt}
+                className="h-12 w-auto object-contain"
+                loading="lazy"
+              />
+            </picture>
           ))}
         </div>
 

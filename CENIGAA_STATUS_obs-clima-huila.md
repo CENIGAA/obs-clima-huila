@@ -5,11 +5,14 @@
 
 | Versión | Fecha | Branch | Último commit | Estado |
 |---|---|---|---|---|
-| v1.7.0 | 2026-07-12 | `main` | `f09ea37` · *chore: sincronizar restyle UI + infraestructura de calidad y CI* | ✅ **Producción · header azul, homepage blanca, suite de pruebas y CI endurecido** |
+| v1.7.1 | 2026-07-14 | `main` | (pendiente del commit `perf: lazy /enso + WebP + sitemap`) | ✅ **Producción · cierre de deuda técnica: code-splitting de /enso, WebP y SEO** |
+| v1.7.0 | 2026-07-12 | `main` | `f09ea37` · *chore: sincronizar restyle UI + infraestructura de calidad y CI* | ✅ header azul, homepage blanca, suite de pruebas y CI endurecido |
 | v1.6.0 | 2026-07-10 | `main` | *feat: menú desplegable + footer mínimo + I+D+i reestructurado* | ✅ Navegación agrupada, footer institucional mínimo, sección I+D+i con grupos de investigación |
 | v1.5.0 | 2026-06-17 | `main` | `6ba6bc2` · *feat(enso): mapa Leaflet regiones hidrologicas Colombia #N2* | ✅ `/enso` con mapa Leaflet real (escala nacional) |
 
-> Documento de auditoría · refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-07-12. v1.7.0 combina un **restyle de UI** con una capa de **calidad e infraestructura**. UI: el **header pasa a fondo azul `#4A60D8`** con todo su contenido en blanco; la **homepage (Hero) pasa a fondo blanco** con los colores del contenido invertidos para legibilidad (tarjetas de estadística claras, badges tenues, CTA secundario claro); el **footer adopta layout horizontal** (logos institucionales a la izquierda, copyright al frente); se elimina el indicador de scroll "Explorar" + flecha del Hero; y los fondos claros de sección (Resumen, Aliados, bloques de `/enso`) pasan a blanco. Infraestructura: **suite de pruebas** (`vitest` para UI + `node:test` para datos/CSP), script `scripts/validate-data.mjs`, config `.eslintrc.cjs`, y **CI endurecido** (lint + validate:data + test antes del build). Se **deja de trackear `build/`** (Vite output ahora se genera en CI, `build/` en `.gitignore`) y se elimina el `azure-static-web-apps.yml` legacy de la raíz. El contenido de `/enso` se refactoriza a `public/data/enso-contenido.json` con guía `MANTENIMIENTO_ENSO.md`.
+> Documento de auditoría · refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-07-14. v1.7.1 cierra deuda técnica: **`/enso` pasa a `React.lazy()` + `Suspense`** en App.jsx, con lo que el chunk `index-*.js` baja de **161 KB a 118 KB** (gzip 30 KB) y ENSO se emite como chunk aparte `Enso-*.js` (29.7 KB) que solo se descarga al navegar a `/enso`. **SEO**: `sitemap.xml` con `lastmod 2026-07-14` en las 10 rutas. **Imágenes WebP**: `Gobernacion_Huila` (32→6 KB), `Efrain-Dominguez3` (32→22 KB) y `Efrain_isologo` (91→26 KB); la de Gobernación se sirve vía `<picture>` + fallback PNG en Footer y Aliados (las dos de Efraín quedan disponibles, aún sin referencia en código). Verificado 0 em-dashes en JSONs públicos. Suite lint + validate:data + test + build en verde; persiste el warning preexistente del chunk de Recharts (>500 KB), ajeno a estos cambios.
+>
+> v1.7.0 combina un **restyle de UI** con una capa de **calidad e infraestructura**. UI: el **header pasa a fondo azul `#4A60D8`** con todo su contenido en blanco; la **homepage (Hero) pasa a fondo blanco** con los colores del contenido invertidos para legibilidad (tarjetas de estadística claras, badges tenues, CTA secundario claro); el **footer adopta layout horizontal** (logos institucionales a la izquierda, copyright al frente); se elimina el indicador de scroll "Explorar" + flecha del Hero; y los fondos claros de sección (Resumen, Aliados, bloques de `/enso`) pasan a blanco. Infraestructura: **suite de pruebas** (`vitest` para UI + `node:test` para datos/CSP), script `scripts/validate-data.mjs`, config `.eslintrc.cjs`, y **CI endurecido** (lint + validate:data + test antes del build). Se **deja de trackear `build/`** (Vite output ahora se genera en CI, `build/` en `.gitignore`) y se elimina el `azure-static-web-apps.yml` legacy de la raíz. El contenido de `/enso` se refactoriza a `public/data/enso-contenido.json` con guía `MANTENIMIENTO_ENSO.md`.
 >
 > v1.6.0 reorganizó la navegación y el equipo: **menú agrupado en desplegables temáticos** (Datos y Monitoreo · Recursos · El Observatorio), se eliminó el item redundante "Inicio", "Equipo" pasó a **"I+D+i"** y el CTA ROGAA apunta a `cenigaa.org/views/rogaa.html`. El footer se redujo al mínimo con los logos de las entidades a cargo (Gobernación del Huila · CAM · CENIGAA · IDEAM). La sección **I+D+i** se dividió en tres subcategorías (Talento Humano · Grupos de Investigación · Infraestructura): perfil de Jorge Chavarro con foto y LinkedIn + checklist de roles, nuevo **Grupo DSGAA**, y tarjetas horizontales con logo lateral. La dedicatoria a Efraín se movió a `/sobre`; se añadió el logo del ODS 13 en `/politica`. Se **eliminó el carácter em dash** de todo el proyecto.
 >
@@ -109,7 +112,7 @@ cenigaa-obs-clima-huila/
 │       └── colombia-regiones-hidrologicas.geojson        ← v1.5.0 · 24 KB · 5 features (regiones)
 └── src/
     ├── main.jsx
-    ├── App.jsx                                           ← BrowserRouter + 9 rutas
+    ├── App.jsx                                           ← BrowserRouter + 9 rutas · v1.7.1 Enso en React.lazy + Suspense
     ├── hooks/
     │   └── useDataLoader.js                              (useEstaciones, useEstacion, useResumenDepartamento)
     ├── data/
@@ -134,25 +137,26 @@ cenigaa-obs-clima-huila/
         ├── PoliticaSection.jsx                           ← v1.0.1 · /politica
         ├── ResumenSection.jsx                            ← v1.1.0 · /resumen · v1.2.0 lazy BarChart
         ├── LazyBarChart.jsx                              ← v1.2.0 · chunk dinámico Recharts
-        ├── Enso.jsx                                      ← v1.3.0 · /enso · v1.4.0 Bloque Nacional · v1.5.0 mapa Leaflet
+        ├── Enso.jsx                                      ← v1.3.0 · /enso · v1.4.0 Bloque Nacional · v1.5.0 mapa Leaflet · v1.7.1 lazy chunk
         └── HomenajeEfrain.jsx                            (/efrain · WebPs desde v1.2.0)
 ```
 
-### Chunks de producción (output Vite tras v1.5.0)
+### Chunks de producción (output rolldown tras v1.7.1)
 
 | Chunk | Tamaño | Gzip | Contenido |
 |---|---:|---:|---|
-| `index-*.js` | 161 KB | 45.2 KB | App shell + router + secciones (subió en v1.5.0 por el código del mapa Leaflet inline en Enso.jsx) |
-| `map-*.js` | 289 KB | 88.7 KB | leaflet + react-leaflet (lazy en `/mapa`, sincrónico en `/enso` desde v1.5.0) |
-| `charts-*.js` | 374 KB | 110.6 KB | recharts (lazy en `/resumen` vía `LazyBarChart`) |
-| `LazyBarChart-*.js` | 1.08 KB | 0.62 KB | wrapper dinámico de Recharts |
-| `icons-*.js` | 24 KB | 6.5 KB | lucide-react |
-| `vendor-*.js` | 0.06 KB | 0.07 KB | react / react-dom (hoisted por Rollup a otros chunks) |
-| `index-*.css` | 59 KB | 15.2 KB | Tailwind compilado + Leaflet CSS + tokens |
+| `index-*.js` | 118 KB | 30.0 KB | App shell + router + secciones (bajó de 161 KB al sacar Enso a lazy en v1.7.1) |
+| `Enso-*.js` | 29.7 KB | 7.8 KB | **`/enso` lazy** (v1.7.1) · mapa Leaflet + narrativa, solo se descarga en `/enso` |
+| `map-*.js` | 148.8 KB | 43.4 KB | leaflet + react-leaflet |
+| `charts-*.js` | 500.9 KB | 150.3 KB | recharts (lazy en `/resumen` vía `LazyBarChart`) · supera el límite de 500 KB (warning) |
+| `vendor-*.js` | 57.2 KB | 20.7 KB | react / react-dom |
+| `LazyBarChart-*.js` | 1.07 KB | 0.59 KB | wrapper dinámico de Recharts |
+| `index-*.css` | 46.5 KB | 9.4 KB | Tailwind compilado + tokens |
+| `map-*.css` | 14.8 KB | 6.3 KB | Leaflet CSS (chunk propio bajo rolldown) |
 
-✅ **Code splitting por ruta intacto** (desde v1.2.0). El usuario que entra a `/` sólo paga `index + icons + css` (~244 KB sin gzip, ~67 KB gzip); el chunk `map-*.js` (Leaflet) y el GeoJSON de regiones se descargan únicamente al navegar a `/enso` o `/mapa`.
+✅ **Code splitting por ruta intacto**. El usuario que entra a `/` ya no paga el código de `/enso`: los chunks `Enso-*.js`, `map-*.js` (Leaflet) y el GeoJSON de regiones se descargan únicamente al navegar a `/enso` o `/mapa`.
 
-> ⚠ **Observación v1.5.0**: el chunk `index-*.js` creció de 130 KB a 161 KB porque el código del mapa Leaflet de `/enso` (useEffect + L.map + L.geoJSON + circleMarkers) vive ahora en `Enso.jsx`, que se importa directamente desde `App.jsx`. Si se quiere bajar la home a su nivel previo, una opción de baja prioridad es envolver `Enso` con `React.lazy(() => import('./Enso'))` en `App.jsx` para que el bundle de `/enso` no contamine el de `/`.
+> ✅ **Resuelto en v1.7.1** (antes P2): `Enso` se envuelve con `React.lazy(() => import('./Enso'))` + `Suspense` en `App.jsx`, devolviendo `index-*.js` de 161 KB a 118 KB. Queda pendiente (P3) el chunk de Recharts (>500 KB); una opción futura es un lazy más granular de las gráficas.
 
 ---
 
@@ -526,14 +530,14 @@ Infraestructura preparada en `data/pipeline/` (ignorada por git):
 | 🟠 P1 | Correr Lighthouse y registrar baseline | Especialmente relevante tras v1.5.0 (Leaflet ya carga en `/enso`); home debería estar por encima de 90 |
 | 🟠 P1 | Ejecutar primera corrida real del notebook Fase 2 · Módulo 1 (catálogo IDEAM) | Confirma conectividad al API `datos.gov.co/resource/hp9r-jxuu` |
 | 🟡 P2 | Reemplazar `municipios_huila.geojson` por polígonos reales | El `style` polygon ya está cableado; sólo cambiar el archivo |
-| 🟡 P2 | Convertir a WebP las imágenes restantes | Pendientes: `Gobernacion_Huila.png`, `Efrain-Dominguez3.jpg`, `Efrain_isologo.jpg` |
+| ✅ ~~P2~~ | ~~Convertir a WebP las imágenes restantes~~ | **Resuelto v1.7.1**: `Gobernacion_Huila`, `Efrain-Dominguez3`, `Efrain_isologo` en WebP. Gobernación vía `<picture>`; las dos de Efraín aún sin referencia en código |
 | 🟡 P2 | Copiar `CCYVCE_DB.db` a `data/` para habilitar Módulo 4 del pipeline | Sin esto, Módulo 4 emite advertencia y se salta |
-| 🟡 P2 | Lazy-load del componente `Enso` completo en `App.jsx` | El chunk `index-*.js` creció de 130 KB a 161 KB en v1.5.0 por el código Leaflet inline; envolverlo en `React.lazy` lo saca del bundle de home |
+| ✅ ~~P2~~ | ~~Lazy-load del componente `Enso` completo en `App.jsx`~~ | **Resuelto v1.7.1**: `React.lazy` + `Suspense`; `index-*.js` de 161 KB → 118 KB, chunk `Enso-*.js` (29.7 KB) aparte |
 | 🟢 P3 | Habilitar contenido EN cuando se traduzca | `src/data/content.js` ya tiene estructura · sólo cambiar `LANG = 'en'` |
 | 🟢 P3 | Implementar Módulo 5b ENSO (17 índices NOAA-CPC) en el notebook | Marcado explícitamente como "versión futura" |
 | 🟢 P3 | Automatizar actualización de `enso-estado.json` con API NOAA/CPC | Prevista jul 2026 |
 | 🟢 P3 | Enviar `sitemap.xml` a Google Search Console y Bing Webmaster Tools | Acelera la primera indexación |
-| 🟢 P3 | Pasada tipográfica sobre `enso-estado.json` y JSON propietarios | Em-dashes preservados literalmente desde v1.3.0/v1.4.0 |
+| ✅ ~~P3~~ | ~~Pasada tipográfica sobre `enso-estado.json` y JSON propietarios~~ | **Resuelto**: 0 em-dashes en todo `public/data/` (verificado v1.7.1) |
 | 🟢 P3 | Actualizar `<lastmod>` del sitemap al hacer cambios en `/enso` | Hoy queda en `2026-06-17`; manual hasta automatización |
 
 ### Riesgos operacionales
@@ -601,4 +605,4 @@ ea54cef  fix: add postcss config so Tailwind directives compile
 
 *CENIGAA_STATUS_obs-clima-huila.md v1.5.0 · 2026-06-17*
 *Auditor: agente Claude Code · Branch `main` · Repositorio `cenigaa-obs-clima-huila`*
-*Próxima revisión sugerida: al añadir el bloque regional con las 17 estaciones automáticas del Huila (cierra la narrativa global → nacional → regional, Q3 2026), al ejecutar la primera corrida real del Módulo 1 del notebook de Fase 2, o al envolver `Enso.jsx` con `React.lazy` para regresar `index-*.js` al rango de 130 KB.*
+*Próxima revisión sugerida: al añadir el bloque regional con las 17 estaciones automáticas del Huila (cierra la narrativa global → nacional → regional, Q3 2026), al ejecutar la primera corrida real del Módulo 1 del notebook de Fase 2, o al abordar el chunk de Recharts (>500 KB) con un lazy más granular de las gráficas.*
