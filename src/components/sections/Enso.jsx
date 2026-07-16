@@ -23,10 +23,45 @@ const COLOR_TIPO = {
 }
 
 const COLOR_AGENCIA = {
-  'NOAA / PSL': { bg: '#003087', short: 'NOAA' },
-  'Copernicus / ECMWF': { bg: '#003247', short: 'C3S' },
-  'IRI / Columbia': { bg: '#1a5276', short: 'IRI' },
+  'NOAA / PSL': { bg: '#003087', short: 'NOAA', logo: '/assets/logos/Logo_NOAA.jpeg' },
+  'Copernicus / ECMWF': { bg: '#003247', short: 'C3S', logo: '/assets/logos/Logo_COPERNICUS.jpeg' },
+  'IRI / Columbia': { bg: '#1a5276', short: 'IRI', logo: '/assets/logos/Logo_IRI-Columbia-University.png' },
 }
+
+// ─── Visualizaciones en vivo ─────────────────────────────────────────────────
+// Imágenes oficiales auto-actualizadas de NOAA (PSL/CPC), con URL de ruta estable
+// (no dependen de la fecha). Permitidas por `img-src https:` de la CSP; si alguna
+// falla, la card muestra un fallback con enlace a la fuente.
+const VISUALIZACIONES = [
+  {
+    id: 'viz-sst',
+    titulo: 'Anomalía de temperatura superficial del mar',
+    fuente: 'NOAA / PSL',
+    descripcion:
+      'Anomalía diaria de TSM (base 1991-2020). La lengua cálida sobre el Pacífico ecuatorial central-oriental es la firma de El Niño.',
+    img: 'https://psl.noaa.gov/map/images/sst/sst.daily.anom.gif',
+    enlace: 'https://psl.noaa.gov/enso/current.html',
+    ancho: true,
+  },
+  {
+    id: 'viz-plume',
+    titulo: 'Pronóstico de modelos · pluma Niño 3.4 (CFSv2)',
+    fuente: 'NOAA / CPC',
+    descripcion:
+      'Predicción del índice Niño 3.4 por el conjunto CFSv2. Cada trazo es un miembro del ensamble; el negro es el promedio.',
+    img: 'https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/figure06.gif',
+    enlace: 'https://iri.columbia.edu/our-expertise/climate/forecasts/enso/current/',
+  },
+  {
+    id: 'viz-mei',
+    titulo: 'Índice Multivariado ENSO (MEI v2)',
+    fuente: 'NOAA / PSL',
+    descripcion:
+      'Serie temporal del MEI v2, que combina cinco variables oceánico-atmosféricas para caracterizar la fase e intensidad del ENSO.',
+    img: 'https://psl.noaa.gov/enso/mei/img/meiv2.timeseries.png',
+    enlace: 'https://psl.noaa.gov/enso/mei/',
+  },
+]
 
 const HISTORICAL_DEFAULTS = {
   years: 87,
@@ -468,13 +503,24 @@ function GeovisorCard({ geo }) {
   return (
     <article className="rounded-2xl bg-white p-6 flex flex-col gap-4 shadow-lg">
       <div className="flex items-center gap-3">
-        <div
-          className="flex items-center justify-center w-14 h-14 rounded-lg text-white font-extrabold text-[15px] tracking-tight shrink-0"
-          style={{ background: agencia.bg }}
-          aria-hidden="true"
-        >
-          {agencia.short}
-        </div>
+        {agencia.logo ? (
+          <div className="flex items-center justify-center w-24 h-24 rounded-lg bg-white border border-neutral-200 shrink-0 p-2">
+            <img
+              src={agencia.logo}
+              alt={`Logo ${geo.agencia}`}
+              className="max-w-full max-h-full object-contain"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          <div
+            className="flex items-center justify-center w-14 h-14 rounded-lg text-white font-extrabold text-[15px] tracking-tight shrink-0"
+            style={{ background: agencia.bg }}
+            aria-hidden="true"
+          >
+            {agencia.short}
+          </div>
+        )}
         <div>
           <p className="text-[11px] font-mono uppercase tracking-[0.1em] text-neutral-500">
             {geo.agencia}
@@ -520,6 +566,79 @@ function GeovisorCard({ geo }) {
   )
 }
 
+function VizCard({ viz }) {
+  const [error, setError] = useState(false)
+
+  return (
+    <figure
+      className={`rounded-2xl bg-white overflow-hidden shadow-lg flex flex-col ${viz.ancho ? 'lg:col-span-2' : ''}`}
+    >
+      <div className="flex items-center justify-center bg-white p-3 min-h-[180px]">
+        {error ? (
+          <div className="flex flex-col items-center gap-2 text-center py-8 px-4">
+            <Globe2 size={24} className="text-neutral-300" aria-hidden="true" />
+            <p className="text-[12.5px] text-neutral-500 max-w-xs">
+              La visualización no está disponible en este momento.
+            </p>
+          </div>
+        ) : (
+          <img
+            src={viz.img}
+            alt={viz.titulo}
+            className="max-w-full h-auto object-contain"
+            loading="lazy"
+            onError={() => setError(true)}
+          />
+        )}
+      </div>
+
+      <figcaption className="flex flex-col gap-2 p-5 border-t border-neutral-100 mt-auto">
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full bg-[#EEF1FB] text-[#4A60D8] text-[10.5px] font-semibold tracking-wide uppercase">
+            {viz.fuente}
+          </span>
+        </div>
+        <h3 className="text-[14.5px] font-bold text-[#162341] leading-tight">
+          {viz.titulo}
+        </h3>
+        <p className="text-[12.5px] text-neutral-600 leading-relaxed">
+          {viz.descripcion}
+        </p>
+        <a
+          href={viz.enlace}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 mt-1 text-[12.5px] font-semibold text-[#4A60D8] hover:text-[#162341] transition-colors"
+        >
+          Ver en la fuente
+          <ExternalLink size={12} aria-hidden="true" />
+        </a>
+      </figcaption>
+    </figure>
+  )
+}
+
+function VisualizacionEnVivo() {
+  return (
+    <div className="mt-14 pt-12 border-t border-white/10">
+      <h3 className="text-xl sm:text-2xl font-bold tracking-tight">
+        Visualización en vivo
+      </h3>
+      <p className="mt-2 text-[14px] text-neutral-300 max-w-2xl">
+        Imágenes oficiales auto-actualizadas de NOAA (PSL y CPC) del estado y
+        pronóstico del ENSO. Se cargan directamente desde la fuente; para el visor
+        interactivo completo usa los enlaces de cada agencia arriba.
+      </p>
+
+      <div className="mt-8 grid gap-5 lg:grid-cols-2 items-stretch">
+        {VISUALIZACIONES.map((viz) => (
+          <VizCard key={viz.id} viz={viz} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function BloqueGeovisores({ geovisores, content }) {
   return (
     <section className="py-16 lg:py-20 bg-[#162341] text-white">
@@ -536,6 +655,8 @@ function BloqueGeovisores({ geovisores, content }) {
             <GeovisorCard key={geo.id} geo={geo} />
           ))}
         </div>
+
+        <VisualizacionEnVivo />
 
         <p className="mt-8 text-[12.5px] text-neutral-400 max-w-3xl leading-relaxed">
           {content.outro}
