@@ -5,12 +5,15 @@
 
 | Versión | Fecha | Branch | Último commit | Estado |
 |---|---|---|---|---|
-| v1.7.1 | 2026-07-14 | `main` | (pendiente del commit `perf: lazy /enso + WebP + sitemap`) | ✅ **Producción · cierre de deuda técnica: code-splitting de /enso, WebP y SEO** |
+| v1.7.2 | 2026-07-16 | `main` | (pendiente del commit `feat(enso): logos geovisores + visualización en vivo + WebP IRI`) | ✅ **Producción · logos de geovisores, bloque de visualización en vivo del ENSO y logo IRI en WebP** |
+| v1.7.1 | 2026-07-14 | `main` | `8e00b5c` · *perf: lazy /enso + WebP + sitemap* | ✅ cierre de deuda técnica: code-splitting de /enso, WebP y SEO |
 | v1.7.0 | 2026-07-12 | `main` | `f09ea37` · *chore: sincronizar restyle UI + infraestructura de calidad y CI* | ✅ header azul, homepage blanca, suite de pruebas y CI endurecido |
 | v1.6.0 | 2026-07-10 | `main` | *feat: menú desplegable + footer mínimo + I+D+i reestructurado* | ✅ Navegación agrupada, footer institucional mínimo, sección I+D+i con grupos de investigación |
 | v1.5.0 | 2026-06-17 | `main` | `6ba6bc2` · *feat(enso): mapa Leaflet regiones hidrologicas Colombia #N2* | ✅ `/enso` con mapa Leaflet real (escala nacional) |
 
-> Documento de auditoría · refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-07-14. v1.7.1 cierra deuda técnica: **`/enso` pasa a `React.lazy()` + `Suspense`** en App.jsx, con lo que el chunk `index-*.js` baja de **161 KB a 118 KB** (gzip 30 KB) y ENSO se emite como chunk aparte `Enso-*.js` (29.7 KB) que solo se descarga al navegar a `/enso`. **SEO**: `sitemap.xml` con `lastmod 2026-07-14` en las 10 rutas. **Imágenes WebP**: `Gobernacion_Huila` (32→6 KB), `Efrain-Dominguez3` (32→22 KB) y `Efrain_isologo` (91→26 KB); la de Gobernación se sirve vía `<picture>` + fallback PNG en Footer y Aliados (las dos de Efraín quedan disponibles, aún sin referencia en código). Verificado 0 em-dashes en JSONs públicos. Suite lint + validate:data + test + build en verde; persiste el warning preexistente del chunk de Recharts (>500 KB), ajeno a estos cambios.
+> Documento de auditoría · refleja el estado real del repositorio `cenigaa-obs-clima-huila` el 2026-07-16. v1.7.2 enriquece `/enso`: las cards de geovisores integran los **logos reales** de NOAA, Copernicus e IRI (tile blanco 96×96, `object-contain`, fallback a siglas), y se añade un bloque **"Visualización en vivo"** con tres imágenes oficiales auto-actualizadas de NOAA (PSL/CPC) de ruta estable: anomalía de TSM, pluma Niño 3.4 (CFSv2) e índice MEI v2. Cada panel lleva fuente, enlace a origen y fallback `onError`. No requiere cambios de CSP (`img-src https:` ya lo permite). Copernicus (app interactiva) e IRI (URLs por fecha) se mantienen como enlace profundo, no como imagen embebida. El logo de IRI se optimiza a **WebP** (323→28.5 KB) servido vía `<picture>` + fallback PNG.
+>
+> v1.7.1 cierra deuda técnica: **`/enso` pasa a `React.lazy()` + `Suspense`** en App.jsx, con lo que el chunk `index-*.js` baja de **161 KB a 118 KB** (gzip 30 KB) y ENSO se emite como chunk aparte `Enso-*.js` (29.7 KB) que solo se descarga al navegar a `/enso`. **SEO**: `sitemap.xml` con `lastmod 2026-07-14` en las 10 rutas. **Imágenes WebP**: `Gobernacion_Huila` (32→6 KB), `Efrain-Dominguez3` (32→22 KB) y `Efrain_isologo` (91→26 KB); la de Gobernación se sirve vía `<picture>` + fallback PNG en Footer y Aliados (las dos de Efraín quedan disponibles, aún sin referencia en código). Verificado 0 em-dashes en JSONs públicos. Suite lint + validate:data + test + build en verde; persiste el warning preexistente del chunk de Recharts (>500 KB), ajeno a estos cambios.
 >
 > v1.7.0 combina un **restyle de UI** con una capa de **calidad e infraestructura**. UI: el **header pasa a fondo azul `#4A60D8`** con todo su contenido en blanco; la **homepage (Hero) pasa a fondo blanco** con los colores del contenido invertidos para legibilidad (tarjetas de estadística claras, badges tenues, CTA secundario claro); el **footer adopta layout horizontal** (logos institucionales a la izquierda, copyright al frente); se elimina el indicador de scroll "Explorar" + flecha del Hero; y los fondos claros de sección (Resumen, Aliados, bloques de `/enso`) pasan a blanco. Infraestructura: **suite de pruebas** (`vitest` para UI + `node:test` para datos/CSP), script `scripts/validate-data.mjs`, config `.eslintrc.cjs`, y **CI endurecido** (lint + validate:data + test antes del build). Se **deja de trackear `build/`** (Vite output ahora se genera en CI, `build/` en `.gitignore`) y se elimina el `azure-static-web-apps.yml` legacy de la raíz. El contenido de `/enso` se refactoriza a `public/data/enso-contenido.json` con guía `MANTENIMIENTO_ENSO.md`.
 >
@@ -100,6 +103,9 @@ cenigaa-obs-clima-huila/
 │   │       ├── DSGAA.png                                 ← v1.6.0 · card grupo DSGAA
 │   │       ├── Logo_GAA+IA.png                           ← v1.6.0 · card GAA+IA Lab
 │   │       ├── S-WEB-Goal-13.png                         ← v1.6.0 · logo ODS 13 en /politica
+│   │       ├── Gobernacion_Huila.webp                    ← v1.7.1 · WebP (Footer/Aliados vía <picture>)
+│   │       ├── Logo_NOAA.jpeg / Logo_COPERNICUS.jpeg     ← v1.7.2 · logos geovisores /enso
+│   │       ├── Logo_IRI-Columbia-University.png / .webp  ← v1.7.2 · logo IRI (WebP 323→28.5 KB, <picture>)
 │   │       └── logo_cenigaa_T_Blanco.png                 ← (legacy footer navy · v1.6.0 footer usa fondo blanco)
 │   └── data/
 │       ├── catalogo_estaciones_CENIGAA.csv               ← descargable público
@@ -137,7 +143,7 @@ cenigaa-obs-clima-huila/
         ├── PoliticaSection.jsx                           ← v1.0.1 · /politica
         ├── ResumenSection.jsx                            ← v1.1.0 · /resumen · v1.2.0 lazy BarChart
         ├── LazyBarChart.jsx                              ← v1.2.0 · chunk dinámico Recharts
-        ├── Enso.jsx                                      ← v1.3.0 · /enso · v1.4.0 Bloque Nacional · v1.5.0 mapa Leaflet · v1.7.1 lazy chunk
+        ├── Enso.jsx                                      ← v1.3.0 · /enso · v1.5.0 mapa Leaflet · v1.7.1 lazy chunk · v1.7.2 logos geovisores + visualización en vivo
         └── HomenajeEfrain.jsx                            (/efrain · WebPs desde v1.2.0)
 ```
 
@@ -222,7 +228,7 @@ Hasta v1.1.0 todas las secciones se renderizaban apiladas en la home (`/`). **A 
 2. **Editorial** · contexto científico del evento.
 3. **Línea de tiempo vertical** con marcador `animate-ping` en el ítem "presente" y borde verde en hitos.
 4. **Indicadores cuasi-real** · 3 cards con valor grande en naranja.
-5. **Geovisores internacionales** · botones que abren NOAA/PSL, Copernicus/ECMWF, IRI/Columbia en pestaña nueva.
+5. **Geovisores internacionales** · cards con logo real de NOAA/PSL, Copernicus/ECMWF e IRI/Columbia (v1.7.2) y botones que abren cada visor en pestaña nueva; seguidas del bloque **Visualización en vivo** (v1.7.2) con 3 imágenes oficiales auto-actualizadas de NOAA (TSM, pluma Niño 3.4 CFSv2, MEI v2) y fallback `onError`.
 6. **Escala Nacional Colombia (v1.4.0 · refinado en v1.5.0)** · 4 sub-bloques:
    - **N1** · Tarjeta navy de alerta IDEAM (96% persistencia · 63% intensidad muy fuerte) con pulse animado.
    - **N2** · Grid 2 columnas con **mapa Leaflet real** (380 px) sobre tiles CartoDB Light + tabla de regiones con badges por nivel y row resaltado para Andina.

@@ -25,7 +25,7 @@ const COLOR_TIPO = {
 const COLOR_AGENCIA = {
   'NOAA / PSL': { bg: '#003087', short: 'NOAA', logo: '/assets/logos/Logo_NOAA.jpeg' },
   'Copernicus / ECMWF': { bg: '#003247', short: 'C3S', logo: '/assets/logos/Logo_COPERNICUS.jpeg' },
-  'IRI / Columbia': { bg: '#1a5276', short: 'IRI', logo: '/assets/logos/Logo_IRI-Columbia-University.png' },
+  'IRI / Columbia': { bg: '#1a5276', short: 'IRI', logo: '/assets/logos/Logo_IRI-Columbia-University.png', logoWebp: '/assets/logos/Logo_IRI-Columbia-University.webp' },
 }
 
 // ─── Visualizaciones en vivo ─────────────────────────────────────────────────
@@ -505,12 +505,15 @@ function GeovisorCard({ geo }) {
       <div className="flex items-center gap-3">
         {agencia.logo ? (
           <div className="flex items-center justify-center w-24 h-24 rounded-lg bg-white border border-neutral-200 shrink-0 p-2">
-            <img
-              src={agencia.logo}
-              alt={`Logo ${geo.agencia}`}
-              className="max-w-full max-h-full object-contain"
-              loading="lazy"
-            />
+            <picture>
+              {agencia.logoWebp && <source srcSet={agencia.logoWebp} type="image/webp" />}
+              <img
+                src={agencia.logo}
+                alt={`Logo ${geo.agencia}`}
+                className="max-w-full max-h-full object-contain"
+                loading="lazy"
+              />
+            </picture>
           </div>
         ) : (
           <div
