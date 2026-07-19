@@ -1,0 +1,28 @@
+# RAG ENSO-Huila v2 — dependencias
+# pip install -r scripts/rag/requirements.txt --break-system-packages
+
+# Extracción PDF
+pdfplumber>=0.10.0
+pymupdf>=1.23.0          # fitz
+
+# Chunking semántico
+llama-index-core>=0.10.0
+
+# Vector store
+qdrant-client>=1.9.0
+
+# Embeddings
+requests>=2.31.0         # Ollama vía HTTP
+
+# Sparse / BM25
+rank_bm25>=0.2.2
+
+# Reranker cross-encoder
+FlagEmbedding>=1.2.0
+sentence-transformers>=2.7.0
+
+# MCP server (Claude Desktop)
+mcp>=1.0.0
+
+# Utilidades
+tqdm>=4.66.0

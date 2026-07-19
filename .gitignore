@@ -159,3 +159,8 @@ outputs/
 __pycache__/
 .ipynb_checkpoints/
 data/enso_indices/
+
+# RAG v2 — no van al repo
+scripts/rag/.venv/
+scripts/rag/bm25_index.pkl
+data/figuras_rag/
